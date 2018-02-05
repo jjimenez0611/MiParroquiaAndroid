@@ -37,6 +37,7 @@ dependencies {
         transitive = true
     }
     implementation "com.google.firebase:firebase-core:$firebase_version"
+    implementation "com.google.firebase:firebase-firestore:$firebase_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
 
     implementation "com.google.dagger:dagger:$dagger_version"
