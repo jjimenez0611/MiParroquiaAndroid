@@ -1,6 +1,5 @@
 package com.effeta.miparroquiaandroid.views.models
 
-import android.location.Geocoder
 import android.location.Location
 
 /**
