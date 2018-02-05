@@ -1,4 +1,4 @@
-package com.effeta.miparroquiaandroid.views.models
+package com.effeta.miparroquiaandroid.models
 
 import java.sql.Timestamp
 
