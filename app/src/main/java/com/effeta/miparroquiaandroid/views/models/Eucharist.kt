@@ -1,10 +1,10 @@
 package com.effeta.miparroquiaandroid.views.models
 
-import android.location.Geocoder
-import android.location.Location
+import java.sql.Timestamp
+
 
 /**
  * Created by jjimenez on 2/2/18.
  */
-class Eucharist (val mImage : String, val mName : String, val mUbication: Location) {
+class Eucharist(val mEucharist: String, val mHour: Timestamp, val mPriestName: String) {
 }
