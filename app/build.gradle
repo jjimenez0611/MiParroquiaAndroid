@@ -45,6 +45,10 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     implementation "android.arch.lifecycle:extensions:$arch_version"
+    implementation "android.arch.lifecycle:reactivestreams:$arch_version"
+
+    // Anko Commons
+    compile "org.jetbrains.anko:anko-commons:$anko_version"
 
 
     testImplementation "junit:junit:4.12"

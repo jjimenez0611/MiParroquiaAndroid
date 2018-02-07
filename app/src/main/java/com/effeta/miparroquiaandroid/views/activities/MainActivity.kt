@@ -1,12 +1,17 @@
 package com.effeta.miparroquiaandroid.views.activities
 
+import android.arch.lifecycle.Observer
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import com.effeta.miparroquiaandroid.R
+import com.effeta.miparroquiaandroid.viewmodel.AnnouncementViewModel
 import com.effeta.miparroquiaandroid.views.adapters.ViewPagerAdapter
 import com.effeta.miparroquiaandroid.views.common.BaseActivity
+import com.effeta.miparroquiaandroid.views.common.createViewModel
+import com.effeta.miparroquiaandroid.views.common.unsafeLazy
 import com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment
 import com.effeta.miparroquiaandroid.views.fragments.ChurchMapFragment
 import com.effeta.miparroquiaandroid.views.fragments.EucharistFragment
@@ -58,18 +63,42 @@ class MainActivity : BaseActivity() {
 
     private var prevMenuItem: MenuItem? = null
 
-    override fun getLayout(): Int = R.layout.activity_main
+    override val mLayout: Int = R.layout.activity_main
 
-    override fun initViewModel() {
+    private lateinit var mAnnouncementViewModel : AnnouncementViewModel
+
+    override fun initializeViewModels() {
+        mAnnouncementViewModel = createViewModel(this, AnnouncementViewModel::class.java)
     }
 
-    override fun initUI() {
+    override fun initializeUI() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         viewpager.addOnPageChangeListener(mOnPageChangeListener)
         setupViewPager(viewpager)
     }
 
-    override fun initObservers() {
+    override fun observeLiveData(isNewActivity: Boolean) {
+        if (isNewActivity) {
+            mAnnouncementViewModel.setChurch("SGIRn6F4Q22haQv1NOEg")
+        }
+        mAnnouncementViewModel.announcementsLiveData.observe(this, Observer {
+            Log.d("Success", it.toString())
+        })
+        mAnnouncementViewModel.isLoadingLiveData.observe(this, Observer {
+            if (it!!) {
+                progress.visibility = View.VISIBLE
+            } else {
+                progress.visibility = View.GONE
+            }
+        })
+        mAnnouncementViewModel.throwableLiveData.observe(this, Observer {
+            progress.visibility = View.GONE
+            if (it != null) {
+
+            } else {
+
+            }
+        })
     }
 
     private fun setupViewPager(viewPager: ViewPager) {

@@ -6,12 +6,12 @@ import com.effeta.miparroquiaandroid.views.common.BaseFragment
 class EucharistFragment : BaseFragment() {
     override fun getLayout(): Int =  R.layout.fragment_eucharist
 
-    override fun initViewModel() {
+    override fun createViewModel() {
     }
 
-    override fun initUI() {
+    override fun initializeUI() {
     }
 
-    override fun initObservers() {
+    override fun observeLiveData(isNewActivity: Boolean) {
     }
 }

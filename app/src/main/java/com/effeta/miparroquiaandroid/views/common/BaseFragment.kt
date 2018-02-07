@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.effeta.miparroquiaandroid.R
 
 /**
  * Created by aulate on 1/2/18.
@@ -16,20 +15,20 @@ abstract class BaseFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val v = inflater!!.inflate(getLayout(), container, false)
-        init()
+        initialize(savedInstanceState == null)
         return v
     }
 
     abstract fun getLayout(): Int
 
-    fun init() {
-        initViewModel()
-        initUI()
-        initObservers()
+    private fun initialize(isNewActivity: Boolean) {
+        createViewModel()
+        initializeUI()
+        observeLiveData(isNewActivity)
     }
 
-    abstract fun initViewModel()
-    abstract fun initUI()
-    abstract fun initObservers()
+    abstract fun createViewModel()
+    abstract fun initializeUI()
+    abstract fun observeLiveData(isNewActivity: Boolean)
 
 }
