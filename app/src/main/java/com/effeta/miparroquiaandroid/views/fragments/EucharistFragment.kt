@@ -4,9 +4,9 @@ import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.views.common.BaseFragment
 
 class EucharistFragment : BaseFragment() {
-    override fun getLayout(): Int =  R.layout.fragment_eucharist
+    override val mLayout: Int = R.layout.fragment_eucharist
 
-    override fun createViewModel() {
+    override fun initializeViewModels() {
     }
 
     override fun initializeUI() {

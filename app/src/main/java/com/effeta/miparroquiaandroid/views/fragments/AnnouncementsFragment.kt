@@ -4,9 +4,9 @@ import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.views.common.BaseFragment
 
 class AnnouncementsFragment : BaseFragment() {
-    override fun getLayout(): Int =  R.layout.fragment_announcements
+    override val mLayout: Int = R.layout.fragment_announcements
 
-    override fun createViewModel() {
+    override fun initializeViewModels() {
     }
 
     override fun initializeUI() {

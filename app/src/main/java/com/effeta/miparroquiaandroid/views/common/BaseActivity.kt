@@ -1,6 +1,6 @@
 package com.effeta.miparroquiaandroid.views.common
 
-import android.arch.lifecycle.*
+import android.arch.lifecycle.LifecycleOwner
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 

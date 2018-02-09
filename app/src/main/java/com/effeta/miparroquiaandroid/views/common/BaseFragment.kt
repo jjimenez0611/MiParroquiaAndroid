@@ -14,20 +14,20 @@ abstract class BaseFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val v = inflater!!.inflate(getLayout(), container, false)
+        val v = inflater!!.inflate(mLayout, container, false)
         initialize(savedInstanceState == null)
         return v
     }
 
-    abstract fun getLayout(): Int
+    abstract val mLayout: Int
 
     private fun initialize(isNewActivity: Boolean) {
-        createViewModel()
+        initializeViewModels()
         initializeUI()
         observeLiveData(isNewActivity)
     }
 
-    abstract fun createViewModel()
+    abstract fun initializeViewModels()
     abstract fun initializeUI()
     abstract fun observeLiveData(isNewActivity: Boolean)
 
