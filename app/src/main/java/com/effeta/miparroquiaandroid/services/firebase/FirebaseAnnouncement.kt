@@ -2,10 +2,8 @@ package com.effeta.miparroquiaandroid.services.firebase
 
 import android.util.Log
 import com.effeta.miparroquiaandroid.models.Announcement
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import io.reactivex.Observable
 
 /**
