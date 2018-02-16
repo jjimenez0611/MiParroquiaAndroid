@@ -1,10 +1,13 @@
 package com.effeta.miparroquiaandroid.views.activities
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.MenuItem
 import com.effeta.miparroquiaandroid.R
+import com.effeta.miparroquiaandroid.models.Announcement
 import com.effeta.miparroquiaandroid.views.adapters.ViewPagerAdapter
 import com.effeta.miparroquiaandroid.views.common.BaseActivity
 import com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment
@@ -55,21 +58,20 @@ class MainActivity : BaseActivity() {
         }
 
     }
-
     private var prevMenuItem: MenuItem? = null
 
-    override fun getLayout(): Int = R.layout.activity_main
+    override val mLayout: Int = R.layout.activity_main
 
-    override fun initViewModel() {
+    override fun initializeViewModels() {
     }
 
-    override fun initUI() {
+    override fun initializeUI() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         viewpager.addOnPageChangeListener(mOnPageChangeListener)
         setupViewPager(viewpager)
     }
 
-    override fun initObservers() {
+    override fun observeLiveData(isNewActivity: Boolean) {
     }
 
     private fun setupViewPager(viewPager: ViewPager) {

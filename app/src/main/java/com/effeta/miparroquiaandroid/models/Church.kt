@@ -1,9 +1,14 @@
 package com.effeta.miparroquiaandroid.models
 
-import android.location.Location
+import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.firestore.PropertyName
 
 /**
  * Created by jjimenez on 2/2/18.
  */
-class Church(val mImage : String, val mName : String, val mUbication: Location) {
-}
+class Church(
+        var mKey : String,
+        @PropertyName("image") val mImage : String,
+        @PropertyName("name") val mName : String,
+        @PropertyName("geolocation") val mUbication: GeoPoint
+)
