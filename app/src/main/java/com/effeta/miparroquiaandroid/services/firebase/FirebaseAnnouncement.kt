@@ -15,7 +15,7 @@ object FirebaseAnnouncement {
     val announcementKey = "announcements"
     val announcements: CollectionReference = FirebaseFirestore.getInstance().collection(announcementKey)
 
-    fun getAnnouncementList(): Observable<List<Announcement>> {
+    fun getAllAnnouncements(): Observable<List<Announcement>> {
         return Observable.create<List<Announcement>> {
             announcements.get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -35,9 +35,49 @@ object FirebaseAnnouncement {
         }
     }
 
-    fun getAnnouncementList(type : String): Observable<List<Announcement>> {
+    fun getAllAnnouncements(limit : Long): Observable<List<Announcement>> {
+        return Observable.create<List<Announcement>> {
+            announcements.limit(limit).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = ArrayList<Announcement>()
+                    task.result.documents.forEach({ documentSnapshot ->
+                        val a = documentSnapshot.toObject(Announcement::class.java)
+                        a.mKey = documentSnapshot.id
+                        Log.d("AnnouncementRepository", a.toString())
+                        list.plus(a)
+                    })
+                    it.onNext(list)
+                    it.onComplete()
+                } else {
+                    it.onError(task.exception!!)
+                }
+            }
+        }
+    }
+
+    fun getAnnouncementListByType(type : String): Observable<List<Announcement>> {
         return Observable.create<List<Announcement>> {
             announcements.whereEqualTo(Announcement.FirebaseProperties.type, type).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = ArrayList<Announcement>()
+                    task.result.documents.forEach({ documentSnapshot ->
+                        val a = documentSnapshot.toObject(Announcement::class.java)
+                        a.mKey = documentSnapshot.id
+                        Log.d("AnnouncementRepository", a.toString())
+                        list.plus(a)
+                    })
+                    it.onNext(list)
+                    it.onComplete()
+                } else {
+                    it.onError(task.exception!!)
+                }
+            }
+        }
+    }
+
+    fun getAnnouncementListByChurch(church : String): Observable<List<Announcement>> {
+        return Observable.create<List<Announcement>> {
+            announcements.whereEqualTo(Announcement.FirebaseProperties.church, church).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = ArrayList<Announcement>()
                     task.result.documents.forEach({ documentSnapshot ->

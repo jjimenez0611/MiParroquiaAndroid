@@ -10,6 +10,6 @@ import io.reactivex.Observable
 object AnnouncementRepository {
 
     fun getAnnouncements() : Observable<List<Announcement>> {
-        return FirebaseAnnouncement.getAnnouncementList("1")
+        return FirebaseAnnouncement.getAllAnnouncements()
     }
 }
