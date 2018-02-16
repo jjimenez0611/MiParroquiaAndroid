@@ -14,9 +14,9 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = [
-    (AndroidSupportInjectionModule::class),
-    (AppModule::class),
-    (ActivityBuilder::class)
+    AndroidSupportInjectionModule::class,
+    AppModule::class,
+    ActivityBuilder::class
 ])
 interface AppComponent : AndroidInjector<DaggerApplication> {
     fun inject(app: MiParroquiaApplication)
