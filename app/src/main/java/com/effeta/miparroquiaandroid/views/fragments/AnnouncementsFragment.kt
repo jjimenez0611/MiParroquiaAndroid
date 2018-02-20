@@ -5,15 +5,15 @@ import android.arch.lifecycle.ViewModelProviders
 import android.view.View
 import android.widget.Toast
 import com.effeta.miparroquiaandroid.R
+import com.effeta.miparroquiaandroid.common.BaseFragment
 import com.effeta.miparroquiaandroid.models.Announcement
 import com.effeta.miparroquiaandroid.viewmodel.AnnouncementViewModel
-import com.effeta.miparroquiaandroid.views.common.BaseFragment
 import kotlinx.android.synthetic.main.fragment_announcements.*
 
 class AnnouncementsFragment : BaseFragment() {
     override val mLayout: Int = R.layout.fragment_announcements
 
-    lateinit var mAnnouncementViewModel: AnnouncementViewModel
+    private lateinit var mAnnouncementViewModel: AnnouncementViewModel
 
     override fun initializeViewModels() {
         mAnnouncementViewModel = ViewModelProviders.of(this).get(AnnouncementViewModel::class.java)

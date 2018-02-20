@@ -1,15 +1,12 @@
 package com.effeta.miparroquiaandroid.views.activities
 
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.MenuItem
 import com.effeta.miparroquiaandroid.R
-import com.effeta.miparroquiaandroid.models.Announcement
+import com.effeta.miparroquiaandroid.common.BaseActivity
 import com.effeta.miparroquiaandroid.views.adapters.ViewPagerAdapter
-import com.effeta.miparroquiaandroid.views.common.BaseActivity
 import com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment
 import com.effeta.miparroquiaandroid.views.fragments.ChurchMapFragment
 import com.effeta.miparroquiaandroid.views.fragments.EucharistFragment

@@ -1,7 +1,7 @@
 package com.effeta.miparroquiaandroid.views.fragments
 
 import com.effeta.miparroquiaandroid.R
-import com.effeta.miparroquiaandroid.views.common.BaseFragment
+import com.effeta.miparroquiaandroid.common.BaseFragment
 
 class EucharistFragment : BaseFragment() {
     override val mLayout: Int = R.layout.fragment_eucharist

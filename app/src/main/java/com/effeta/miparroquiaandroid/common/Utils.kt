@@ -1,4 +1,4 @@
-package com.effeta.miparroquiaandroid.views.common
+package com.effeta.miparroquiaandroid.common
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
@@ -14,6 +14,6 @@ import android.arch.lifecycle.ViewModelProviders
  */
 fun <T> unsafeLazy(initializer: () -> T) = lazy(LazyThreadSafetyMode.NONE, initializer)
 
-fun <T : ViewModel> createViewModel(activity: BaseActivity, viewModelClass: Class<T> ) : T {
+fun <T : ViewModel> createViewModel(activity: BaseActivity, viewModelClass: Class<T>): T {
     return ViewModelProviders.of(activity).get(viewModelClass)
 }
