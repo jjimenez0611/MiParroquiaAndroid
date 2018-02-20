@@ -55,7 +55,7 @@ object FirebaseAnnouncement {
 
     fun getAnnouncementListByType(type : String): Observable<List<Announcement>> {
         return Observable.create<List<Announcement>> {
-            announcements.whereEqualTo(Announcement.FirebaseProperties.type, type).get().addOnCompleteListener { task ->
+            announcements.whereEqualTo(Announcement.FirebasePropertiesAnnouncement.type, type).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = ArrayList<Announcement>()
                     task.result.documents.forEach({ documentSnapshot ->
@@ -75,7 +75,7 @@ object FirebaseAnnouncement {
 
     fun getAnnouncementListByChurch(church : String): Observable<List<Announcement>> {
         return Observable.create<List<Announcement>> {
-            announcements.whereEqualTo(Announcement.FirebaseProperties.church, church).get().addOnCompleteListener { task ->
+            announcements.whereEqualTo(Announcement.FirebasePropertiesAnnouncement.church, church).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = ArrayList<Announcement>()
                     task.result.documents.forEach({ documentSnapshot ->
