@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginTop="8dp"
     android:background="@drawable/item_announcement"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_horizontal_margin"
@@ -44,6 +44,7 @@
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minLines="3"
         app:layout_constraintStart_toStartOf="@+id/item_published_at"
         app:layout_constraintTop_toBottomOf="@id/item_published_at"
         tools:text="Este es un anuncio de prueba, a partir de aqui se encontraran los diferentes anuncios que desean mostrarse" />
