@@ -1,4 +1,4 @@
-package com.effeta.miparroquiaandroid.views.common
+package com.effeta.miparroquiaandroid.common
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

@@ -21,8 +21,8 @@ object FirebaseAnnouncement {
                     task.result.documents.forEach({ documentSnapshot ->
                         val a = documentSnapshot.toObject(Announcement::class.java)
                         a.mKey = documentSnapshot.id
-                        Log.d("AnnouncementRepository", a.toString())
-                        list.plus(a)
+                        Log.d("FirebaseAnnouncement", a.toString())
+                        list.add(a)
                     })
                     it.onNext(list)
                     it.onComplete()

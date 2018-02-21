@@ -1,7 +1,9 @@
-package com.effeta.miparroquiaandroid.views.common
+package com.effeta.miparroquiaandroid.common
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by aulate on 6/2/18.
@@ -14,6 +16,11 @@ import android.arch.lifecycle.ViewModelProviders
  */
 fun <T> unsafeLazy(initializer: () -> T) = lazy(LazyThreadSafetyMode.NONE, initializer)
 
-fun <T : ViewModel> createViewModel(activity: BaseActivity, viewModelClass: Class<T> ) : T {
+fun <T : ViewModel> createViewModel(activity: BaseActivity, viewModelClass: Class<T>): T {
     return ViewModelProviders.of(activity).get(viewModelClass)
+}
+
+fun Date.toString(pattern: String): String {
+    val simpleDateFormat = SimpleDateFormat(pattern)
+    return simpleDateFormat.format(this)
 }
