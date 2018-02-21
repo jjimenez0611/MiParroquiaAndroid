@@ -14,4 +14,7 @@ class EucharistFragment : BaseFragment() {
 
     override fun observeLiveData(isNewActivity: Boolean) {
     }
+
+    override fun fetchData() {
+    }
 }
