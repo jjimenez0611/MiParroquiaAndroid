@@ -41,10 +41,12 @@ class AnnouncementsFragment : BaseFragment() {
 
         mAnnouncementViewModel.announcementList.observe(this, Observer {
             Toast.makeText(this@AnnouncementsFragment.context, "Anuncios cargados.", Toast.LENGTH_SHORT).show()
+            progress.visibility = View.GONE
             showAnnouncements(it)
         })
+    }
 
-
+    override fun fetchData() {
         mAnnouncementViewModel.getAnnouncements()
     }
 
