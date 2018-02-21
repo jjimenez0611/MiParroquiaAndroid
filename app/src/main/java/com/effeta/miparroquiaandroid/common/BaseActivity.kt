@@ -1,4 +1,4 @@
-package com.effeta.miparroquiaandroid.views.common
+package com.effeta.miparroquiaandroid.common
 
 import android.arch.lifecycle.LifecycleOwner
 import android.os.Bundle
