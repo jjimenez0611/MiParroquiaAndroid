@@ -2,16 +2,21 @@ package com.effeta.miparroquiaandroid.models
 
 import com.google.firebase.firestore.PropertyName
 import com.google.firebase.firestore.ServerTimestamp
-import java.sql.Timestamp
-import java.util.Date
+import java.util.*
 
 
 /**
  * Created by jjimenez on 2/2/18.
  */
 class Eucharist(
-        var mKey : String,
-        @PropertyName("church") val mChurch: String,
-        @PropertyName("hour") @ServerTimestamp val mHour: Date,
-        @PropertyName("priest") val mPriestName: String
-)
+        var mKey: String,
+        @get:PropertyName(Eucharist.FirebasePropertiesEucharist.church) @set:PropertyName(Eucharist.FirebasePropertiesEucharist.church) var mChurch: String = "",
+        @get:PropertyName(Eucharist.FirebasePropertiesEucharist.hour) @set:PropertyName(Eucharist.FirebasePropertiesEucharist.hour) @ServerTimestamp var mHour: Date = Date(),
+        @get:PropertyName(Eucharist.FirebasePropertiesEucharist.priest) @set:PropertyName(Eucharist.FirebasePropertiesEucharist.priest) var mPriestName: String = ""
+) {
+    object FirebasePropertiesEucharist {
+        const val church = "church"
+        const val hour = "hour"
+        const val priest = "priest"
+    }
+}
