@@ -8,11 +8,17 @@ import com.google.firebase.firestore.PropertyName
  */
 class Church(
         var mKey: String = "",
-        @get:PropertyName(FirebasePropertiesChurch.image) @set:PropertyName(FirebasePropertiesChurch.image) var mImage: String = "",
-        @get:PropertyName(FirebasePropertiesChurch.name) @set:PropertyName(FirebasePropertiesChurch.name) var mName: String = "",
-        @get:PropertyName(FirebasePropertiesChurch.geolocation) @set:PropertyName(FirebasePropertiesChurch.geolocation) var mUbication: GeoPoint?
+        @get:PropertyName(FirebaseProperties.image)
+        @set:PropertyName(FirebaseProperties.image)
+        var mImage: String = "",
+        @get:PropertyName(FirebaseProperties.name)
+        @set:PropertyName(FirebaseProperties.name)
+        var mName: String = "",
+        @get:PropertyName(FirebaseProperties.geolocation)
+        @set:PropertyName(FirebaseProperties.geolocation)
+        var mUbication: GeoPoint?
 ) {
-    object FirebasePropertiesChurch {
+    object FirebaseProperties {
         const val name = "name"
         const val image = "image"
         const val geolocation = "geolocation"
