@@ -15,4 +15,7 @@ class ChurchMapFragment : BaseFragment() {
 
     override fun observeLiveData(isNewActivity: Boolean) {
     }
+
+    override fun fetchData() {
+    }
 }

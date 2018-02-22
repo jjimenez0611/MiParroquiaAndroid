@@ -18,7 +18,7 @@ class AnnouncementViewModel : ViewModel() {
     fun getAnnouncements() {
         AnnouncementRepository.getAnnouncements()
                 .subscribe { list ->
-                    isLoading.postValue(false)
+                    //                    isLoading.postValue(false)
                     announcementList.postValue(list)
                 }
     }

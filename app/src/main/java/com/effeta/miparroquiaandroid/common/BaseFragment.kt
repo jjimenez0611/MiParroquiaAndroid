@@ -11,11 +11,16 @@ import android.view.ViewGroup
  */
 abstract class BaseFragment : Fragment() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initialize(savedInstanceState == null)
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val v = inflater!!.inflate(mLayout, container, false)
-        initialize(savedInstanceState == null)
+        fetchData()
         return v
     }
 
@@ -30,5 +35,6 @@ abstract class BaseFragment : Fragment() {
     abstract fun initializeViewModels()
     abstract fun initializeUI()
     abstract fun observeLiveData(isNewActivity: Boolean)
+    abstract fun fetchData()
 
 }
