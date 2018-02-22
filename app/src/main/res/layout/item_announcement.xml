@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    android:background="@drawable/item_announcement"
+    android:background="@drawable/bg_filial_announcement"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_horizontal_margin"
     android:paddingEnd="@dimen/activity_vertical_margin"
