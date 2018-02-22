@@ -12,13 +12,10 @@ class AnnouncementViewModel : ViewModel() {
 
     var announcementList: MutableLiveData<List<Announcement>> = MutableLiveData()
 
-    var isLoading: MutableLiveData<Boolean> = MutableLiveData()
-
     var isError: MutableLiveData<Boolean> = MutableLiveData()
     fun getAnnouncements() {
         AnnouncementRepository.getAnnouncements()
                 .subscribe { list ->
-                    //                    isLoading.postValue(false)
                     announcementList.postValue(list)
                 }
     }
