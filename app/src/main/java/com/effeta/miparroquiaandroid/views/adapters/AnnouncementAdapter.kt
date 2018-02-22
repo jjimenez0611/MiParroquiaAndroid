@@ -2,6 +2,7 @@ package com.effeta.miparroquiaandroid.views.adapters
 
 import android.view.View
 import com.effeta.miparroquiaandroid.R
+import com.effeta.miparroquiaandroid.common.changeBackground
 import com.effeta.miparroquiaandroid.common.toString
 import com.effeta.miparroquiaandroid.models.Announcement
 import kotlinx.android.synthetic.main.item_announcement.view.*
@@ -20,9 +21,7 @@ object AnnouncementAdapter : BaseAdapter<Announcement, AnnouncementAdapter.Annou
     class AnnouncementViewHolder(itemView: View?) : BaseViewHolder<Announcement>(itemView) {
         override fun showItem(item: Announcement) {
             if (item.mType.toInt() == 1)
-                itemView.setBackgroundResource(R.drawable.bg_parish_announcement)
-            else
-                itemView.setBackgroundResource(R.drawable.bg_filial_announcement)
+                itemView.changeBackground(R.drawable.bg_parish_announcement)
 
             itemView.item_title.text = item.mTitle
             itemView.item_description.text = item.mDescription
