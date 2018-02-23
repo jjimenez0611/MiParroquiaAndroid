@@ -1,6 +1,7 @@
 package com.effeta.miparroquiaandroid.views.fragments
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -11,16 +12,24 @@ import com.effeta.miparroquiaandroid.models.Announcement
 import com.effeta.miparroquiaandroid.viewmodel.AnnouncementViewModel
 import com.effeta.miparroquiaandroid.views.adapters.AnnouncementAdapter
 import kotlinx.android.synthetic.main.fragment_announcements.*
+import javax.inject.Inject
 
 class AnnouncementsFragment : BaseFragment() {
     override val mLayout: Int = R.layout.fragment_announcements
 
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var mAnnouncementViewModel: AnnouncementViewModel
 
-    private var mAnnouncementAdapter = AnnouncementAdapter
+    @Inject
+    lateinit var mAnnouncementAdapter : AnnouncementAdapter
 
     override fun initializeViewModels() {
-        mAnnouncementViewModel = ViewModelProviders.of(this).get(AnnouncementViewModel::class.java)
+
+        mAnnouncementViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(AnnouncementViewModel::class.java)
     }
 
     override fun initializeUI() {

@@ -1,15 +1,19 @@
 package com.effeta.miparroquiaandroid.services.firebase
 
 import android.util.Log
+import com.effeta.miparroquiaandroid.TestOpen
 import com.effeta.miparroquiaandroid.models.Announcement
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.Observable
+import javax.inject.Inject
 
 /**
  * Created by aulate on 16/2/18.
  */
-object FirebaseAnnouncement {
+@TestOpen
+
+class FirebaseAnnouncement @Inject constructor() {
     val announcementKey = "announcements"
     val announcements: CollectionReference = FirebaseFirestore.getInstance().collection(announcementKey)
 
@@ -33,7 +37,7 @@ object FirebaseAnnouncement {
         }
     }
 
-    fun getAllAnnouncements(limit : Long): Observable<List<Announcement>> {
+    fun getAllAnnouncements(limit: Long): Observable<List<Announcement>> {
         return Observable.create<List<Announcement>> {
             announcements.limit(limit).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -53,7 +57,7 @@ object FirebaseAnnouncement {
         }
     }
 
-    fun getAnnouncementListByType(type : String): Observable<List<Announcement>> {
+    fun getAnnouncementListByType(type: String): Observable<List<Announcement>> {
         return Observable.create<List<Announcement>> {
             announcements.whereEqualTo(Announcement.FirebaseProperties.type, type).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -73,7 +77,7 @@ object FirebaseAnnouncement {
         }
     }
 
-    fun getAnnouncementListByChurch(church : String): Observable<List<Announcement>> {
+    fun getAnnouncementListByChurch(church: String): Observable<List<Announcement>> {
         return Observable.create<List<Announcement>> {
             announcements.whereEqualTo(Announcement.FirebaseProperties.church, church).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {

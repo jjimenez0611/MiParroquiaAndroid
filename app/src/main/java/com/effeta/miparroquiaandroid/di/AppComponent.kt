@@ -2,11 +2,12 @@ package com.effeta.miparroquiaandroid.di
 
 import android.app.Application
 import com.effeta.miparroquiaandroid.MiParroquiaApplication
+import com.effeta.miparroquiaandroid.di.viewModels.ViewModelsModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
-import dagger.android.support.AndroidSupportInjectionModule
 import dagger.android.DaggerApplication
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 /**
@@ -16,7 +17,9 @@ import javax.inject.Singleton
 @Component(modules = [
     AndroidSupportInjectionModule::class,
     AppModule::class,
-    ActivityBuilder::class
+    ViewModelsModule::class,
+    ActivityBuilder::class,
+    FragmentBuilder::class
 ])
 interface AppComponent : AndroidInjector<DaggerApplication> {
     fun inject(app: MiParroquiaApplication)

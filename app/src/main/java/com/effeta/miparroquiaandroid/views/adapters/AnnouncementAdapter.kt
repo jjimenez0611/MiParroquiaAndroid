@@ -6,11 +6,12 @@ import com.effeta.miparroquiaandroid.common.changeBackground
 import com.effeta.miparroquiaandroid.common.toString
 import com.effeta.miparroquiaandroid.models.Announcement
 import kotlinx.android.synthetic.main.item_announcement.view.*
+import javax.inject.Inject
 
 /**
  * Created by aulate on 20/2/18.
  */
-object AnnouncementAdapter : BaseAdapter<Announcement, AnnouncementAdapter.AnnouncementViewHolder>() {
+class AnnouncementAdapter @Inject constructor() : BaseAdapter<Announcement, AnnouncementAdapter.AnnouncementViewHolder>() {
 
     override var mItemLayout = R.layout.item_announcement
 

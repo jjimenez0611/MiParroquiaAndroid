@@ -1,2 +1,0 @@
-This is a folder for all the different ViewModels in the project, you can divide them into
-ListViewModels and Single or Normal ViewModels.
