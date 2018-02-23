@@ -13,14 +13,11 @@ class AnnouncementViewModel @Inject constructor(private val announcementReposito
 
     var announcementList: MutableLiveData<List<Announcement>> = MutableLiveData()
 
-    var isLoading: MutableLiveData<Boolean> = MutableLiveData()
-
     var isError: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getAnnouncements() {
         announcementRepository.getAnnouncements()
                 .subscribe { list ->
-                    isLoading.postValue(false)
                     announcementList.postValue(list)
                 }
     }

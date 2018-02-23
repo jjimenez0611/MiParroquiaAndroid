@@ -2,6 +2,7 @@ package com.effeta.miparroquiaandroid.common
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
+import android.view.View
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,4 +24,14 @@ fun <T : ViewModel> createViewModel(activity: BaseActivity, viewModelClass: Clas
 fun Date.toString(pattern: String): String {
     val simpleDateFormat = SimpleDateFormat(pattern)
     return simpleDateFormat.format(this)
+}
+
+fun View.changeBackground(drawableRes: Int) {
+    val pL = paddingLeft
+    val pT = paddingTop
+    val pR = paddingRight
+    val pB = paddingBottom
+
+    setBackgroundResource(drawableRes)
+    setPadding(pL, pT, pR, pB)
 }

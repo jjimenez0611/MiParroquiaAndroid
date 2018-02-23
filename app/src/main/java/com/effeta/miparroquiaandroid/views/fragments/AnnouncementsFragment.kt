@@ -33,24 +33,17 @@ class AnnouncementsFragment : BaseFragment() {
     }
 
     override fun initializeUI() {
+        mAnnouncementAdapter.mAnnouncementTypes = resources.getStringArray(R.array.announcement_types)
     }
 
     override fun observeLiveData(isNewActivity: Boolean) {
-        mAnnouncementViewModel.isLoading.observe(this, Observer { isLoading ->
-            if (isLoading!!) {
-                progress.visibility = View.VISIBLE
-            } else {
-                progress.visibility = View.GONE
-            }
-        })
         mAnnouncementViewModel.isError.observe(this, Observer {
             Toast.makeText(this@AnnouncementsFragment.context, "Error al cargar los anuncios.", Toast.LENGTH_SHORT).show()
         })
-
-
         mAnnouncementViewModel.announcementList.observe(this, Observer {
             Toast.makeText(this@AnnouncementsFragment.context, "Anuncios cargados.", Toast.LENGTH_SHORT).show()
             progress.visibility = View.GONE
+            content.visibility = View.VISIBLE
             showAnnouncements(it)
         })
     }
