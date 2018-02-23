@@ -24,6 +24,7 @@ class AnnouncementsFragment : BaseFragment() {
     }
 
     override fun initializeUI() {
+        mAnnouncementAdapter.mAnnouncementTypes = resources.getStringArray(R.array.announcement_types)
     }
 
     override fun observeLiveData(isNewActivity: Boolean) {
