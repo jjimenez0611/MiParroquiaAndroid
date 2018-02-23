@@ -9,7 +9,7 @@ import javax.inject.Inject
 /**
  * Created by aulate on 16/2/18.
  */
-class AnnouncementViewModel @Inject constructor(private val instance : AnnouncementRepository): ViewModel() {
+class AnnouncementViewModel @Inject constructor(private val announcementRepository : AnnouncementRepository): ViewModel() {
 
     var announcementList: MutableLiveData<List<Announcement>> = MutableLiveData()
 
@@ -18,7 +18,7 @@ class AnnouncementViewModel @Inject constructor(private val instance : Announcem
     var isError: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getAnnouncements() {
-        instance.getAnnouncements()
+        announcementRepository.getAnnouncements()
                 .subscribe { list ->
                     isLoading.postValue(false)
                     announcementList.postValue(list)

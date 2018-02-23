@@ -71,9 +71,9 @@ dependencies {
 
 
     // required if you want to use Mockito for unit tests
-    testImplementation 'org.mockito:mockito-core:2.13.0'
+    testImplementation "org.mockito:mockito-core:$mokito_version"
     // required if you want to use Mockito for Android tests
-    androidTestImplementation 'org.mockito:mockito-android:2.13.0'
+    androidTestImplementation "org.mockito:mockito-android:$mokito_version"
 
     //testCompile "com.nhaarman:mockito-kotlin:x.x.x"
 }

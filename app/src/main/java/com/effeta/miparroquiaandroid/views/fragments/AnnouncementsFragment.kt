@@ -20,9 +20,11 @@ class AnnouncementsFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private var mAnnouncementViewModel: AnnouncementViewModel? = null
 
-    private var mAnnouncementAdapter = AnnouncementAdapter
+    private lateinit var mAnnouncementViewModel: AnnouncementViewModel
+
+    @Inject
+    lateinit var mAnnouncementAdapter : AnnouncementAdapter
 
     override fun initializeViewModels() {
 
@@ -34,19 +36,19 @@ class AnnouncementsFragment : BaseFragment() {
     }
 
     override fun observeLiveData(isNewActivity: Boolean) {
-        mAnnouncementViewModel!!.isLoading.observe(this, Observer { isLoading ->
+        mAnnouncementViewModel.isLoading.observe(this, Observer { isLoading ->
             if (isLoading!!) {
                 progress.visibility = View.VISIBLE
             } else {
                 progress.visibility = View.GONE
             }
         })
-        mAnnouncementViewModel!!.isError.observe(this, Observer {
+        mAnnouncementViewModel.isError.observe(this, Observer {
             Toast.makeText(this@AnnouncementsFragment.context, "Error al cargar los anuncios.", Toast.LENGTH_SHORT).show()
         })
 
 
-        mAnnouncementViewModel!!.announcementList.observe(this, Observer {
+        mAnnouncementViewModel.announcementList.observe(this, Observer {
             Toast.makeText(this@AnnouncementsFragment.context, "Anuncios cargados.", Toast.LENGTH_SHORT).show()
             progress.visibility = View.GONE
             showAnnouncements(it)
@@ -54,7 +56,7 @@ class AnnouncementsFragment : BaseFragment() {
     }
 
     override fun fetchData() {
-        mAnnouncementViewModel!!.getAnnouncements()
+        mAnnouncementViewModel.getAnnouncements()
     }
 
     private fun showAnnouncements(list: List<Announcement>?) {
