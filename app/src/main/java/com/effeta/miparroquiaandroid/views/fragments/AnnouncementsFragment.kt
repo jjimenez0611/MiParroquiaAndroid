@@ -20,7 +20,7 @@ class AnnouncementsFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    var mAnnouncementViewModel: AnnouncementViewModel? = null
+    private var mAnnouncementViewModel: AnnouncementViewModel? = null
 
     private var mAnnouncementAdapter = AnnouncementAdapter
 
