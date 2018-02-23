@@ -7,6 +7,15 @@ import com.google.firebase.firestore.PropertyName
  */
 class AnnouncementType(
         mKey: String,
-        @PropertyName("id") val mId: String,
-        @PropertyName("name") val mName: String
-)
+        @get:PropertyName(FirebaseProperties.id)
+        @set:PropertyName(FirebaseProperties.id)
+        var mId: String = "",
+        @get:PropertyName(FirebaseProperties.name)
+        @set:PropertyName(FirebaseProperties.name)
+        var mName: String = ""
+) {
+    object FirebaseProperties {
+        const val name = "name"
+        const val id = "id"
+    }
+}
