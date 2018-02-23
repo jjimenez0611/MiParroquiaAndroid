@@ -2,12 +2,12 @@ package com.effeta.miparroquiaandroid.common
 
 import android.arch.lifecycle.LifecycleOwner
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import dagger.android.support.DaggerAppCompatActivity
 
 /**
  * Created by aulate on 5/1/18.
  */
-abstract class BaseActivity : AppCompatActivity(), LifecycleOwner {
+abstract class BaseActivity : DaggerAppCompatActivity(), LifecycleOwner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

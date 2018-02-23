@@ -1,15 +1,16 @@
 package com.effeta.miparroquiaandroid.common
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.android.support.DaggerFragment
 
 /**
  * Created by aulate on 1/2/18.
  */
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : DaggerFragment
+() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
