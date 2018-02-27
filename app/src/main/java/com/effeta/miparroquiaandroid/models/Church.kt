@@ -10,13 +10,13 @@ class Church(
         var mKey: String = "",
         @get:PropertyName(FirebaseProperties.image)
         @set:PropertyName(FirebaseProperties.image)
-        var mImage: String = "",
+        var mImage: String? = "",
         @get:PropertyName(FirebaseProperties.name)
         @set:PropertyName(FirebaseProperties.name)
         var mName: String = "",
         @get:PropertyName(FirebaseProperties.geolocation)
         @set:PropertyName(FirebaseProperties.geolocation)
-        var mUbication: GeoPoint?
+        var mUbication: GeoPoint? = GeoPoint(0.0, 0.0)
 ) {
     object FirebaseProperties {
         const val name = "name"

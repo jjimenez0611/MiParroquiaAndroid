@@ -40,7 +40,7 @@ class AnnouncementsFragment : BaseFragment() {
         mAnnouncementViewModel.isError.observe(this, Observer {
             Toast.makeText(this@AnnouncementsFragment.context, "Error al cargar los anuncios.", Toast.LENGTH_SHORT).show()
         })
-        mAnnouncementViewModel.announcementList.observe(this, Observer {
+        mAnnouncementViewModel.mAnnouncementList.observe(this, Observer {
             Toast.makeText(this@AnnouncementsFragment.context, "Anuncios cargados.", Toast.LENGTH_SHORT).show()
             progress.visibility = View.GONE
             content.visibility = View.VISIBLE
