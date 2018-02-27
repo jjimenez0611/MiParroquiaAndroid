@@ -64,6 +64,10 @@ dependencies {
     // Anko Commons
     compile "org.jetbrains.anko:anko-commons:$anko_version"
 
+    //Google maps
+
+    implementation "com.google.android.gms:play-services-maps:$googleServicerVersion"
+    implementation "com.google.android.gms:play-services-location:$googleServicerVersion"
 
     testImplementation "junit:junit:4.12"
     androidTestImplementation "com.android.support.test:runner:1.0.1"
