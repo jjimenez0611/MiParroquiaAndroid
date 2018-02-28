@@ -2,5 +2,5 @@
     <string name="app_name">MiParroquia</string>
     <string name="title_announcements">Anuncios</string>
     <string name="title_eucharist">Eucaristías</string>
-    <string name="title_church_map">Parroquia</string>
+    <string name="title_church_map">Mapa de mí parroquia</string>
 </resources>

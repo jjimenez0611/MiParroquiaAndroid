@@ -1,0 +1,19 @@
+<resources>
+    <!--
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=BD:A8:F1:58:22:7C:6A:76:33:59:EC:D3:93:AA:F3:02:B0:AA:30:9F%3Bcom.soin.cartimity.presenters
+
+    You can also addCustomTabListener your credentials to an existing key, using this line:
+    BD:A8:F1:58:22:7C:6A:76:33:59:EC:D3:93:AA:F3:02:B0:AA:30:9F;com.soin.cartimity.presenters
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyAqfgmVjES9GGPKRj62wbtHMg4Tmneqqlo
+    </string>
+</resources>
