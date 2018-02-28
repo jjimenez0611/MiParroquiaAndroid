@@ -21,7 +21,7 @@ class AnnouncementAdapter @Inject constructor() : BaseAdapter<Announcement, Anno
         return AnnouncementViewHolder(view)
     }
 
-    class AnnouncementViewHolder(itemView: View?) : BaseViewHolder<Announcement>(itemView) {
+    inner class AnnouncementViewHolder(itemView: View?) : BaseViewHolder<Announcement>(itemView) {
         override fun showItem(item: Announcement) {
 
             if (item.mType.toInt() == 0)

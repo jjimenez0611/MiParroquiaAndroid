@@ -1,5 +1,6 @@
 package com.effeta.miparroquiaandroid.common
 
+import android.arch.lifecycle.LifecycleOwner
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,7 @@ import dagger.android.support.DaggerFragment
 /**
  * Created by aulate on 1/2/18.
  */
-abstract class BaseFragment : DaggerFragment
-() {
+abstract class BaseFragment : DaggerFragment(), LifecycleOwner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
