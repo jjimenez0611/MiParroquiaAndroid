@@ -78,4 +78,8 @@ class MainActivity : BaseActivity() {
         adapter.addFragment(ChurchMapFragment())
         viewPager.adapter = adapter
     }
+
+    override fun fetchData() {
+
+    }
 }
