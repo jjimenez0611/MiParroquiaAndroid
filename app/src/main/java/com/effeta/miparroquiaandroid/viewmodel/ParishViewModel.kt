@@ -9,7 +9,8 @@ import javax.inject.Inject
 /**
  * Created by aulate on 5/3/18.
  */
-class ParishViewModel @Inject constructor(private val mParishRepository: ParishRepository) : ViewModel() {
+class ParishViewModel @Inject constructor(
+        private val mParishRepository: ParishRepository) : ViewModel() {
 
     private var mParishList: MutableLiveData<List<Parish>> = MutableLiveData()
 
@@ -21,4 +22,7 @@ class ParishViewModel @Inject constructor(private val mParishRepository: ParishR
 
     fun getParishes() = mParishList
 
+    fun storeSelectedParish(parishKey: String) {
+        mParishRepository.storeParish(parishKey)
+    }
 }

@@ -12,6 +12,7 @@ import com.effeta.miparroquiaandroid.common.BaseActivity
 import com.effeta.miparroquiaandroid.models.Parish
 import com.effeta.miparroquiaandroid.viewmodel.ParishViewModel
 import kotlinx.android.synthetic.main.activity_select_church.*
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -51,7 +52,8 @@ class SelectChurchActivity : BaseActivity() {
         btn_parish_selected.setOnClickListener {
             if (mSelectedParishPos != -1) {
                 val p = mAdapter.getItem(mSelectedParishPos)
-                toast(p.mName)
+                mParishViewModel.storeSelectedParish(p.mKey)
+                startActivity(intentFor<MainActivity>())
             }
         }
     }

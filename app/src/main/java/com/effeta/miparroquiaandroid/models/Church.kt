@@ -14,6 +14,9 @@ data class Church(
         @get:PropertyName(FirebaseProperties.name)
         @set:PropertyName(FirebaseProperties.name)
         var mName: String = "",
+        @get:PropertyName(FirebaseProperties.parish)
+        @set:PropertyName(FirebaseProperties.parish)
+        var mParish: String = "",
         @get:PropertyName(FirebaseProperties.geolocation)
         @set:PropertyName(FirebaseProperties.geolocation)
         var mUbication: GeoPoint? = GeoPoint(0.0, 0.0)
@@ -22,6 +25,7 @@ data class Church(
         const val name = "name"
         const val image = "image"
         const val geolocation = "geolocation"
+        const val parish = "parish"
     }
 
     override fun toString(): String {
