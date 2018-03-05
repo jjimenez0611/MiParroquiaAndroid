@@ -2,6 +2,7 @@ package com.effeta.miparroquiaandroid.views.adapters
 
 import android.view.View
 import com.effeta.miparroquiaandroid.R
+import com.effeta.miparroquiaandroid.common.DATE_FORMAT
 import com.effeta.miparroquiaandroid.common.changeBackground
 import com.effeta.miparroquiaandroid.common.toString
 import com.effeta.miparroquiaandroid.models.Announcement
@@ -29,8 +30,7 @@ class AnnouncementAdapter @Inject constructor() : BaseAdapter<Announcement, Anno
 
             itemView.item_title.text = item.mTitle
             itemView.item_description.text = item.mDescription
-            itemView.item_published_at.text = item.mPublishedAt.toString("dd-MM-yyyy")
-           // itemView.item_type.text = mAnnouncementTypes!![item.mType.toInt()]
+            itemView.item_published_at.text = item.mPublishedAt.toString(DATE_FORMAT)
         }
     }
 }
