@@ -45,7 +45,7 @@ class SelectChurchActivity : BaseActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                toast("Nothing selected.")
+                toast(R.string.error_nothing_selected)
             }
         }
 

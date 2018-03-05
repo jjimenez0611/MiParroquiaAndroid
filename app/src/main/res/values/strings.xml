@@ -11,4 +11,5 @@
     <!--Error texts-->
     <string name="error_to_load_map_church">No fue posible cargar las iglesias</string>
     <string name="error_to_load_announcements">Error al cargar los anuncios</string>
+    <string name="error_nothing_selected">No se ha seleccionado ninguna opción.</string>
 </resources>
