@@ -6,7 +6,7 @@ import com.google.firebase.firestore.PropertyName
  * Created by jjimenez on 2/2/18.
  */
 data class Parish(
-        var mKey : String,
+        var mKey: String = "",
         @get:PropertyName(Parish.FirebaseProperties.email)
         @set:PropertyName(Parish.FirebaseProperties.email)
         var mEmail: String = "",

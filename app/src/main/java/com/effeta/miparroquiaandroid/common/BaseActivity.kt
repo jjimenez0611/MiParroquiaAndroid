@@ -21,11 +21,9 @@ abstract class BaseActivity : DaggerAppCompatActivity(), LifecycleOwner {
         initializeViewModels()
         initializeUI()
         observeLiveData(isNewActivity)
-        fetchData()
     }
 
     abstract fun initializeViewModels()
     abstract fun initializeUI()
     abstract fun observeLiveData(isNewActivity: Boolean)
-    abstract fun fetchData()
 }
