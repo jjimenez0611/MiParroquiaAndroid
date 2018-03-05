@@ -8,10 +8,10 @@ import javax.inject.Inject
 /**
  * Created by jjimenez on 2/26/18.
  */
-class ChurchMapRepository @Inject constructor(private val mChurchMapFirebaseChruchMap: FirebaseChurchMap) {
+class ChurchMapRepository @Inject constructor(private val mChurchMapFirebaseChurchMap: FirebaseChurchMap) {
 
 
-    fun getChurchs() : Observable<List<Church>>{
-        return mChurchMapFirebaseChruchMap.getAllChurchs()
+    fun getChurches() : Observable<List<Church>>{
+        return mChurchMapFirebaseChurchMap.getAllChurches()
     }
 }

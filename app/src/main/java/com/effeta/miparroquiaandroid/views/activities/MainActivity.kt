@@ -18,18 +18,15 @@ class MainActivity : BaseActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_announcements -> {
-//                message.setText(R.string.title_announcements)
                 viewpager.currentItem = 0
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_eucharist -> {
                 viewpager.currentItem = 1
-//                message.setText(R.string.title_eucharist)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_church_map -> {
                 viewpager.currentItem = 2
-//                message.setText(R.string.title_church_map)
                 return@OnNavigationItemSelectedListener true
             }
         }

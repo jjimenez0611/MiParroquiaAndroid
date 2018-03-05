@@ -7,4 +7,8 @@
     <string name="map_label_church">Iglesia de %s</string>
     <string name="placeholder_choose_parish">Elija su parroquia</string>
     <string name="btn_continue">Continuar</string>
+
+    <!--Error texts-->
+    <string name="error_to_load_map_church">No fue posible cargar las iglesias</string>
+    <string name="error_to_load_announcements">Error al cargar los anuncios</string>
 </resources>

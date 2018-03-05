@@ -15,8 +15,8 @@ class ChurchMapViewModel @Inject constructor(private val mChurchMapRepository : 
 
     var isError: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun getChurchs() {
-        mChurchMapRepository.getChurchs()
+    fun getChurches() {
+        mChurchMapRepository.getChurches()
                 .subscribe { list ->
                     mChurchList.postValue(list)
                 }

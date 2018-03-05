@@ -17,8 +17,8 @@ import javax.inject.Inject
 @TestOpen
 
 class FirebaseAnnouncement @Inject constructor() {
-    val announcementKey = "announcements"
-    val announcements: CollectionReference = FirebaseFirestore.getInstance().collection(announcementKey)
+    private val announcementKey = "announcements"
+    private val announcements: CollectionReference = FirebaseFirestore.getInstance().collection(announcementKey)
 
     fun getAllAnnouncements(): Observable<List<Announcement>> {
         return Observable.create<List<Announcement>> {

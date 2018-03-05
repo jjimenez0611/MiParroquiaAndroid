@@ -28,7 +28,7 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var mChurchViewModel: ChurchMapViewModel
+    private lateinit var mChurchViewModel: ChurchMapViewModel
 
     private lateinit var mMap: GoogleMap
 
@@ -40,10 +40,21 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
     override fun initializeUI() {
     }
 
+    /**
+     * Here we get the map Fragment is necessary use childFragmentManager because is in a fragment
+     */
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val mapFragment = childFragmentManager
+                .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+    }
+
     override fun observeLiveData(isNewActivity: Boolean) {
 
         mChurchViewModel.isError.observe(this, Observer {
-            Toast.makeText(this@ChurchMapFragment.context, "Error al cargar los puntos.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@ChurchMapFragment.context, R.string.error_to_load_map_church, Toast.LENGTH_SHORT).show()
         })
         mChurchViewModel.mChurchList.observe(this, Observer {
             progress.visibility = View.GONE
@@ -52,11 +63,15 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
         })
     }
 
+    /**
+     * We can't use this method, because we need to wait to onMapReady to fetch Data, we use the getChurch.
+     */
     override fun fetchData() {
-
     }
 
-
+    /**
+     * This method is used to show the church on the map
+     */
     private fun showMapPoints(list: List<Church>?) {
         mMap.clear()
         var pointToAdd = LatLng(9.934739, -84.087502)
@@ -67,26 +82,17 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pointToAdd, 13F))
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        val mapFragment = childFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
-    }
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isCompassEnabled = true
-        // Add a marker in Sydney and move the camera
+        // Add a marker in San Jose Costa Rica and move the camera
         val SJCR = LatLng(9.934739, -84.087502)
         mMap.addMarker(MarkerOptions().position(SJCR))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(SJCR, 15F))
 
         //Get the point
-        mChurchViewModel.getChurchs()
+        mChurchViewModel.getChurches()
     }
 
 }
