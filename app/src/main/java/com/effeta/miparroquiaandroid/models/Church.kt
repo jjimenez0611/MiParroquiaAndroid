@@ -6,7 +6,7 @@ import com.google.firebase.firestore.PropertyName
 /**
  * Created by jjimenez on 2/2/18.
  */
-class Church(
+data class Church(
         var mKey: String = "",
         @get:PropertyName(FirebaseProperties.image)
         @set:PropertyName(FirebaseProperties.image)
@@ -22,5 +22,9 @@ class Church(
         const val name = "name"
         const val image = "image"
         const val geolocation = "geolocation"
+    }
+
+    override fun toString(): String {
+        return mName
     }
 }

@@ -1,5 +1,6 @@
 package com.effeta.miparroquiaandroid.views.activities
 
+import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.BaseActivity
 
 /**
@@ -7,22 +8,17 @@ import com.effeta.miparroquiaandroid.common.BaseActivity
  */
 class SelectChurchActivity : BaseActivity() {
 
-    override val mLayout: Int
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    override val mLayout: Int = R.layout.activity_select_church
 
     override fun initializeViewModels() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun initializeUI() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun observeLiveData(isNewActivity: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun fetchData() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

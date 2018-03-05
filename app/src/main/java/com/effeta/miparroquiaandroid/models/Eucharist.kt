@@ -8,7 +8,7 @@ import java.util.*
 /**
  * Created by jjimenez on 2/2/18.
  */
-class Eucharist(
+data class Eucharist(
         var mKey: String,
         @get:PropertyName(Eucharist.FirebasePropertiesEucharist.church)
         @set:PropertyName(Eucharist.FirebasePropertiesEucharist.church)
@@ -24,5 +24,9 @@ class Eucharist(
         const val church = "church"
         const val hour = "hour"
         const val priest = "priest"
+    }
+
+    override fun toString(): String {
+        return super.toString()
     }
 }

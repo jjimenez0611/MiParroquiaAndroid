@@ -5,4 +5,6 @@
     <string name="title_church_map">Mapa</string>
 
     <string name="map_label_church">Iglesia de %s</string>
+    <string name="placeholder_choose_parish">Elija su parroquia</string>
+    <string name="btn_continue">Continuar</string>
 </resources>
