@@ -111,7 +111,7 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
                 pointToAdd = LatLng(item.mUbication!!.latitude, item.mUbication!!.longitude)
                 mMap.addMarker(MarkerOptions().position(pointToAdd).title(String.format(getString(R.string.map_label_church), item.mName)))
             }
-            pointToAdd?.let { mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pointToAdd, 17F)) }
+            pointToAdd?.let { mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pointToAdd, 12F)) }
         }
     }
 
