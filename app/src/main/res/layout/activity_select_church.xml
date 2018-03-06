@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context="com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment">
+
+    <LinearLayout
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/base_keyline"
+            android:layout_marginEnd="@dimen/base_keyline"
+            android:layout_marginStart="@dimen/base_keyline"
+            android:layout_marginTop="@dimen/base_keyline"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/base_keyline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <ImageView
+                android:id="@+id/image_logo"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="@dimen/base_keyline"
+                android:layout_marginEnd="@dimen/base_keyline"
+                android:layout_marginStart="@dimen/base_keyline"
+                android:layout_marginTop="@dimen/base_keyline"
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@drawable/ic_choose_parish" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_choose_parish" />
+
+            <Spinner
+                android:id="@+id/spinner_choose_parish"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeightSmall"
+                android:prompt="@string/placeholder_choose_parish"
+                android:spinnerMode="dialog" />
+
+            <Button
+                android:id="@+id/btn_parish_selected"
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeight"
+                android:text="@string/btn_continue"
+                android:theme="@style/AppTheme.Button" />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</FrameLayout>

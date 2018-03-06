@@ -5,8 +5,8 @@ import com.google.firebase.firestore.PropertyName
 /**
  * Created by jjimenez on 2/2/18.
  */
-class Parish(
-        var mKey : String,
+data class Parish(
+        var mKey: String = "",
         @get:PropertyName(Parish.FirebaseProperties.email)
         @set:PropertyName(Parish.FirebaseProperties.email)
         var mEmail: String = "",
@@ -29,5 +29,9 @@ class Parish(
         const val name = "name"
         const val parish_priest = "parish_priest"
         const val phonenumber = "phonenumber"
+    }
+
+    override fun toString(): String {
+        return mName
     }
 }

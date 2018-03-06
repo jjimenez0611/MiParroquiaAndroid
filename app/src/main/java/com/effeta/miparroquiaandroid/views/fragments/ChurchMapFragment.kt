@@ -64,20 +64,14 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     /**
-     * We can't use this method, because we need to wait to onMapReady to fetch Data, we use the getChurch.
-     */
-    override fun fetchData() {
-    }
-
-    /**
      * This method is used to show the church on the map
      */
     private fun showMapPoints(list: List<Church>?) {
         mMap.clear()
         var pointToAdd = LatLng(9.934739, -84.087502)
-        for (item in list!!) {
-            pointToAdd = LatLng(item.mUbication!!.latitude, item.mUbication!!.longitude)
-            mMap.addMarker(MarkerOptions().position(pointToAdd).title(String.format(getString(R.string.title_map_point), item.mName)))
+        for(item in list!!){
+            pointToAdd = LatLng(item.mUbication!!.latitude,item.mUbication!!.longitude)
+            mMap.addMarker(MarkerOptions().position(pointToAdd).title(String.format(getString(R.string.map_label_church), item.mName)))
         }
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pointToAdd, 13F))
     }

@@ -18,6 +18,9 @@ data class Announcement(
         @get:PropertyName(FirebaseProperties.church)
         @set:PropertyName(FirebaseProperties.church)
         var mChurch: String = "",
+        @get:PropertyName(FirebaseProperties.parish)
+        @set:PropertyName(FirebaseProperties.parish)
+        var mParish: String = "",
         @get:PropertyName(FirebaseProperties.image)
         @set:PropertyName(FirebaseProperties.image)
         var mImage: String? = "",
@@ -38,6 +41,7 @@ data class Announcement(
         const val title = "title"
         const val description = "description"
         const val church = "church"
+        const val parish = "parish"
         const val image = "image"
         const val type = "type"
         const val created_at = "created_at"

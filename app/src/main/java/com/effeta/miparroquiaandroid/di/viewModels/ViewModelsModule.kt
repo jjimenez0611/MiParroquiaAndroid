@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.effeta.miparroquiaandroid.viewmodel.AnnouncementViewModel
 import com.effeta.miparroquiaandroid.viewmodel.ChurchMapViewModel
+import com.effeta.miparroquiaandroid.viewmodel.ParishViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -20,6 +21,11 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(ChurchMapViewModel::class)
     abstract fun bindChurchMapViewModel(churchMapViewModel: ChurchMapViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ParishViewModel::class)
+    abstract fun bindParishViewModel(parishViewModel: ParishViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

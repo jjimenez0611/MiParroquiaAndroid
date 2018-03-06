@@ -1,5 +1,6 @@
 package com.effeta.miparroquiaandroid.common
 
+import android.arch.lifecycle.LifecycleOwner
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,7 @@ import dagger.android.support.DaggerFragment
 /**
  * Created by aulate on 1/2/18.
  */
-abstract class BaseFragment : DaggerFragment
-() {
+abstract class BaseFragment : DaggerFragment(), LifecycleOwner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +20,7 @@ abstract class BaseFragment : DaggerFragment
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val v = inflater!!.inflate(mLayout, container, false)
-        fetchData()
-        return v
+        return inflater!!.inflate(mLayout, container, false)
     }
 
     abstract val mLayout: Int
@@ -36,6 +34,5 @@ abstract class BaseFragment : DaggerFragment
     abstract fun initializeViewModels()
     abstract fun initializeUI()
     abstract fun observeLiveData(isNewActivity: Boolean)
-    abstract fun fetchData()
 
 }

@@ -2,11 +2,14 @@
     <string name="app_name">MiParroquia</string>
     <string name="title_announcements">Anuncios</string>
     <string name="title_eucharist">Eucaristías</string>
-    <string name="title_church_map">Mapa de mí parroquia</string>
-    <string name="title_map_point" formatted="false">%s %s,Iglesia de</string>
+    <string name="title_church_map">Mapa</string>
+
+    <string name="map_label_church">Iglesia de %s</string>
+    <string name="placeholder_choose_parish">Elija su parroquia</string>
+    <string name="btn_continue">Continuar</string>
 
     <!--Error texts-->
     <string name="error_to_load_map_church">No fue posible cargar las iglesias</string>
     <string name="error_to_load_announcements">Error al cargar los anuncios</string>
-
+    <string name="error_nothing_selected">No se ha seleccionado ninguna opción.</string>
 </resources>
