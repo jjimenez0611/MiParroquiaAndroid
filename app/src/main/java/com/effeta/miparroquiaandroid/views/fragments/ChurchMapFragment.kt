@@ -64,12 +64,6 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     /**
-     * We can't use this method, because we need to wait to onMapReady to fetch Data, we use the getChurch.
-     */
-    override fun fetchData() {
-    }
-
-    /**
      * This method is used to show the church on the map
      */
     private fun showMapPoints(list: List<Church>?) {

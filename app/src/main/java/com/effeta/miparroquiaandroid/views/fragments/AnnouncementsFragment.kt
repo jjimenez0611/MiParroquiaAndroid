@@ -17,7 +17,6 @@ import javax.inject.Inject
 class AnnouncementsFragment : BaseFragment() {
     override val mLayout: Int = R.layout.fragment_announcements
 
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -40,15 +39,11 @@ class AnnouncementsFragment : BaseFragment() {
         mAnnouncementViewModel.isError.observe(this, Observer {
             Toast.makeText(this@AnnouncementsFragment.context, R.string.error_to_load_announcements, Toast.LENGTH_SHORT).show()
         })
-        mAnnouncementViewModel.mAnnouncementList.observe(this, Observer {
+        mAnnouncementViewModel.getAnnouncements().observe(this, Observer {
             progress.visibility = View.GONE
             content.visibility = View.VISIBLE
             showAnnouncements(it)
         })
-    }
-
-    override fun fetchData() {
-        mAnnouncementViewModel.getAnnouncements()
     }
 
     private fun showAnnouncements(list: List<Announcement>?) {

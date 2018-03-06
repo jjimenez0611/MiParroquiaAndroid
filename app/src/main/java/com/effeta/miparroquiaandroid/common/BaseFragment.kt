@@ -20,9 +20,7 @@ abstract class BaseFragment : DaggerFragment(), LifecycleOwner {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val v = inflater!!.inflate(mLayout, container, false)
-        fetchData()
-        return v
+        return inflater!!.inflate(mLayout, container, false)
     }
 
     abstract val mLayout: Int
@@ -36,6 +34,5 @@ abstract class BaseFragment : DaggerFragment(), LifecycleOwner {
     abstract fun initializeViewModels()
     abstract fun initializeUI()
     abstract fun observeLiveData(isNewActivity: Boolean)
-    abstract fun fetchData()
 
 }
