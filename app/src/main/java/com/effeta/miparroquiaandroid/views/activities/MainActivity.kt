@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.MenuItem
 import com.effeta.miparroquiaandroid.R
-import com.effeta.miparroquiaandroid.common.BaseActivity
+import com.effeta.miparroquiaandroid.common.NavDrawerActivity
 import com.effeta.miparroquiaandroid.views.adapters.ViewPagerAdapter
 import com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment
 import com.effeta.miparroquiaandroid.views.fragments.ChurchMapFragment
@@ -13,7 +13,7 @@ import com.effeta.miparroquiaandroid.views.fragments.EucharistFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : NavDrawerActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -52,12 +52,14 @@ class MainActivity : BaseActivity() {
         }
 
     }
+
     private var prevMenuItem: MenuItem? = null
 
     override val mLayout: Int = R.layout.activity_main
 
-    override fun initializeViewModels() {
-    }
+    override val mToolbarMenu: Int? = null
+
+    override val mTitle: Int? = R.string.app_name
 
     override fun initializeUI() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
@@ -65,8 +67,6 @@ class MainActivity : BaseActivity() {
         setupViewPager(viewpager)
     }
 
-    override fun observeLiveData(isNewActivity: Boolean) {
-    }
 
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
