@@ -6,11 +6,13 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.support.v4.app.ActivityCompat
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.effeta.miparroquiaandroid.R
@@ -26,6 +28,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_announcements.*
@@ -68,16 +72,20 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
 
         mChurchViewModel.isError.observe(this, Observer {
             Toast.makeText(this@ChurchMapFragment.context, R.string.error_to_load_map_church, Toast.LENGTH_SHORT).show()
+            initMapFragment()
         })
         mChurchViewModel.getChurches().observe(this, Observer {
             progress.visibility = View.GONE
             content.visibility = View.VISIBLE
-
-            val mapFragment = childFragmentManager
-                    .findFragmentById(R.id.map) as SupportMapFragment
-            mapFragment.getMapAsync(this)
+            initMapFragment()
             churches = it!!
         })
+    }
+
+    private fun initMapFragment(){
+        val mapFragment = childFragmentManager
+                .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -109,11 +117,21 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
             var pointToAdd: LatLng? = null
             for (item in list) {
                 pointToAdd = LatLng(item.mUbication!!.latitude, item.mUbication!!.longitude)
-                mMap.addMarker(MarkerOptions().position(pointToAdd).title(String.format(getString(R.string.map_label_church), item.mName)))
+                mMap.addMarker(MarkerOptions().icon(getMarkerIconFromDrawable(getResources().getDrawable(R.drawable.marker_map_church))).position(pointToAdd).title(String.format(getString(R.string.map_label_church), item.mName)))
             }
             pointToAdd?.let { mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pointToAdd, 12F)) }
         }
     }
+
+    private fun getMarkerIconFromDrawable(drawable: Drawable): BitmapDescriptor {
+        val canvas = Canvas()
+        val bitmap: Bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888);
+        canvas.setBitmap(bitmap)
+        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+        drawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
 
     /**
      * fun to check the locations permissions
