@@ -3,6 +3,7 @@ package com.effeta.miparroquiaandroid.services.firebase
 import android.util.Log
 import com.effeta.miparroquiaandroid.models.Parish
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -32,5 +33,23 @@ class FirebaseParish @Inject constructor() {
                 }
             }
         }
+    }
+
+    fun getParish(parishKey: String): Observable<Parish> {
+        return Observable.create<Parish> {
+            parishes.document(parishKey).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val parish = parseParish(task.result)
+                    it.onNext(parish)
+                    it.onComplete()
+                } else {
+                    it.onError(task.exception!!)
+                }
+            }
+        }
+    }
+
+    private fun parseParish(result: DocumentSnapshot): Parish {
+        return result.toObject(Parish::class.java)
     }
 }

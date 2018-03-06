@@ -12,4 +12,15 @@
     <string name="error_to_load_map_church">No fue posible cargar las iglesias</string>
     <string name="error_to_load_announcements">Error al cargar los anuncios</string>
     <string name="error_nothing_selected">No se ha seleccionado ninguna opción.</string>
+    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+
+    <string name="navigation_drawer_open">Abrir menú de navegación</string>
+    <string name="navigation_drawer_close">Cerrar menú de navegación</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="nav_support">Reportar un problema</string>
+    <string name="nav_section_support">Soporte</string>
+    <string name="nav_change_parish">Cambiar de parroquia</string>
+    <string name="feature_not_ready">Funcionalidad no disponible todavía.</string>
+    <string name="parish_logo_help">Logo de la parroquia</string>
 </resources>
