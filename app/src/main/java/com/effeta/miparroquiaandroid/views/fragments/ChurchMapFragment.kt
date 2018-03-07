@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.fragment_announcements.*
 import javax.inject.Inject
 
 
-class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
+class ChurchMapFragment : BaseFragment(), OnMapReadyCallback ,GoogleMap.OnMapLoadedCallback{
 
     override val mLayout: Int = R.layout.fragment_church_map
 
@@ -46,8 +46,6 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
     private lateinit var mMapViewModel: MapViewModel
 
     private lateinit var mMap: GoogleMap
-
-    private lateinit var mLocationRequest: LocationRequest
 
     private lateinit var churches: List<Church>
 
@@ -84,11 +82,11 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
             churches = it!!
         })
 
-/*        mMapViewModel.hasPermission.observe(this, Observer {
+        mMapViewModel.hasPermission.observe(this, Observer {
             if (!it!!){
                 requestLocationPermissions()
             }
-        })*/
+        })
     }
 
     private fun initMapFragment() {
@@ -111,10 +109,14 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
             mMap.addMarker(MarkerOptions().position(mSJCR))
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mSJCR, 15F))
         }
-        if (checkLocationPermission()) {
+        if (mMapViewModel.checkLocationPermission()) {
             mMap.isMyLocationEnabled = true
             startLocationUpdates()
         }
+    }
+
+    override fun onMapLoaded() {
+
     }
 
     /**
@@ -132,18 +134,6 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
         }
     }
 
-
-
-    fun checkLocationPermission(): Boolean {
-        return if (ActivityCompat.checkSelfPermission(activity,
-                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            true
-        } else {
-            requestLocationPermissions()
-            false
-        }
-    }
 
     /**
      * fun to retrieve the permissions

@@ -9,9 +9,11 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.support.v4.app.ActivityCompat
 import android.util.Log
+import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.FASTEST_INTERVAL
 import com.effeta.miparroquiaandroid.common.UPDATE_INTERVAL
 import com.google.android.gms.location.*
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import javax.inject.Inject
 
@@ -57,12 +59,12 @@ class MapViewModel @Inject constructor(application: Application) : AndroidViewMo
         Log.d("new Location",msg)
     }
 
-    //var hasPermission: MutableLiveData<Boolean> = MutableLiveData()
+    var hasPermission: MutableLiveData<Boolean> = MutableLiveData()
 
     /**
      * fun to check the locations permissions
      */
-/*    fun checkLocationPermission(): Boolean {
+    fun checkLocationPermission(): Boolean {
         return if (ActivityCompat.checkSelfPermission(getApplication(),
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplication(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -71,6 +73,6 @@ class MapViewModel @Inject constructor(application: Application) : AndroidViewMo
             hasPermission.postValue(false)
             false
         }
-    }*/
+    }
 
 }
