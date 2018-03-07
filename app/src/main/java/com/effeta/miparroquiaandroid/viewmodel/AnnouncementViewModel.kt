@@ -16,11 +16,18 @@ class AnnouncementViewModel @Inject constructor(private val mAnnouncementReposit
     var isError: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
+        reloadAnnouncements()
+    }
+
+    fun getAnnouncements(): MutableLiveData<List<Announcement>> {
+        reloadAnnouncements()
+        return mAnnouncementList
+    }
+
+    private fun reloadAnnouncements() {
         mAnnouncementRepository.getAnnouncements()
                 .subscribe { list ->
                     mAnnouncementList.postValue(list)
                 }
     }
-
-    fun getAnnouncements() = mAnnouncementList
 }
