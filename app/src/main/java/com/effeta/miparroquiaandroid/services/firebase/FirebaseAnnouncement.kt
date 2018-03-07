@@ -1,6 +1,5 @@
 package com.effeta.miparroquiaandroid.services.firebase
 
-import android.util.Log
 import com.effeta.miparroquiaandroid.TestOpen
 import com.effeta.miparroquiaandroid.models.Announcement
 import com.google.android.gms.tasks.Task
@@ -93,7 +92,6 @@ class FirebaseAnnouncement @Inject constructor() {
         task.result.documents.forEach({ documentSnapshot ->
             val a = documentSnapshot.toObject(Announcement::class.java)
             a.mKey = documentSnapshot.id
-            Log.d("AnnouncementRepository", a.toString())
             list.add(a)
         })
         return list

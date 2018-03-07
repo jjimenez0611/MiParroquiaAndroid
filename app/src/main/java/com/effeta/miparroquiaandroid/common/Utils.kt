@@ -1,7 +1,5 @@
 package com.effeta.miparroquiaandroid.common
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProviders
 import android.view.View
 import java.text.SimpleDateFormat
 import java.util.*
@@ -9,17 +7,6 @@ import java.util.*
 /**
  * Created by aulate on 6/2/18.
  */
-
-
-/**
- * A thread unsafe lazy function.
- * This function 'must' be called only on single thread.
- */
-fun <T> unsafeLazy(initializer: () -> T) = lazy(LazyThreadSafetyMode.NONE, initializer)
-
-fun <T : ViewModel> createViewModel(activity: BaseActivity, viewModelClass: Class<T>): T {
-    return ViewModelProviders.of(activity).get(viewModelClass)
-}
 
 fun Date.toString(pattern: String): String {
     val simpleDateFormat = SimpleDateFormat(pattern)
@@ -34,4 +21,13 @@ fun View.changeBackground(drawableRes: Int) {
 
     setBackgroundResource(drawableRes)
     setPadding(pL, pT, pR, pB)
+}
+
+fun Any.logName(): String {
+    val str = this.javaClass.simpleName
+    if (str.length > 35 - "sl_".length) {
+        return "sl_" + str.substring(0, 35 - "sl_".length - 1)
+    }
+
+    return "sl_" + str
 }

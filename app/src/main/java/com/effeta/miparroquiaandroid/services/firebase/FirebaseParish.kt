@@ -1,6 +1,5 @@
 package com.effeta.miparroquiaandroid.services.firebase
 
-import android.util.Log
 import com.effeta.miparroquiaandroid.models.Parish
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
@@ -23,7 +22,6 @@ class FirebaseParish @Inject constructor() {
                     task.result.documents.forEach({ documentSnapshot ->
                         val a = documentSnapshot.toObject(Parish::class.java)
                         a.mKey = documentSnapshot.id
-                        Log.d("FirebaseAnnouncement", a.toString())
                         list.add(a)
                     })
                     it.onNext(list)
