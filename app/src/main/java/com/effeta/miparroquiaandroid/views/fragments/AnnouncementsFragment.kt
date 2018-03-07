@@ -36,14 +36,18 @@ class AnnouncementsFragment : BaseFragment() {
     }
 
     override fun observeLiveData(isNewActivity: Boolean) {
-        mAnnouncementViewModel.isError.observe(this, Observer {
+        getViewLifecycleOwner()?.let {
+            mAnnouncementViewModel.isError.observe(it, Observer {
             Toast.makeText(this@AnnouncementsFragment.context, R.string.error_to_load_announcements, Toast.LENGTH_SHORT).show()
         })
-        mAnnouncementViewModel.getAnnouncements().observe(this, Observer {
+        }
+        getViewLifecycleOwner()?.let {
+            mAnnouncementViewModel.getAnnouncements().observe(it, Observer {
             progress.visibility = View.GONE
             content.visibility = View.VISIBLE
             showAnnouncements(it)
         })
+        }
     }
 
     private fun showAnnouncements(list: List<Announcement>?) {

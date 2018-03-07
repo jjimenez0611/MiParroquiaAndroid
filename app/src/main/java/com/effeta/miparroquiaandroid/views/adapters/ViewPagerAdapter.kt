@@ -1,13 +1,13 @@
 package com.effeta.miparroquiaandroid.views.adapters
 
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
 import com.effeta.miparroquiaandroid.common.BaseFragment
 
 /**
  * Created by aulate on 1/2/18.
  */
-class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class ViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
     val fragments = ArrayList<BaseFragment>()
 
