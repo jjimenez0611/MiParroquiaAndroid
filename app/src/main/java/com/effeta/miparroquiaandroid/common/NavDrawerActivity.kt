@@ -81,7 +81,7 @@ abstract class NavDrawerActivity : BaseActivity(), NavigationView.OnNavigationIt
         return false
     }
 
-    fun setNavDrawerInformation(parish: Parish?) {
+    private fun setNavDrawerInformation(parish: Parish?) {
         parish?.let {
             textview_email.text = parish.mEmail
             textview_name.text = parish.mName
