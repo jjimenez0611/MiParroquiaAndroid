@@ -11,15 +11,17 @@ import javax.inject.Inject
  */
 class ChurchMapViewModel @Inject constructor(private val mChurchMapRepository : ChurchMapRepository): ViewModel() {
 
-    var mChurchList: MutableLiveData<List<Church>> = MutableLiveData()
+    private var mChurchList: MutableLiveData<List<Church>> = MutableLiveData()
 
     var isError: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun getChurches() {
+    init {
         mChurchMapRepository.getChurches()
                 .subscribe { list ->
                     mChurchList.postValue(list)
                 }
     }
+
+    fun getChurches() = mChurchList
 
 }
