@@ -6,13 +6,11 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.Toast
 import com.effeta.miparroquiaandroid.R
@@ -21,15 +19,15 @@ import com.effeta.miparroquiaandroid.common.FASTEST_INTERVAL
 import com.effeta.miparroquiaandroid.common.REQUEST_FINE_LOCATION
 import com.effeta.miparroquiaandroid.common.UPDATE_INTERVAL
 import com.effeta.miparroquiaandroid.models.Church
+import com.effeta.miparroquiaandroid.utils.MapUtils
 import com.effeta.miparroquiaandroid.viewmodel.ChurchMapViewModel
+import com.effeta.miparroquiaandroid.viewmodel.MapViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_announcements.*
@@ -45,15 +43,20 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
 
     private lateinit var mChurchViewModel: ChurchMapViewModel
 
+    private lateinit var mMapViewModel: MapViewModel
+
     private lateinit var mMap: GoogleMap
 
-    private var mLocationRequest: LocationRequest? = null
+    private lateinit var mLocationRequest: LocationRequest
 
     private lateinit var churches: List<Church>
 
     override fun initializeViewModels() {
         mChurchViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ChurchMapViewModel::class.java)
+
+        mMapViewModel = ViewModelProviders.of(this,viewModelFactory)
+                .get(MapViewModel::class.java)
     }
 
     override fun initializeUI() {
@@ -80,9 +83,15 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
             initMapFragment()
             churches = it!!
         })
+
+/*        mMapViewModel.hasPermission.observe(this, Observer {
+            if (!it!!){
+                requestLocationPermissions()
+            }
+        })*/
     }
 
-    private fun initMapFragment(){
+    private fun initMapFragment() {
         val mapFragment = childFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -117,26 +126,15 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
             var pointToAdd: LatLng? = null
             for (item in list) {
                 pointToAdd = LatLng(item.mUbication!!.latitude, item.mUbication!!.longitude)
-                mMap.addMarker(MarkerOptions().icon(getMarkerIconFromDrawable(getResources().getDrawable(R.drawable.marker_map_church))).position(pointToAdd).title(String.format(getString(R.string.map_label_church), item.mName)))
+                mMap.addMarker(MarkerOptions().icon(MapUtils.getMarkerIconFromDrawable(ContextCompat.getDrawable(context, R.drawable.marker_map_church))).position(pointToAdd).title(String.format(getString(R.string.map_label_church), item.mName)))
             }
             pointToAdd?.let { mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pointToAdd, 12F)) }
         }
     }
 
-    private fun getMarkerIconFromDrawable(drawable: Drawable): BitmapDescriptor {
-        val canvas = Canvas()
-        val bitmap: Bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888);
-        canvas.setBitmap(bitmap)
-        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-        drawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-    }
 
 
-    /**
-     * fun to check the locations permissions
-     */
-    private fun checkLocationPermission(): Boolean {
+    fun checkLocationPermission(): Boolean {
         return if (ActivityCompat.checkSelfPermission(activity,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity,
                         Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -177,42 +175,18 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
     // Trigger new location updates at interval
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
-
-        // Create the location request to start receiving updates
-        mLocationRequest = LocationRequest()
-        mLocationRequest!!.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        mLocationRequest!!.interval = UPDATE_INTERVAL
-        mLocationRequest!!.fastestInterval = FASTEST_INTERVAL
-        // Create LocationSettingsRequest object using location request
-        val builder = LocationSettingsRequest.Builder()
-        builder.addLocationRequest(mLocationRequest!!)
-        val locationSettingsRequest = builder.build()
-
         // Check whether location settings are satisfied
         // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsClient
         val settingsClient = LocationServices.getSettingsClient(activity)
-        settingsClient.checkLocationSettings(locationSettingsRequest)
+        settingsClient.checkLocationSettings(mMapViewModel.initLocationUpdates())
 
         // new Google API SDK v11 uses getFusedLocationProviderClient(this)
-        getFusedLocationProviderClient(activity).requestLocationUpdates(mLocationRequest, object : LocationCallback() {
+        getFusedLocationProviderClient(activity).requestLocationUpdates(mMapViewModel.getLocationRequest(), object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 // do work here
-                onLocationChanged(locationResult!!.lastLocation)
+                mMapViewModel.onLocationChanged(locationResult!!.lastLocation)
             }
         }, Looper.myLooper())
-    }
-
-    /**
-     * This fun could be used to update the map if the location change
-     */
-    fun onLocationChanged(location: Location) {
-        // New location has now been determined
-        val msg = "Updated Location: " +
-                java.lang.Double.toString(location.latitude) + "," +
-                java.lang.Double.toString(location.longitude)
-        // Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-        // You can now create a LatLng Object for use with maps
-        val latLng = LatLng(location.latitude, location.longitude)
     }
 
 }
