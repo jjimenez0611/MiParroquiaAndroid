@@ -1,7 +1,6 @@
 package com.effeta.miparroquiaandroid.viewmodel
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
@@ -9,20 +8,19 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.support.v4.app.ActivityCompat
 import android.util.Log
-import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.FASTEST_INTERVAL
 import com.effeta.miparroquiaandroid.common.UPDATE_INTERVAL
-import com.google.android.gms.location.*
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.maps.model.LatLng
 import javax.inject.Inject
 
 /**
- * Created by jjimenez on 3/7/18.
- */
-class MapViewModel @Inject constructor(application: Application) : AndroidViewModel(application){
+* Created by jjimenez on 3/7/18.
+*/
+class MapViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
-    private var mLocationRequest : LocationRequest = LocationRequest()
+    private var mLocationRequest: LocationRequest = LocationRequest()
 
     // Trigger new location updates at interval
     fun initLocationUpdates(): LocationSettingsRequest? {
@@ -53,10 +51,8 @@ class MapViewModel @Inject constructor(application: Application) : AndroidViewMo
         val msg = "Updated Location: " +
                 java.lang.Double.toString(location.latitude) + "," +
                 java.lang.Double.toString(location.longitude)
-        // Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-        // You can now create a LatLng Object for use with maps
         val latLng = LatLng(location.latitude, location.longitude)
-        Log.d("new Location",msg)
+        Log.d("new Location", msg)
     }
 
     var hasPermission: MutableLiveData<Boolean> = MutableLiveData()
