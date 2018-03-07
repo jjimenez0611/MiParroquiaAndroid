@@ -6,35 +6,30 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.Drawable
-import android.location.Location
 import android.os.Bundle
 import android.os.Looper
-import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.Toast
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.BaseFragment
-import com.effeta.miparroquiaandroid.common.FASTEST_INTERVAL
 import com.effeta.miparroquiaandroid.common.REQUEST_FINE_LOCATION
-import com.effeta.miparroquiaandroid.common.UPDATE_INTERVAL
 import com.effeta.miparroquiaandroid.models.Church
+import com.effeta.miparroquiaandroid.utils.MapUtils
 import com.effeta.miparroquiaandroid.viewmodel.ChurchMapViewModel
-import com.google.android.gms.location.*
+import com.effeta.miparroquiaandroid.viewmodel.MapViewModel
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_announcements.*
 import javax.inject.Inject
-
 
 class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
 
@@ -45,15 +40,16 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
 
     private lateinit var mChurchViewModel: ChurchMapViewModel
 
+    private lateinit var mMapViewModel: MapViewModel
+
     private lateinit var mMap: GoogleMap
-
-    private var mLocationRequest: LocationRequest? = null
-
-    private lateinit var churches: List<Church>
 
     override fun initializeViewModels() {
         mChurchViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ChurchMapViewModel::class.java)
+
+        mMapViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(MapViewModel::class.java)
     }
 
     override fun initializeUI() {
@@ -64,49 +60,49 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mChurchViewModel.getChurches()
-
+        initMapFragment()
     }
 
     override fun observeLiveData(isNewActivity: Boolean) {
-
-        mChurchViewModel.isError.observe(this, Observer {
-            Toast.makeText(this@ChurchMapFragment.context, R.string.error_to_load_map_church, Toast.LENGTH_SHORT).show()
-            initMapFragment()
-        })
-        mChurchViewModel.getChurches().observe(this, Observer {
-            progress.visibility = View.GONE
-            content.visibility = View.VISIBLE
-            initMapFragment()
-            churches = it!!
+        mMapViewModel.hasPermission.observe(this, Observer {
+            if (!it!!) {
+                requestLocationPermissions()
+            }
         })
     }
 
-    private fun initMapFragment(){
+    private fun initMapFragment() {
         val mapFragment = childFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
+    /**
+     * Fun to know when the map aReady to use
+     */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isCompassEnabled = true
         // Add a marker in San Jose Costa Rica and move the camera
 
-        //Get the point
-        if (!churches.isEmpty()) {
-            showMapPoints(churches)
-        } else {
-            val mSJCR = LatLng(9.934739, -84.087502)
-            mMap.addMarker(MarkerOptions().position(mSJCR))
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mSJCR, 15F))
-        }
-        if (checkLocationPermission()) {
+        if (mMapViewModel.checkLocationPermission()) {
             mMap.isMyLocationEnabled = true
             startLocationUpdates()
         }
+
+        //Set Churches Observes when the map are ready
+        mChurchViewModel.isError.observe(this, Observer {
+            Toast.makeText(this@ChurchMapFragment.context, R.string.error_to_load_map_church, Toast.LENGTH_SHORT).show()
+        })
+
+        mChurchViewModel.getChurches().observe(this, Observer {
+            progress.visibility = View.GONE
+            content.visibility = View.VISIBLE
+            showMapPoints(it!!)
+        })
     }
+
 
     /**
      * This method is used to show the church on the map
@@ -114,36 +110,15 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
     private fun showMapPoints(list: List<Church>?) {
         mMap.clear()
         list?.let {
-            var pointToAdd: LatLng? = null
-            for (item in list) {
-                pointToAdd = LatLng(item.mUbication!!.latitude, item.mUbication!!.longitude)
-                mMap.addMarker(MarkerOptions().icon(getMarkerIconFromDrawable(getResources().getDrawable(R.drawable.marker_map_church))).position(pointToAdd).title(String.format(getString(R.string.map_label_church), item.mName)))
+            //Get the point
+            if (!list.isEmpty()) {
+                var pointToAdd: LatLng? = null
+                for (item in list) {
+                    pointToAdd = LatLng(item.mUbication!!.latitude, item.mUbication!!.longitude)
+                    mMap.addMarker(MarkerOptions().icon(MapUtils.getMarkerIconFromDrawable(ContextCompat.getDrawable(context, R.drawable.marker_map_church))).position(pointToAdd).title(String.format(getString(R.string.map_label_church), item.mName)))
+                }
+                pointToAdd?.let { mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pointToAdd, 12F)) }
             }
-            pointToAdd?.let { mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pointToAdd, 12F)) }
-        }
-    }
-
-    private fun getMarkerIconFromDrawable(drawable: Drawable): BitmapDescriptor {
-        val canvas = Canvas()
-        val bitmap: Bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888);
-        canvas.setBitmap(bitmap)
-        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-        drawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-    }
-
-
-    /**
-     * fun to check the locations permissions
-     */
-    private fun checkLocationPermission(): Boolean {
-        return if (ActivityCompat.checkSelfPermission(activity,
-                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            true
-        } else {
-            requestLocationPermissions()
-            false
         }
     }
 
@@ -162,57 +137,32 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
             REQUEST_FINE_LOCATION -> {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
+                    // permission was granted.
                     startLocationUpdates()
                     mMap.isMyLocationEnabled = true
                 }
                 return
             }
         }// other 'case' lines to check for other
-        // permissions this app might request
-    }
-
-    // Trigger new location updates at interval
-    @SuppressLint("MissingPermission")
-    private fun startLocationUpdates() {
-
-        // Create the location request to start receiving updates
-        mLocationRequest = LocationRequest()
-        mLocationRequest!!.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        mLocationRequest!!.interval = UPDATE_INTERVAL
-        mLocationRequest!!.fastestInterval = FASTEST_INTERVAL
-        // Create LocationSettingsRequest object using location request
-        val builder = LocationSettingsRequest.Builder()
-        builder.addLocationRequest(mLocationRequest!!)
-        val locationSettingsRequest = builder.build()
-
-        // Check whether location settings are satisfied
-        // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsClient
-        val settingsClient = LocationServices.getSettingsClient(activity)
-        settingsClient.checkLocationSettings(locationSettingsRequest)
-
-        // new Google API SDK v11 uses getFusedLocationProviderClient(this)
-        getFusedLocationProviderClient(activity).requestLocationUpdates(mLocationRequest, object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                // do work here
-                onLocationChanged(locationResult!!.lastLocation)
-            }
-        }, Looper.myLooper())
     }
 
     /**
-     * This fun could be used to update the map if the location change
-     */
-    fun onLocationChanged(location: Location) {
-        // New location has now been determined
-        val msg = "Updated Location: " +
-                java.lang.Double.toString(location.latitude) + "," +
-                java.lang.Double.toString(location.longitude)
-        // Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-        // You can now create a LatLng Object for use with maps
-        val latLng = LatLng(location.latitude, location.longitude)
+     *  Trigger new location updates at interval
+      */
+    @SuppressLint("MissingPermission")
+    private fun startLocationUpdates() {
+        // Check whether location settings are satisfied
+        // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsClient
+        val settingsClient = LocationServices.getSettingsClient(activity)
+        settingsClient.checkLocationSettings(mMapViewModel.initLocationUpdates())
+
+        // new Google API SDK v11 uses getFusedLocationProviderClient(this)
+        getFusedLocationProviderClient(activity).requestLocationUpdates(mMapViewModel.getLocationRequest(), object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                // do work here
+                mMapViewModel.onLocationChanged(locationResult!!.lastLocation)
+            }
+        }, Looper.myLooper())
     }
 
 }
