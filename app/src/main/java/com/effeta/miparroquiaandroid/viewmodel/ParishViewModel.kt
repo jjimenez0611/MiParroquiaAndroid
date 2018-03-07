@@ -20,9 +20,6 @@ class ParishViewModel @Inject constructor(
         mParishRepository.getParishes().subscribe {
             mParishList.postValue(it)
         }
-        mParishRepository.getParish().subscribe {
-            mParish.postValue(it)
-        }
     }
 
     fun getParishes() = mParishList
@@ -31,5 +28,10 @@ class ParishViewModel @Inject constructor(
         mParishRepository.storeParish(parishKey)
     }
 
-    fun getParish() = mParish
+    fun getParish(): MutableLiveData<Parish> {
+        mParishRepository.getParish().subscribe {
+            mParish.postValue(it)
+        }
+        return mParish
+    }
 }
