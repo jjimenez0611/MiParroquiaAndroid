@@ -20,7 +20,7 @@ class ParishViewModel @Inject constructor(
         mParishRepository.getParishes().subscribe {
             mParishList.postValue(it)
 
-            mParishRepository.getParish().subscribe {
+            mParishRepository.getParish()?.subscribe {
                 mParish.postValue(it)
             }
         }

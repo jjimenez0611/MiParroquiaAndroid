@@ -19,8 +19,9 @@ class ParishRepository @Inject constructor(private val mFirebaseParish: Firebase
         mSharedPreferences.storeParishKey(parishKey)
     }
 
-    fun getParish(): Observable<Parish> {
+    fun getParish(): Observable<Parish>? {
         val parishKey = mSharedPreferences.getParishKey()
-        return mFirebaseParish.getParish(parishKey!!)
+        parishKey?.let { return mFirebaseParish.getParish(parishKey) }
+        return null
     }
 }
