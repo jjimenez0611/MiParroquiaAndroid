@@ -38,7 +38,6 @@ abstract class NavDrawerActivity : DaggerAppCompatActivity(), NavigationView.OnN
 
     abstract val mLayout: Int
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(mLayout)
@@ -53,30 +52,30 @@ abstract class NavDrawerActivity : DaggerAppCompatActivity(), NavigationView.OnN
         header = nav_view.getHeaderView(0)
         supportActionBar?.title = getString(mTitle!!)
 
-        //Init the view models and UI
-        initialize(false)
-
         //Set the Observer
-        observeLiveDataToNavDawer(savedInstanceState == null)
+        initializeParishViewModel()
+        observeParish()
 
+        //Init the view models and UI
+        initialize()
     }
 
-    private fun initialize(isNewActivity: Boolean) {
-        initializeViewModelsNavDrawer()
+    private fun initialize() {
         initializeViewModels()
         initializeUI()
+        observeLiveData()
     }
 
     abstract fun initializeUI()
-
     abstract fun initializeViewModels()
+    abstract fun observeLiveData()
 
-    private fun initializeViewModelsNavDrawer() {
+    private fun initializeParishViewModel() {
         mParishViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ParishViewModel::class.java)
     }
 
-    private fun observeLiveDataToNavDawer(isNewActivity: Boolean) {
+    private fun observeParish() {
         mParishViewModel.getParish().observe(this, Observer<Parish> {
             setNavDrawerInformation(it!!)
         })

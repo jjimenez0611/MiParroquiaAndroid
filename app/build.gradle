@@ -79,6 +79,7 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-android:$mokito_version"
 
     //testCompile "com.nhaarman:mockito-kotlin:x.x.x"
+    implementation "com.android.support:cardview-v7:$sdk_version"
 }
 
 apply plugin: 'com.google.gms.google-services'
