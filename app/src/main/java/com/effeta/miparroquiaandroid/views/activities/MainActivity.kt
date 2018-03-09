@@ -14,8 +14,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : NavDrawerActivity() {
-    override fun initializeViewModels() {
-    }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -63,12 +61,15 @@ class MainActivity : NavDrawerActivity() {
 
     override val mTitle: Int? = R.string.app_name
 
+    override fun initializeViewModels() {}
+
     override fun initializeUI() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         viewpager.addOnPageChangeListener(mOnPageChangeListener)
         setupViewPager(viewpager)
     }
 
+    override fun observeLiveData() {}
 
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)

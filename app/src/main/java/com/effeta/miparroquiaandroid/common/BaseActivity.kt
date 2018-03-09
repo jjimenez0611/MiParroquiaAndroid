@@ -11,18 +11,18 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(mLayout)
-        initialize(savedInstanceState == null)
+        initialize()
     }
 
     abstract val mLayout: Int
 
-    private fun initialize(isNewActivity: Boolean) {
+    private fun initialize() {
         initializeViewModels()
         initializeUI()
-        observeLiveData(isNewActivity)
+        observeLiveData()
     }
 
     abstract fun initializeViewModels()
     abstract fun initializeUI()
-    abstract fun observeLiveData(isNewActivity: Boolean)
+    abstract fun observeLiveData()
 }

@@ -58,7 +58,7 @@ class SelectChurchActivity : BaseActivity() {
         }
     }
 
-    override fun observeLiveData(isNewActivity: Boolean) {
+    override fun observeLiveData() {
         mParishViewModel.getParishes().observe(this, Observer {
             showContent()
             setupSpinner(parishes = it!!)
