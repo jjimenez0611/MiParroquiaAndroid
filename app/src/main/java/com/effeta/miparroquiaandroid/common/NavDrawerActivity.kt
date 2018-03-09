@@ -42,7 +42,6 @@ abstract class NavDrawerActivity : DaggerAppCompatActivity(), NavigationView.OnN
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(mLayout)
-        //Init the Models and UI
 
         //Set the Nav Drawer
         setSupportActionBar(toolbar)
@@ -71,6 +70,17 @@ abstract class NavDrawerActivity : DaggerAppCompatActivity(), NavigationView.OnN
     abstract fun initializeUI()
 
     abstract fun initializeViewModels()
+
+    private fun initializeViewModelsNavDrawer() {
+        mParishViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(ParishViewModel::class.java)
+    }
+
+    private fun observeLiveDataToNavDawer(isNewActivity: Boolean) {
+        mParishViewModel.getParish().observe(this, Observer<Parish> {
+            setNavDrawerInformation(it!!)
+        })
+    }
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -114,16 +124,4 @@ abstract class NavDrawerActivity : DaggerAppCompatActivity(), NavigationView.OnN
             header.textview_schedule?.text = parish.mSchedule
         }
     }
-
-    private fun initializeViewModelsNavDrawer() {
-        mParishViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(ParishViewModel::class.java)
-    }
-
-    private fun observeLiveDataToNavDawer(isNewActivity: Boolean) {
-        mParishViewModel.getParish().observe(this, Observer<Parish> {
-            setNavDrawerInformation(it!!)
-        })
-    }
-
 }
