@@ -6,11 +6,11 @@ and also the announcements made for each given church affiliated.
 
 ## Screenshots
 
-![Image1]()
+No images yet!
 
 ## Download
 
-![Coming Soon!]()
+Coming Soon!
 
 ## How to contribute?
 
