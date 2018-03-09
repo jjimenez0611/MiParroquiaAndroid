@@ -1,8 +1,6 @@
 package com.effeta.miparroquiaandroid.services.firebase
 
-import com.effeta.miparroquiaandroid.models.Announcement
 import com.effeta.miparroquiaandroid.models.Church
-import com.effeta.miparroquiaandroid.models.Parish
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import io.reactivex.Observable
@@ -13,7 +11,7 @@ import javax.inject.Inject
  */
 
 
-class FirebaseChurchMap @Inject constructor(){
+class FirebaseChurchMap @Inject constructor() {
 
     private val churchesKey = "churchs"
     private val churches: CollectionReference = FirebaseFirestore.getInstance().collection(churchesKey)
@@ -37,7 +35,7 @@ class FirebaseChurchMap @Inject constructor(){
         }
     }
 
-    fun getAnnouncementListByParish(parishKey: String?): Observable<List<Church>> {
+    fun getChurchListByParish(parishKey: String?): Observable<List<Church>> {
         return Observable.create {
             if (!parishKey.isNullOrEmpty()) {
                 val q: Query = churches.whereEqualTo(Church.FirebaseProperties.parish, parishKey)

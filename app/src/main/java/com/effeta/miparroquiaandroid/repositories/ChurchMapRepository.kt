@@ -16,7 +16,7 @@ class ChurchMapRepository @Inject constructor(private val mChurchMapFirebaseChur
     fun getChurches(): Observable<List<Church>> {
         val parishKey = mSharedPreferences.getParishKey()
 
-        return mChurchMapFirebaseChurchMap.getAnnouncementListByParish(parishKey)
+        return mChurchMapFirebaseChurchMap.getChurchListByParish(parishKey)
     }
 
 }
