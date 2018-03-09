@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : NavDrawerActivity() {
+    override fun initializeViewModels() {
+    }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {

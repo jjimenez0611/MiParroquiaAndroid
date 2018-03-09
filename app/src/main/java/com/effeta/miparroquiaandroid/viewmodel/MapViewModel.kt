@@ -32,16 +32,12 @@ class MapViewModel @Inject constructor(application: Application) : AndroidViewMo
         mLocationRequest.fastestInterval = FASTEST_INTERVAL
         // Create LocationSettingsRequest object using location request
         val builder = LocationSettingsRequest.Builder()
-
         builder.addLocationRequest(mLocationRequest)
-
         return builder.build()
 
     }
 
-    fun getLocationRequest(): LocationRequest {
-        return mLocationRequest
-    }
+    fun getLocationRequest() = mLocationRequest
 
     /**
      * This fun could be used to update the map if the location change
