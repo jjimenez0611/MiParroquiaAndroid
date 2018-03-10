@@ -48,6 +48,8 @@ class FirebaseParish @Inject constructor() {
     }
 
     private fun parseParish(result: DocumentSnapshot): Parish {
-        return result.toObject(Parish::class.java)
+        val parish = result.toObject(Parish::class.java)
+        parish.mKey = result.id
+        return parish
     }
 }

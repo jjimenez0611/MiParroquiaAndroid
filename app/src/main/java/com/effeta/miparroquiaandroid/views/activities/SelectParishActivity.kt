@@ -9,9 +9,11 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.BaseActivity
+import com.effeta.miparroquiaandroid.common.OVERWRITE_PARISH
 import com.effeta.miparroquiaandroid.models.Parish
 import com.effeta.miparroquiaandroid.viewmodel.ParishViewModel
 import kotlinx.android.synthetic.main.activity_select_church.*
+import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import javax.inject.Inject
@@ -19,7 +21,7 @@ import javax.inject.Inject
 /**
  * Created by aulate on 26/2/18.
  */
-class SelectChurchActivity : BaseActivity() {
+class SelectParishActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -53,22 +55,41 @@ class SelectChurchActivity : BaseActivity() {
             if (mSelectedParishPos != -1) {
                 val p = mAdapter.getItem(mSelectedParishPos)
                 mParishViewModel.storeSelectedParish(p.mKey)
-                startActivity(intentFor<MainActivity>())
+                toMainActivity()
             }
         }
     }
 
     override fun observeLiveData() {
-        mParishViewModel.getParishes().observe(this, Observer {
-            showContent()
-            setupSpinner(parishes = it!!)
+        mParishViewModel.getParish().observe(this, Observer { parish ->
+            if ((parish == null) or (intent.hasExtra(OVERWRITE_PARISH))) {
+                mParishViewModel.getParishes().observe(this, Observer { parishes ->
+                    showContent()
+                    val pos = parishes?.indexOfFirst {
+                        it.mKey == parish?.mKey
+                    }
+                    pos?.let { mSelectedParishPos = it }
+                    setupSpinner(pos, parishes!!)
+                })
+            } else {
+                toMainActivity()
+            }
         })
+
     }
 
-    private fun setupSpinner(parishes: List<Parish>) {
+    private fun toMainActivity() {
+        startActivity(intentFor<MainActivity>().clearTop())
+        finish()
+    }
+
+    private fun setupSpinner(selectedPosition: Int?, parishes: List<Parish>) {
         mAdapter.clear()
         mAdapter.addAll(parishes)
         spinner_choose_parish.adapter = mAdapter
+        selectedPosition?.let {
+            spinner_choose_parish.setSelection(it)
+        }
     }
 
     private fun showContent() {

@@ -13,13 +13,11 @@ import android.view.View
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.models.Parish
 import com.effeta.miparroquiaandroid.viewmodel.ParishViewModel
-import com.effeta.miparroquiaandroid.views.activities.SelectChurchActivity
+import com.effeta.miparroquiaandroid.views.activities.SelectParishActivity
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer_header.view.*
-import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.singleTop
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -101,10 +99,11 @@ abstract class NavDrawerActivity : DaggerAppCompatActivity(), NavigationView.OnN
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_change_parish -> {
-                startActivity(intentFor<SelectChurchActivity>()
-                        .clearTop()
-                        .singleTop())
-                return true
+                startActivity(intentFor<SelectParishActivity>(Pair(OVERWRITE_PARISH, true)))
+                if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                    drawer_layout.closeDrawer(GravityCompat.START)
+                }
+                return false
             }
             R.id.nav_support -> {
                 // handle click
