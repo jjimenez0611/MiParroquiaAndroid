@@ -61,21 +61,27 @@ class SelectParishActivity : BaseActivity() {
     }
 
     override fun observeLiveData() {
-        mParishViewModel.getParish().observe(this, Observer { parish ->
-            if ((parish == null) or (intent.hasExtra(OVERWRITE_PARISH))) {
-                mParishViewModel.getParishes().observe(this, Observer { parishes ->
-                    showContent()
-                    val pos = parishes?.indexOfFirst {
-                        it.mKey == parish?.mKey
-                    }
-                    pos?.let { mSelectedParishPos = it }
-                    setupSpinner(pos, parishes!!)
+        if (mParishViewModel.hasParishStored()) {
+            if (intent.hasExtra(OVERWRITE_PARISH)) {
+                mParishViewModel.getParish().observe(this, Observer { parish ->
+                    mParishViewModel.getParishes().observe(this, Observer { parishes ->
+                        showContent()
+                        val pos = parishes?.indexOfFirst {
+                            it.mKey == parish?.mKey
+                        }
+                        pos?.let { mSelectedParishPos = it }
+                        setupSpinner(pos, parishes!!)
+                    })
                 })
             } else {
                 toMainActivity()
             }
-        })
-
+        } else {
+            mParishViewModel.getParishes().observe(this, Observer { parishes ->
+                showContent()
+                setupSpinner(null, parishes!!)
+            })
+        }
     }
 
     private fun toMainActivity() {

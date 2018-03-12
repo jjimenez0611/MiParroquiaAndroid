@@ -20,8 +20,10 @@ class ParishViewModel @Inject constructor(
         mParishRepository.getParishes().subscribe {
             mParishList.postValue(it)
         }
-        mParishRepository.getParish()?.subscribe {
-            mParish.postValue(it)
+        if (mParishRepository.hasParishStored()) {
+            mParishRepository.getParish().subscribe {
+                mParish.postValue(it)
+            }
         }
     }
 
@@ -32,5 +34,9 @@ class ParishViewModel @Inject constructor(
     }
 
     fun getParish() = mParish
+
+    fun hasParishStored(): Boolean {
+        return mParishRepository.hasParishStored()
+    }
 
 }

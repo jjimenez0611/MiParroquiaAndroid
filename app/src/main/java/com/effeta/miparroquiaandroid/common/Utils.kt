@@ -23,6 +23,16 @@ fun View.changeBackground(drawableRes: Int) {
     setPadding(pL, pT, pR, pB)
 }
 
+fun View.changeBackgroundColor(colorRes: Int) {
+    val pL = paddingLeft
+    val pT = paddingTop
+    val pR = paddingRight
+    val pB = paddingBottom
+
+    setBackgroundResource(colorRes)
+    setPadding(pL, pT, pR, pB)
+}
+
 fun Any.logName(): String {
     val str = this.javaClass.simpleName
     if (str.length > 35 - "sl_".length) {
