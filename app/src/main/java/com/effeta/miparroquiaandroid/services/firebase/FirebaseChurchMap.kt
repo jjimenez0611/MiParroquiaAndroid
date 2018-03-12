@@ -58,9 +58,19 @@ class FirebaseChurchMap @Inject constructor() {
     private fun parseChurches(task: Task<QuerySnapshot>): List<Church> {
         val list = ArrayList<Church>()
         task.result.documents.forEach({ documentSnapshot ->
-            val a = documentSnapshot.toObject(Church::class.java)
-            a.mKey = documentSnapshot.id
-            list.add(a)
+            val data = documentSnapshot.data
+
+            val churchToAdd  = documentSnapshot.toObject(Church::class.java)
+
+            churchToAdd.mKey = documentSnapshot.id
+
+            if(data.getValue(Church.FirebaseProperties.geolocation) != null) {
+                val geoPoint = data.getValue(Church.FirebaseProperties.geolocation) as GeoPoint
+                churchToAdd.mLatitude = geoPoint.latitude
+                churchToAdd.mLongitude = geoPoint.longitude
+            }
+
+            list.add(churchToAdd)
         })
         return list
     }

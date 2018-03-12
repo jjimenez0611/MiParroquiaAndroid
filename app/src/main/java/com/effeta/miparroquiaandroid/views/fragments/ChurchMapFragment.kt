@@ -5,19 +5,22 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Looper
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.BaseFragment
+import com.effeta.miparroquiaandroid.common.EXTRA_CHURCH
 import com.effeta.miparroquiaandroid.common.REQUEST_FINE_LOCATION
 import com.effeta.miparroquiaandroid.models.Church
 import com.effeta.miparroquiaandroid.utils.MapUtils
 import com.effeta.miparroquiaandroid.viewmodel.ChurchMapViewModel
 import com.effeta.miparroquiaandroid.viewmodel.MapViewModel
+import com.effeta.miparroquiaandroid.views.activities.DetailMapActivity
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
@@ -27,11 +30,13 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_announcements.*
+import java.io.Serializable
 import javax.inject.Inject
 
-class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
+class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     override val mLayout: Int = R.layout.fragment_church_map
 
@@ -44,6 +49,8 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
+    private lateinit var mLocationCallback: LocationCallback
+
     override fun initializeViewModels() {
         mChurchViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ChurchMapViewModel::class.java)
@@ -55,11 +62,19 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
     override fun initializeUI() {
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (mMapViewModel.checkLocationPermission()) {
+            startLocationUpdates()
+        }
+    }
+
     /**
      * Here we get the map Fragment is necessary use childFragmentManager because is in a fragment
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        initLocationCallback()
         initMapFragment()
     }
 
@@ -88,7 +103,6 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
 
         if (mMapViewModel.checkLocationPermission()) {
             mMap.isMyLocationEnabled = true
-            startLocationUpdates()
         }
 
         //Set Churches Observes when the map are ready
@@ -101,8 +115,9 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
             content.visibility = View.VISIBLE
             showMapPoints(it!!)
         })
-    }
 
+        mMap.setOnMarkerClickListener(this)
+    }
 
     /**
      * This method is used to show the church on the map
@@ -114,12 +129,28 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
             if (!list.isEmpty()) {
                 var pointToAdd: LatLng? = null
                 for (item in list) {
-                    pointToAdd = LatLng(item.mUbication!!.latitude, item.mUbication!!.longitude)
-                    mMap.addMarker(MarkerOptions().icon(MapUtils.getMarkerIconFromDrawable(ContextCompat.getDrawable(context, R.drawable.marker_map_church))).position(pointToAdd).title(String.format(getString(R.string.map_label_church), item.mName)))
+                    pointToAdd = LatLng(item.mLatitude!!, item.mLongitude!!)
+                    mMap.addMarker(MarkerOptions()
+                            .icon(MapUtils.getMarkerIconFromDrawable(ContextCompat.getDrawable(context, R.drawable.marker_map_church)))
+                            .position(pointToAdd)
+                            .title(String.format(getString(R.string.map_label_church), item.mName))).tag = item
                 }
                 pointToAdd?.let { mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pointToAdd, 12F)) }
             }
         }
+    }
+
+
+    /**
+     * trigger when a marker was clicked
+     */
+    override fun onMarkerClick(p0: Marker?): Boolean {
+
+        val church = p0?.tag as Church
+        val intent = Intent(context, DetailMapActivity::class.java)
+        intent.putExtra(EXTRA_CHURCH, church as Serializable)
+        startActivity(intent)
+        return false
     }
 
     /**
@@ -148,7 +179,7 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
 
     /**
      *  Trigger new location updates at interval
-      */
+     */
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
         // Check whether location settings are satisfied
@@ -157,12 +188,35 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback {
         settingsClient.checkLocationSettings(mMapViewModel.initLocationUpdates())
 
         // new Google API SDK v11 uses getFusedLocationProviderClient(this)
-        getFusedLocationProviderClient(activity).requestLocationUpdates(mMapViewModel.getLocationRequest(), object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                // do work here
-                mMapViewModel.onLocationChanged(locationResult!!.lastLocation)
-            }
-        }, Looper.myLooper())
+        getFusedLocationProviderClient(activity).requestLocationUpdates(mMapViewModel.getLocationRequest(), mLocationCallback, null)
     }
+
+    /**
+     * Fun to manage the location callback, this fun is called on the onResume method to start the location updates
+     */
+    private fun initLocationCallback() {
+        mLocationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?: return
+                /* for (location in locationResult.locations) {
+                     // Update UI with location data
+                     // ...
+                 }*/
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+    }
+
+    /**
+     * fun to stop the location updates is called on the onPause
+     */
+    private fun stopLocationUpdates() {
+        getFusedLocationProviderClient(activity).removeLocationUpdates(mLocationCallback)
+    }
+
 
 }
