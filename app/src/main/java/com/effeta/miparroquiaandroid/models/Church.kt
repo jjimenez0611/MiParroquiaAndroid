@@ -1,7 +1,8 @@
 package com.effeta.miparroquiaandroid.models
 
-import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.PropertyName
+import java.io.Serializable
+
 
 /**
  * Created by jjimenez on 2/2/18.
@@ -17,10 +18,10 @@ data class Church(
         @get:PropertyName(FirebaseProperties.parish)
         @set:PropertyName(FirebaseProperties.parish)
         var mParish: String = "",
-        @get:PropertyName(FirebaseProperties.geolocation)
-        @set:PropertyName(FirebaseProperties.geolocation)
-        var mUbication: GeoPoint? = GeoPoint(0.0, 0.0)
-) {
+        var mLatitude: Double? = 0.0,
+        var mLongitude: Double? = 0.0
+
+) : Serializable {
     object FirebaseProperties {
         const val name = "name"
         const val image = "image"
@@ -31,4 +32,6 @@ data class Church(
     override fun toString(): String {
         return mName
     }
+
+
 }
