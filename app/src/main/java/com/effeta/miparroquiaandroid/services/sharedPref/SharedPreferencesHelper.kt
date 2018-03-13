@@ -20,8 +20,13 @@ class SharedPreferencesHelper @Inject constructor(private val context: Context) 
 
     fun getParishKey(): String? {
         val sharedPreferences = context.getSharedPreferences(filename, Context.MODE_PRIVATE)
-        var key = sharedPreferences.getString(mParishKey, null)
+        var key = sharedPreferences.getString(mParishKey, "")
         return key
+    }
+
+    fun hasParishStored(): Boolean {
+        val sharedPreferences = context.getSharedPreferences(filename, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(mParishKey, null) != null
     }
 
 }
