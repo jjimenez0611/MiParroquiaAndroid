@@ -12,9 +12,8 @@ class DetailMapViewModel @Inject constructor():ViewModel() {
 
     private var mChurch: MutableLiveData<Church> = MutableLiveData()
 
-
     fun setChurchInformation(church:Church){
-        mChurch.postValue(church)
+        mChurch.value = church
     }
 
     fun getChurch() = mChurch

@@ -18,6 +18,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_detail_map.*
 import javax.inject.Inject
+import com.effeta.miparroquiaandroid.utils.MapUtils.getIntentToOpenGoogleMaps
+
 
 /**
  * Created by jjimenez on 3/12/18.
@@ -43,7 +45,6 @@ class DetailMapActivity : BaseActivity(), OnMapReadyCallback {
         setSupportActionBar(toolbar_detail)
         toolbar_detail.title = getString(R.string.detail_map_activity_title)
         toolbar_detail.setNavigationOnClickListener { finish() }
-
         initMapFragment()
     }
 
@@ -53,13 +54,12 @@ class DetailMapActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     override fun observeLiveData() {
-        mDetailMapViewModel.getChurch().observe(this, Observer {
-            showChurchInformation(it!!)
-        })
+
     }
 
     private fun showChurchInformation(church: Church) {
         church_name.text = String.format(getString(R.string.map_label_church), church.mName)
+        fab_go_to_map.setOnClickListener{openMap(church)}
         addPointToMap(church.mLatitude!!, church.mLongitude!!, church.mName)
     }
 
@@ -80,5 +80,13 @@ class DetailMapActivity : BaseActivity(), OnMapReadyCallback {
             mDetailMapViewModel.setChurchInformation(intent.extras.get(EXTRA_CHURCH) as Church)
         }
 
+        mDetailMapViewModel.getChurch().observe(this, Observer {
+            showChurchInformation(it!!)
+        })
+    }
+
+    private fun openMap(church: Church){
+        val label = String.format(getString(R.string.map_label_church), church.mName)
+        startActivity(getIntentToOpenGoogleMaps(church.mLatitude,church.mLongitude,label))
     }
 }

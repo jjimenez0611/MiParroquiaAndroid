@@ -19,6 +19,7 @@
     <style name="ToolBarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:textSize">@dimen/abc_text_size_title_material_toolbar</item>
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 

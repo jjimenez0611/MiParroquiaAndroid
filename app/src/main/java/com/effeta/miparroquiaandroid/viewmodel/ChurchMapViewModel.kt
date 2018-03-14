@@ -9,7 +9,7 @@ import javax.inject.Inject
 /**
  * Created by jjimenez on 2/26/18.
  */
-class ChurchMapViewModel @Inject constructor(mChurchMapRepository : ChurchMapRepository): ViewModel() {
+class ChurchMapViewModel @Inject constructor(mChurchMapRepository: ChurchMapRepository) : ViewModel() {
 
     private var mChurchList: MutableLiveData<List<Church>> = MutableLiveData()
 
