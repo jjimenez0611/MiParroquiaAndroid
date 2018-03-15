@@ -20,13 +20,7 @@ class FirebaseChurchMap @Inject constructor() {
         return Observable.create<List<Church>> {
             churches.get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val list = ArrayList<Church>()
-                    task.result.documents.forEach({ documentSnapshot ->
-                        val a = parseChurch(documentSnapshot)
-                        a.mKey = documentSnapshot.id
-                        list.add(a)
-                    })
-                    it.onNext(list)
+                    it.onNext(parseChurchesList(task))
                     it.onComplete()
                 } else {
                     it.onError(task.exception!!)
@@ -41,7 +35,7 @@ class FirebaseChurchMap @Inject constructor() {
                 val q: Query = churches.whereEqualTo(Church.FirebaseProperties.parish, parishKey)
                 q.get().addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        it.onNext(parseChurches(task))
+                        it.onNext(parseChurchesList(task))
                         it.onComplete()
                     } else {
                         it.onError(task.exception!!)
@@ -51,26 +45,25 @@ class FirebaseChurchMap @Inject constructor() {
         }
     }
 
-    private fun parseChurch(result: DocumentSnapshot): Church {
-        return result.toObject(Church::class.java)
+    private fun parseChurch(documentSnapshot: DocumentSnapshot): Church {
+        val data = documentSnapshot.data
+
+        val church = documentSnapshot.toObject(Church::class.java)
+
+        church.mKey = documentSnapshot.id
+
+        if (data.getValue(Church.FirebaseProperties.geolocation) != null) {
+            val geoPoint = data.getValue(Church.FirebaseProperties.geolocation) as GeoPoint
+            church.mLatitude = geoPoint.latitude
+            church.mLongitude = geoPoint.longitude
+        }
+        return church
     }
 
-    private fun parseChurches(task: Task<QuerySnapshot>): List<Church> {
+    private fun parseChurchesList(task: Task<QuerySnapshot>): List<Church> {
         val list = ArrayList<Church>()
         task.result.documents.forEach({ documentSnapshot ->
-            val data = documentSnapshot.data
-
-            val churchToAdd  = documentSnapshot.toObject(Church::class.java)
-
-            churchToAdd.mKey = documentSnapshot.id
-
-            if(data.getValue(Church.FirebaseProperties.geolocation) != null) {
-                val geoPoint = data.getValue(Church.FirebaseProperties.geolocation) as GeoPoint
-                churchToAdd.mLatitude = geoPoint.latitude
-                churchToAdd.mLongitude = geoPoint.longitude
-            }
-
-            list.add(churchToAdd)
+            list.add(parseChurch(documentSnapshot))
         })
         return list
     }

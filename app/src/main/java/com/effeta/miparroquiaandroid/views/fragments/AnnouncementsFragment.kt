@@ -26,7 +26,6 @@ class AnnouncementsFragment : BaseFragment() {
     lateinit var mAnnouncementAdapter : AnnouncementAdapter
 
     override fun initializeViewModels() {
-
         mAnnouncementViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(AnnouncementViewModel::class.java)
     }
@@ -51,7 +50,7 @@ class AnnouncementsFragment : BaseFragment() {
     }
 
     private fun showAnnouncements(list: List<Announcement>?) {
-        mAnnouncementAdapter.list = list!!
+        mAnnouncementAdapter.mList = list!!
 
         announcement_list.adapter = mAnnouncementAdapter
         announcement_list.layoutManager = LinearLayoutManager(this@AnnouncementsFragment.context)

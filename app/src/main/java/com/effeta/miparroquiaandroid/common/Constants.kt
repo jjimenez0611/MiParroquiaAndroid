@@ -6,6 +6,10 @@ package com.effeta.miparroquiaandroid.common
 
 
 const val DATE_FORMAT: String = "dd-MM-yyyy"
+const val DAY_OF_WEEK: String = "EEEE"
+const val DATE_AND_MONTH: String = "dd MMMM"
+const val HOUR: String = "hh:mm"
+
 const val REQUEST_FINE_LOCATION: Int = 101
 
 const val UPDATE_INTERVAL = (10 * 1000).toLong()  /* 10 secs */

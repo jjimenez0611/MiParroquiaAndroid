@@ -36,6 +36,11 @@ abstract class ViewModelsModule {
     abstract fun bindDetailMapViewModel(mapViewModel: DetailMapViewModel) : ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(EucharistViewModel::class)
+    abstract fun bindEucharistViewModel(eucharistViewModel: EucharistViewModel): ViewModel
+
+    @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
 }

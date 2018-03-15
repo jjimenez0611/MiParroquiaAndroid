@@ -3,10 +3,7 @@ package com.effeta.miparroquiaandroid.services.firebase
 import com.effeta.miparroquiaandroid.TestOpen
 import com.effeta.miparroquiaandroid.models.Announcement
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -23,7 +20,7 @@ class FirebaseAnnouncement @Inject constructor() {
         return Observable.create<List<Announcement>> {
             announcements.get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    it.onNext(parseAnnouncements(task))
+                    it.onNext(parseAnnouncementsList(task))
                     it.onComplete()
                 } else {
                     it.onError(task.exception!!)
@@ -36,7 +33,7 @@ class FirebaseAnnouncement @Inject constructor() {
         return Observable.create<List<Announcement>> {
             announcements.limit(limit).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    it.onNext(parseAnnouncements(task))
+                    it.onNext(parseAnnouncementsList(task))
                     it.onComplete()
                 } else {
                     it.onError(task.exception!!)
@@ -49,7 +46,7 @@ class FirebaseAnnouncement @Inject constructor() {
         return Observable.create<List<Announcement>> {
             announcements.whereEqualTo(Announcement.FirebaseProperties.type, type).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    it.onNext(parseAnnouncements(task))
+                    it.onNext(parseAnnouncementsList(task))
                     it.onComplete()
                 } else {
                     it.onError(task.exception!!)
@@ -62,7 +59,7 @@ class FirebaseAnnouncement @Inject constructor() {
         return Observable.create<List<Announcement>> {
             announcements.whereEqualTo(Announcement.FirebaseProperties.church, church).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    it.onNext(parseAnnouncements(task))
+                    it.onNext(parseAnnouncementsList(task))
                     it.onComplete()
                 } else {
                     it.onError(task.exception!!)
@@ -77,7 +74,7 @@ class FirebaseAnnouncement @Inject constructor() {
                 val q: Query = announcements.whereEqualTo(Announcement.FirebaseProperties.parish, parish)
                 q.get().addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        it.onNext(parseAnnouncements(task))
+                        it.onNext(parseAnnouncementsList(task))
                         it.onComplete()
                     } else {
                         it.onError(task.exception!!)
@@ -87,13 +84,17 @@ class FirebaseAnnouncement @Inject constructor() {
         }
     }
 
-    private fun parseAnnouncements(task: Task<QuerySnapshot>): List<Announcement> {
+    private fun parseAnnouncementsList(task: Task<QuerySnapshot>): List<Announcement> {
         val list = ArrayList<Announcement>()
         task.result.documents.forEach({ documentSnapshot ->
-            val a = documentSnapshot.toObject(Announcement::class.java)
-            a.mKey = documentSnapshot.id
-            list.add(a)
+            list.add(parseAnnouncement(documentSnapshot))
         })
         return list
+    }
+
+    private fun parseAnnouncement(documentSnapshot: DocumentSnapshot): Announcement {
+        val announcement = documentSnapshot.toObject(Announcement::class.java)
+        announcement.mKey = documentSnapshot.id
+        return announcement
     }
 }
