@@ -26,8 +26,8 @@ class ItemClickListener(recyclerView: RecyclerView, private val mListener: Click
 
             override fun onLongPress(e: MotionEvent) {
                 val child = recyclerView.findChildViewUnder(e.x, e.y)
-                if (child != null && mListener != null) {
-                    mListener.onLongItemClick(child, recyclerView.getChildAdapterPosition(child))
+                child?.let {
+                    mListener?.onLongItemClick(it, recyclerView.getChildAdapterPosition(it))
                 }
             }
         })

@@ -17,7 +17,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class EucharistFragment : BaseFragment() {
+class EucharistFragment : BaseFragment(), ItemClickListener.ClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -38,22 +38,35 @@ class EucharistFragment : BaseFragment() {
     }
 
     override fun initializeUI() {
-        attachClickListener()
+        attachClickListeners()
     }
 
     override fun observeLiveData(isNewActivity: Boolean) {
         getViewLifecycleOwner()?.let { lifecycleOwner ->
-            mEucharistViewModel.getWeekDays().observe(lifecycleOwner, Observer { days ->
-                showDays(days)
-                mEucharistViewModel.getEucharists().observe(lifecycleOwner, Observer { eucharists ->
-                    content.visibility = View.VISIBLE
-                    progress.visibility = View.GONE
-
-                    showEucharists(eucharists!!)
-                })
+            showDays(mEucharistViewModel.getWeekDays())
+            mEucharistViewModel.getEucharists().observe(lifecycleOwner, Observer { eucharists ->
+                showEucharists(eucharists!!)
+                showContent()
             })
         }
     }
+
+    override fun onItemClick(view: View, position: Int) {
+        when (view.id) {
+            R.id.item_day -> {
+                if (mDayAdapter.mSelectedPosition != position) {
+                    mDayAdapter.mSelectedPosition = position
+                    mDayAdapter.notifyDataSetChanged()
+                    recyclerview_day_list.smoothScrollToPosition(position)
+//                mEucharistViewModel.getEucharists(mDayAdapter.mList[position].toString(DATE_FORMAT))
+                }
+            }
+            R.id.item_eucharist -> {
+            }
+        }
+    }
+
+    override fun onLongItemClick(view: View?, position: Int) {}
 
     private fun showDays(list: List<Calendar>?) {
         mDayAdapter.mList = list!!
@@ -72,21 +85,19 @@ class EucharistFragment : BaseFragment() {
         mEucharistAdapter.notifyDataSetChanged()
     }
 
-    private fun attachClickListener() {
+    private fun attachClickListeners() {
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(recyclerview_day_list)
+        val dayClickListener = ItemClickListener(recyclerview_day_list, this)
+        recyclerview_day_list.addOnItemTouchListener(dayClickListener)
 
-        val clickListener = ItemClickListener(recyclerview_day_list, object : ItemClickListener.ClickListener {
-            override fun onItemClick(view: View, position: Int) {
-                mDayAdapter.mSelectedPosition = position
-                mDayAdapter.notifyDataSetChanged()
-                recyclerview_day_list.smoothScrollToPosition(position)
-//                mEucharistViewModel.getEucharists(mDayAdapter.mList[position].toString(DATE_FORMAT))
-            }
-
-            override fun onLongItemClick(view: View?, position: Int) {}
-        })
-
-        recyclerview_day_list.addOnItemTouchListener(clickListener)
+        val eucharistClickListener = ItemClickListener(recyclerview_eucharist_list, this)
+        recyclerview_eucharist_list.addOnItemTouchListener(eucharistClickListener)
     }
+
+    private fun showContent() {
+        content.visibility = View.VISIBLE
+        progress.visibility = View.GONE
+    }
+
 }

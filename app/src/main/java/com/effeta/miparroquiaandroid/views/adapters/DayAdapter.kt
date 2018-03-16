@@ -23,8 +23,8 @@ class DayAdapter @Inject constructor() : BaseAdapter<Calendar, DayAdapter.DayVie
 
     inner class DayViewHolder(itemView: View?) : BaseAdapter.BaseViewHolder<Calendar>(itemView) {
         override fun showItem(item: Calendar) {
-            itemView.item_day.text = item.toString(DAY_OF_WEEK).capitalize()
-            itemView.item_date.text = item.toString(DATE_AND_MONTH).capitalize()
+            itemView.item_day_name.text = item.toString(DAY_OF_WEEK).capitalize()
+            itemView.item_day_date.text = item.toString(DATE_AND_MONTH).capitalize()
 
             checkSelectedPosition(item)
         }
@@ -43,13 +43,13 @@ class DayAdapter @Inject constructor() : BaseAdapter<Calendar, DayAdapter.DayVie
 
         private fun changeLayoutState() {
             if (mSelectedPosition == adapterPosition) {
-                itemView.item_background.changeBackground(R.color.colorPrimaryDark)
-                itemView.item_day.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
-                itemView.item_date.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
+                itemView.item_day_background.changeBackground(R.color.colorPrimaryDark)
+                itemView.item_day_name.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
+                itemView.item_day_date.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
             } else {
-                itemView.item_background.changeBackground(R.color.colorPrimaryLight)
-                itemView.item_day.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimaryText))
-                itemView.item_date.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimaryText))
+                itemView.item_day_background.changeBackground(R.color.colorPrimaryLight)
+                itemView.item_day_name.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimaryText))
+                itemView.item_day_date.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimaryText))
             }
         }
     }
