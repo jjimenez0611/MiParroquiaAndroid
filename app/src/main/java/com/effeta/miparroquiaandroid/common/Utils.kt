@@ -13,23 +13,18 @@ fun Date.toString(pattern: String): String {
     return simpleDateFormat.format(this)
 }
 
-fun View.changeBackground(drawableRes: Int) {
-    val pL = paddingLeft
-    val pT = paddingTop
-    val pR = paddingRight
-    val pB = paddingBottom
-
-    setBackgroundResource(drawableRes)
-    setPadding(pL, pT, pR, pB)
+fun Calendar.toString(pattern: String): String {
+    val simpleDateFormat = SimpleDateFormat(pattern)
+    return simpleDateFormat.format(time)
 }
 
-fun View.changeBackgroundColor(colorRes: Int) {
+fun View.changeBackground(resId: Int) {
     val pL = paddingLeft
     val pT = paddingTop
     val pR = paddingRight
     val pB = paddingBottom
 
-    setBackgroundResource(colorRes)
+    setBackgroundResource(resId)
     setPadding(pL, pT, pR, pB)
 }
 

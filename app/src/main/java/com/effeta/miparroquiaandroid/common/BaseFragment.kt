@@ -39,6 +39,7 @@ abstract class BaseFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         mLifeCycleOwner = ViewLifecycleOwner()
         mLifeCycleOwner!!.lifecycle.handleLifecycleEvent(Event.ON_CREATE)
+        initializeUI()
     }
 
     override fun onStart() {
@@ -74,11 +75,6 @@ abstract class BaseFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         initializeViewModels()
         observeLiveData(savedInstanceState == null)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initializeUI()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,

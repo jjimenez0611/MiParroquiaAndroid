@@ -1,9 +1,11 @@
 package com.effeta.miparroquiaandroid.services.firebase
 
 import com.effeta.miparroquiaandroid.models.Parish
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -12,19 +14,13 @@ import javax.inject.Inject
  */
 class FirebaseParish @Inject constructor() {
     private val parishesKey = "parishes"
-    val parishes: CollectionReference = FirebaseFirestore.getInstance().collection(parishesKey)
+    private val parishes: CollectionReference = FirebaseFirestore.getInstance().collection(parishesKey)
 
     fun getAllParishes(): Observable<List<Parish>> {
         return Observable.create<List<Parish>> {
             parishes.orderBy(Parish.FirebaseProperties.name).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val list = ArrayList<Parish>()
-                    task.result.documents.forEach({ documentSnapshot ->
-                        val a = documentSnapshot.toObject(Parish::class.java)
-                        a.mKey = documentSnapshot.id
-                        list.add(a)
-                    })
-                    it.onNext(list)
+                    it.onNext(parseParishesList(task))
                     it.onComplete()
                 } else {
                     it.onError(task.exception!!)
@@ -45,6 +41,14 @@ class FirebaseParish @Inject constructor() {
                 }
             }
         }
+    }
+
+    private fun parseParishesList(task: Task<QuerySnapshot>): List<Parish> {
+        val list = ArrayList<Parish>()
+        task.result.documents.forEach({ documentSnapshot ->
+            list.add(parseParish(documentSnapshot))
+        })
+        return list
     }
 
     private fun parseParish(result: DocumentSnapshot): Parish {
