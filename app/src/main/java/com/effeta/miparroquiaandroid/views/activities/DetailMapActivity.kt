@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.BaseActivity
 import com.effeta.miparroquiaandroid.common.EXTRA_CHURCH
@@ -19,6 +20,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_detail_map.*
 import javax.inject.Inject
 import com.effeta.miparroquiaandroid.utils.MapUtils.getIntentToOpenGoogleMaps
+import com.firebase.ui.storage.images.FirebaseImageLoader
+import com.google.firebase.storage.FirebaseStorage
 
 
 /**
@@ -61,12 +64,32 @@ class DetailMapActivity : BaseActivity(), OnMapReadyCallback {
         church_name.text = String.format(getString(R.string.map_label_church), church.mName)
         fab_go_to_map.setOnClickListener{openMap(church)}
         addPointToMap(church.mLatitude!!, church.mLongitude!!, church.mName)
+
     }
 
+    private fun donwloadImageFromFireStorage(){
+
+         val churchesImagesKey = "churches/images/churches/"
+         val storageRef = FirebaseStorage.getInstance().reference
+        storageRef.child("${churchesImagesKey}eBWlVkuiJSRqKaIZ2qHU.jpg")
+
+
+// ImageView in your Activity
+     //   ImageView imageView = ...;
+
+/*// Load the image using Glide
+        Glide.with(this *//* context *//*)
+                .using( FirebaseImageLoader())
+                .load(storageRef)
+                .into(church_image);*/
+        Glide.with(this /* context */)
+                .load(storageRef)
+                .into(church_image)
+    }
     private fun addPointToMap(latitude:Double, longitude:Double, name:String){
         val pointToAdd = LatLng(latitude, longitude)
         mMap.addMarker(MarkerOptions()
-                .icon(MapUtils.getMarkerIconFromDrawable(ContextCompat.getDrawable(this, R.drawable.marker_map_church)))
+                .icon(MapUtils.getMarkerIconFromDrawable(ContextCompat.getDrawable(this, R.drawable.marker_map_church)!!))
                 .position(pointToAdd)
                 .title(String.format(getString(R.string.map_label_church), name)))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pointToAdd, 17F))
