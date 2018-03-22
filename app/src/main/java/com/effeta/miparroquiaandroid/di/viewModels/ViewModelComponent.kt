@@ -8,9 +8,9 @@ import dagger.Component
 ))
 interface ViewModelComponent {
 
-    fun inject(announcementViewModel: AnnouncementViewModel)
+    fun inject(announcementListViewModel: AnnouncementListViewModel)
 
-    fun inject(churchMapViewModel: ChurchMapViewModel)
+    fun inject(churchListViewModel: ChurchListViewModel)
 
     fun inject(parishViewModel: ParishViewModel)
 

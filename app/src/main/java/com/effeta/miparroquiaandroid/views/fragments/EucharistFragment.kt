@@ -9,7 +9,7 @@ import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.BaseFragment
 import com.effeta.miparroquiaandroid.common.ItemClickListener
 import com.effeta.miparroquiaandroid.models.Eucharist
-import com.effeta.miparroquiaandroid.viewmodel.EucharistViewModel
+import com.effeta.miparroquiaandroid.viewmodel.EucharistListViewModel
 import com.effeta.miparroquiaandroid.views.adapters.DayAdapter
 import com.effeta.miparroquiaandroid.views.adapters.EucharistAdapter
 import kotlinx.android.synthetic.main.fragment_eucharist.*
@@ -22,7 +22,7 @@ class EucharistFragment : BaseFragment(), ItemClickListener.ClickListener {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var mEucharistViewModel: EucharistViewModel
+    private lateinit var mEucharistListViewModel: EucharistListViewModel
 
     @Inject
     lateinit var mDayAdapter: DayAdapter
@@ -33,18 +33,19 @@ class EucharistFragment : BaseFragment(), ItemClickListener.ClickListener {
     override val mLayout: Int = R.layout.fragment_eucharist
 
     override fun initializeViewModels() {
-        mEucharistViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(EucharistViewModel::class.java)
+        mEucharistListViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(EucharistListViewModel::class.java)
     }
 
     override fun initializeUI() {
+        mEucharistAdapter.mLifeCycleOwner = getViewLifecycleOwner()
         attachClickListeners()
     }
 
     override fun observeLiveData(isNewActivity: Boolean) {
         getViewLifecycleOwner()?.let { lifecycleOwner ->
-            showDays(mEucharistViewModel.getWeekDays())
-            mEucharistViewModel.getEucharists().observe(lifecycleOwner, Observer { eucharists ->
+            showDays(mEucharistListViewModel.getWeekDays())
+            mEucharistListViewModel.getEucharists().observe(lifecycleOwner, Observer { eucharists ->
                 showEucharists(eucharists!!)
                 showContent()
             })
@@ -58,7 +59,7 @@ class EucharistFragment : BaseFragment(), ItemClickListener.ClickListener {
                     mDayAdapter.mSelectedPosition = position
                     mDayAdapter.notifyDataSetChanged()
                     recyclerview_day_list.smoothScrollToPosition(position)
-//                mEucharistViewModel.getEucharists(mDayAdapter.mList[position].toString(DATE_FORMAT))
+//                mEucharistListViewModel.getEucharists(mDayAdapter.mList[position].toString(DATE_FORMAT))
                 }
             }
             R.id.item_eucharist -> {

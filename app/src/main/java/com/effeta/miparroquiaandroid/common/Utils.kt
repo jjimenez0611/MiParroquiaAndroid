@@ -1,8 +1,11 @@
 package com.effeta.miparroquiaandroid.common
 
 import android.view.View
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * Created by aulate on 6/2/18.
@@ -16,6 +19,11 @@ fun Date.toString(pattern: String): String {
 fun Calendar.toString(pattern: String): String {
     val simpleDateFormat = SimpleDateFormat(pattern)
     return simpleDateFormat.format(time)
+}
+
+fun DateTime.toString(pattern: String): String {
+    val dtf = DateTimeFormat.forPattern(pattern)
+    return dtf.print(this)
 }
 
 fun View.changeBackground(resId: Int) {

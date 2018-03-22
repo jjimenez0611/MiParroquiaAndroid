@@ -9,7 +9,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.effeta.miparroquiaandroid.R
@@ -18,7 +17,7 @@ import com.effeta.miparroquiaandroid.common.EXTRA_CHURCH
 import com.effeta.miparroquiaandroid.common.REQUEST_FINE_LOCATION
 import com.effeta.miparroquiaandroid.models.Church
 import com.effeta.miparroquiaandroid.utils.MapUtils
-import com.effeta.miparroquiaandroid.viewmodel.ChurchMapViewModel
+import com.effeta.miparroquiaandroid.viewmodel.ChurchListViewModel
 import com.effeta.miparroquiaandroid.viewmodel.MapViewModel
 import com.effeta.miparroquiaandroid.views.activities.DetailMapActivity
 import com.google.android.gms.location.LocationCallback
@@ -43,7 +42,7 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var mChurchViewModel: ChurchMapViewModel
+    private lateinit var mChurchViewModel: ChurchListViewModel
 
     private lateinit var mMapViewModel: MapViewModel
 
@@ -53,7 +52,7 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun initializeViewModels() {
         mChurchViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(ChurchMapViewModel::class.java)
+                .get(ChurchListViewModel::class.java)
 
         mMapViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(MapViewModel::class.java)

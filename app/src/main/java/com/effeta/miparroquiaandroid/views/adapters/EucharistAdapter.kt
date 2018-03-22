@@ -1,19 +1,24 @@
 package com.effeta.miparroquiaandroid.views.adapters
 
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.Observer
 import android.view.View
 import com.effeta.miparroquiaandroid.R
-import com.effeta.miparroquiaandroid.common.HOUR
-import com.effeta.miparroquiaandroid.common.toString
 import com.effeta.miparroquiaandroid.models.Eucharist
+import com.effeta.miparroquiaandroid.viewmodel.EucharistViewModel
 import kotlinx.android.synthetic.main.item_eucharist.view.*
 import javax.inject.Inject
 
-/**
- * Created by aulate on 15/3/18.
+/** -*- coding: utf-8 -*-
+ * This file was created by
+ * @Author: aulate
+ * @Date:   15/3/18
  */
-class EucharistAdapter @Inject constructor() : BaseAdapter<Eucharist, EucharistAdapter.EucharistViewHolder>() {
+class EucharistAdapter @Inject constructor(private val viewmodel: EucharistViewModel) : BaseAdapter<Eucharist, EucharistAdapter.EucharistViewHolder>() {
 
     override var mItemLayout = R.layout.item_eucharist
+
+    var mLifeCycleOwner: LifecycleOwner? = null
 
     override fun instantiateViewHolder(view: View): EucharistViewHolder {
         return EucharistViewHolder(view)
@@ -21,8 +26,19 @@ class EucharistAdapter @Inject constructor() : BaseAdapter<Eucharist, EucharistA
 
     inner class EucharistViewHolder(itemView: View?) : BaseAdapter.BaseViewHolder<Eucharist>(itemView) {
         override fun showItem(item: Eucharist) {
-            itemView.textview_hour.text = item.mHour.toString(HOUR)
-            itemView.textview_church.text = item.mChurch
+            viewmodel.eucharist = item
+            mLifeCycleOwner?.let {
+                viewmodel.hour.observe(it, Observer {
+                    itemView.textview_hour.text = it
+                })
+                viewmodel.church.observe(it, Observer {
+                    itemView.textview_church.text = it
+                })
+                viewmodel.priest.observe(it, Observer {
+                    itemView.textview_priest.visibility = View.VISIBLE
+                    itemView.textview_priest.text = it
+                })
+            }
         }
     }
 }

@@ -1,43 +1,62 @@
 package com.effeta.miparroquiaandroid.models
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import com.effeta.miparroquiaandroid.services.room.MiParroquiaDB
 import com.google.firebase.firestore.PropertyName
-import com.google.firebase.firestore.ServerTimestamp
-import java.util.*
+import org.joda.time.DateTime
 
 /**
  * Created by jjimenez on 2/2/18.
  */
+@Entity(tableName = MiParroquiaDB.ANNOUNCEMENTS_TABLENAME)
 data class Announcement(
+        @PrimaryKey
+        @ColumnInfo(name = Properties.key)
         var mKey: String = "",
-        @get:PropertyName(FirebaseProperties.title)
-        @set:PropertyName(FirebaseProperties.title)
+        @ColumnInfo(name = Properties.title)
+        @get:PropertyName(Properties.title)
+        @set:PropertyName(Properties.title)
         var mTitle: String = "",
-        @get:PropertyName(FirebaseProperties.description)
-        @set:PropertyName(FirebaseProperties.description)
+        @ColumnInfo(name = Properties.description)
+        @get:PropertyName(Properties.description)
+        @set:PropertyName(Properties.description)
         var mDescription: String = "",
-        @get:PropertyName(FirebaseProperties.church)
-        @set:PropertyName(FirebaseProperties.church)
+        @ColumnInfo(name = Properties.church)
+        @get:PropertyName(Properties.church)
+        @set:PropertyName(Properties.church)
         var mChurch: String = "",
-        @get:PropertyName(FirebaseProperties.parish)
-        @set:PropertyName(FirebaseProperties.parish)
+        @ColumnInfo(name = Properties.parish)
+        @get:PropertyName(Properties.parish)
+        @set:PropertyName(Properties.parish)
         var mParish: String = "",
-        @get:PropertyName(FirebaseProperties.image)
-        @set:PropertyName(FirebaseProperties.image)
+        @ColumnInfo(name = Properties.image)
+        @get:PropertyName(Properties.image)
+        @set:PropertyName(Properties.image)
         var mImage: String? = "",
-        @get:PropertyName(FirebaseProperties.type)
-        @set:PropertyName(FirebaseProperties.type)
+        @ColumnInfo(name = Properties.type)
+        @get:PropertyName(Properties.type)
+        @set:PropertyName(Properties.type)
         var mType: String = "",
-        @get:PropertyName(FirebaseProperties.created_at)
-        @set:PropertyName(FirebaseProperties.created_at)
-        @ServerTimestamp var mCreatedAt: Date = Date(),
-        @get:PropertyName(FirebaseProperties.published_at)
-        @set:PropertyName(FirebaseProperties.published_at)
-        @ServerTimestamp var mPublishedAt: Date = Date(),
-        @get:PropertyName(FirebaseProperties.expires_at)
-        @set:PropertyName(FirebaseProperties.expires_at)
-        @ServerTimestamp var mExpiresAt: Date = Date()
+        @ColumnInfo(name = Properties.created_at)
+//        @get:PropertyName(Properties.created_at)
+//        @set:PropertyName(Properties.created_at)
+//        @ServerTimestamp
+        var mCreatedAt: DateTime = DateTime(),
+        @ColumnInfo(name = Properties.published_at)
+//        @get:PropertyName(Properties.published_at)
+//        @set:PropertyName(Properties.published_at)
+//        @ServerTimestamp
+        var mPublishedAt: DateTime = DateTime(),
+        @ColumnInfo(name = Properties.expires_at)
+//        @get:PropertyName(Properties.expires_at)
+//        @set:PropertyName(Properties.expires_at)
+//        @ServerTimestamp
+        var mExpiresAt: DateTime = DateTime()
 ) {
-    object FirebaseProperties {
+    object Properties {
+        const val key = "key"
         const val title = "title"
         const val description = "description"
         const val church = "church"
