@@ -1,29 +1,41 @@
 package com.effeta.miparroquiaandroid.models
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import com.effeta.miparroquiaandroid.services.room.MiParroquiaDB
 import com.google.firebase.firestore.PropertyName
-import com.google.firebase.firestore.ServerTimestamp
-import java.util.*
+import org.joda.time.DateTime
 
 
 /**
  * Created by jjimenez on 2/2/18.
  */
+@Entity(tableName = MiParroquiaDB.EUCHARISTS_TABLENAME)
 data class Eucharist(
+        @PrimaryKey
+        @ColumnInfo(name = Properties.key)
         var mKey: String = "",
-        @get:PropertyName(Eucharist.FirebaseProperties.church)
-        @set:PropertyName(Eucharist.FirebaseProperties.church)
+        @ColumnInfo(name = Properties.church)
+        @get:PropertyName(Eucharist.Properties.church)
+        @set:PropertyName(Eucharist.Properties.church)
         var mChurch: String = "",
-        @get:PropertyName(Eucharist.FirebaseProperties.hour)
-        @set:PropertyName(Eucharist.FirebaseProperties.hour)
-        @ServerTimestamp var mHour: Date = Date(),
-        @get:PropertyName(Eucharist.FirebaseProperties.priest)
-        @set:PropertyName(Eucharist.FirebaseProperties.priest)
-        var mPriestName: String = "",
-        @get:PropertyName(Eucharist.FirebaseProperties.parish)
-        @set:PropertyName(Eucharist.FirebaseProperties.parish)
+        @ColumnInfo(name = Properties.hour)
+//        @get:PropertyName(Eucharist.Properties.hour)
+//        @set:PropertyName(Eucharist.Properties.hour)
+//        @ServerTimestamp
+        var mHour: DateTime = DateTime(),
+        @ColumnInfo(name = Properties.priest)
+        @get:PropertyName(Eucharist.Properties.priest)
+        @set:PropertyName(Eucharist.Properties.priest)
+        var mPriestName: String? = "",
+        @ColumnInfo(name = Properties.parish)
+        @get:PropertyName(Eucharist.Properties.parish)
+        @set:PropertyName(Eucharist.Properties.parish)
         var mParishKey: String = ""
 ) {
-    object FirebaseProperties {
+    object Properties {
+        const val key = "key"
         const val church = "church"
         const val hour = "hour"
         const val priest = "priest"

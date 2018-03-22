@@ -12,7 +12,6 @@ import com.effeta.miparroquiaandroid.common.FASTEST_INTERVAL
 import com.effeta.miparroquiaandroid.common.UPDATE_INTERVAL
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.maps.model.LatLng
 import javax.inject.Inject
 
 /**
@@ -47,7 +46,7 @@ class MapViewModel @Inject constructor(application: Application) : AndroidViewMo
         val msg = "Updated Location: " +
                 java.lang.Double.toString(location.latitude) + "," +
                 java.lang.Double.toString(location.longitude)
-        val latLng = LatLng(location.latitude, location.longitude)
+//        val latLng = LatLng(location.latitude, location.longitude)
         Log.d("new Location", msg)
     }
 
