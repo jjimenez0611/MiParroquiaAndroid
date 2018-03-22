@@ -7,7 +7,10 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import io.reactivex.Observable
+import org.joda.time.DateTime
+import java.util.*
 import javax.inject.Inject
+
 
 /**
  * Created by aulate on 14/3/18.
@@ -18,7 +21,7 @@ class FirebaseEucharist @Inject constructor() {
 
     fun getAllEucharist(): Observable<List<Eucharist>> {
         return Observable.create<List<Eucharist>> {
-            eucharists.orderBy(Eucharist.FirebaseProperties.hour).get().addOnCompleteListener { task ->
+            eucharists.orderBy(Eucharist.Properties.hour).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     it.onNext(parseEucharistList(task))
                     it.onComplete()
@@ -31,8 +34,9 @@ class FirebaseEucharist @Inject constructor() {
 
     fun getEucharistsByParish(parishKey: String): Observable<List<Eucharist>> {
         return Observable.create<List<Eucharist>> {
-            eucharists.whereEqualTo(Eucharist.FirebaseProperties.parish, parishKey)
-                    .orderBy(Eucharist.FirebaseProperties.hour)
+            eucharists
+                    .whereEqualTo(Eucharist.Properties.parish, parishKey)
+                    .orderBy(Eucharist.Properties.hour)
                     .get().addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             it.onNext(parseEucharistList(task))
@@ -55,6 +59,7 @@ class FirebaseEucharist @Inject constructor() {
     private fun parseEucharist(documentSnapshot: DocumentSnapshot): Eucharist {
         val eucharist = documentSnapshot.toObject(Eucharist::class.java)
         eucharist.mKey = documentSnapshot.id
+        eucharist.mHour = DateTime(documentSnapshot[Eucharist.Properties.hour] as Date)
         return eucharist
     }
 }

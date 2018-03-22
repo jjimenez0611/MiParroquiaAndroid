@@ -18,7 +18,7 @@ class FirebaseParish @Inject constructor() {
 
     fun getAllParishes(): Observable<List<Parish>> {
         return Observable.create<List<Parish>> {
-            parishes.orderBy(Parish.FirebaseProperties.name).get().addOnCompleteListener { task ->
+            parishes.orderBy(Parish.Properties.name).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     it.onNext(parseParishesList(task))
                     it.onComplete()

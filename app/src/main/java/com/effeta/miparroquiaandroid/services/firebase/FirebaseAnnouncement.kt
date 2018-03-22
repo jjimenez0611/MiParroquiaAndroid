@@ -5,6 +5,8 @@ import com.effeta.miparroquiaandroid.models.Announcement
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import io.reactivex.Observable
+import org.joda.time.DateTime
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -44,7 +46,7 @@ class FirebaseAnnouncement @Inject constructor() {
 
     fun getAnnouncementListByType(type: String): Observable<List<Announcement>> {
         return Observable.create<List<Announcement>> {
-            announcements.whereEqualTo(Announcement.FirebaseProperties.type, type).get().addOnCompleteListener { task ->
+            announcements.whereEqualTo(Announcement.Properties.type, type).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     it.onNext(parseAnnouncementsList(task))
                     it.onComplete()
@@ -57,7 +59,7 @@ class FirebaseAnnouncement @Inject constructor() {
 
     fun getAnnouncementListByChurch(church: String): Observable<List<Announcement>> {
         return Observable.create<List<Announcement>> {
-            announcements.whereEqualTo(Announcement.FirebaseProperties.church, church).get().addOnCompleteListener { task ->
+            announcements.whereEqualTo(Announcement.Properties.church, church).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     it.onNext(parseAnnouncementsList(task))
                     it.onComplete()
@@ -71,7 +73,7 @@ class FirebaseAnnouncement @Inject constructor() {
     fun getAnnouncementListByParish(parish: String?): Observable<List<Announcement>> {
         return Observable.create {
             if (!parish.isNullOrEmpty()) {
-                val q: Query = announcements.whereEqualTo(Announcement.FirebaseProperties.parish, parish)
+                val q: Query = announcements.whereEqualTo(Announcement.Properties.parish, parish)
                 q.get().addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         it.onNext(parseAnnouncementsList(task))
@@ -95,6 +97,9 @@ class FirebaseAnnouncement @Inject constructor() {
     private fun parseAnnouncement(documentSnapshot: DocumentSnapshot): Announcement {
         val announcement = documentSnapshot.toObject(Announcement::class.java)
         announcement.mKey = documentSnapshot.id
+        announcement.mCreatedAt = DateTime(documentSnapshot[Announcement.Properties.created_at] as Date)
+        announcement.mPublishedAt = DateTime(documentSnapshot[Announcement.Properties.published_at] as Date)
+        announcement.mExpiresAt = DateTime(documentSnapshot[Announcement.Properties.expires_at] as Date)
         return announcement
     }
 }

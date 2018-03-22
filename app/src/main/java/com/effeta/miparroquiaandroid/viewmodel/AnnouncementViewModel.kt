@@ -1,33 +1,32 @@
 package com.effeta.miparroquiaandroid.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import com.effeta.miparroquiaandroid.R
+import com.effeta.miparroquiaandroid.common.DATE_FORMAT
 import com.effeta.miparroquiaandroid.models.Announcement
-import com.effeta.miparroquiaandroid.repositories.AnnouncementRepository
-import javax.inject.Inject
 
 /**
- * Created by aulate on 16/2/18.
+ * Created by aulate on 19/3/18.
  */
-class AnnouncementViewModel @Inject constructor(private val mAnnouncementRepository: AnnouncementRepository) : ViewModel() {
+class AnnouncementViewModel(private val announcement: Announcement) {
 
-    private var mAnnouncementList: MutableLiveData<List<Announcement>> = MutableLiveData()
+    val title = announcement.mTitle
 
-    var isError: MutableLiveData<Boolean> = MutableLiveData()
+    val description = announcement.mDescription
 
-    init {
-        reloadAnnouncements()
+    val publishedAt = announcement.mPublishedAt.toString(DATE_FORMAT)!!
+
+    fun getBackground(): Int {
+        return when (announcement.mType) {
+            "0" ->
+                R.color.colorSecondaryAccent
+
+            else ->
+                R.color.colorAccent
+
+        }
     }
 
-    fun getAnnouncements(): MutableLiveData<List<Announcement>> {
-        reloadAnnouncements()
-        return mAnnouncementList
-    }
+    fun getAnnouncementType(types: Array<String>) = types[announcement.mType.toInt()]
 
-    private fun reloadAnnouncements() {
-        mAnnouncementRepository.getAnnouncements()
-                .subscribe { list ->
-                    mAnnouncementList.postValue(list)
-                }
-    }
+
 }

@@ -32,7 +32,7 @@ class FirebaseChurchMap @Inject constructor() {
     fun getChurchListByParish(parishKey: String?): Observable<List<Church>> {
         return Observable.create {
             if (!parishKey.isNullOrEmpty()) {
-                val q: Query = churches.whereEqualTo(Church.FirebaseProperties.parish, parishKey)
+                val q: Query = churches.whereEqualTo(Church.Properties.parish, parishKey)
                 q.get().addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         it.onNext(parseChurchesList(task))
@@ -52,8 +52,8 @@ class FirebaseChurchMap @Inject constructor() {
 
         church.mKey = documentSnapshot.id
 
-        if (data.getValue(Church.FirebaseProperties.geolocation) != null) {
-            val geoPoint = data.getValue(Church.FirebaseProperties.geolocation) as GeoPoint
+        if (data.getValue(Church.Properties.geolocation) != null) {
+            val geoPoint = data.getValue(Church.Properties.geolocation) as GeoPoint
             church.mLatitude = geoPoint.latitude
             church.mLongitude = geoPoint.longitude
         }
