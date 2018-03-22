@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class FirebaseChurchMap @Inject constructor() {
 
-    private val churchesKey = "churchs"
+    private val churchesKey = "churches"
     private val churches: CollectionReference = FirebaseFirestore.getInstance().collection(churchesKey)
 
     fun getAllChurches(): Observable<List<Church>> {
