@@ -24,7 +24,7 @@ abstract class MiParroquiaDB : RoomDatabase() {
 
     companion object {
         const val PARISHES_TABLENAME = "parishes"
-        const val CHURCHES_TABLENAME = "churchs"
+        const val CHURCHES_TABLENAME = "churches"
         const val ANNOUNCEMENTS_TABLENAME = "announcements"
         const val EUCHARISTS_TABLENAME = "eucharists"
         const val PRIESTS_TABLENAME = "priests"
