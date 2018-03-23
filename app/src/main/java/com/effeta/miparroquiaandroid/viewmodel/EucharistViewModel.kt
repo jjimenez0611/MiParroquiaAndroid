@@ -1,32 +1,44 @@
 package com.effeta.miparroquiaandroid.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import com.effeta.miparroquiaandroid.common.HOUR
 import com.effeta.miparroquiaandroid.models.Eucharist
-import com.effeta.miparroquiaandroid.repositories.EucharistRepository
-import com.effeta.miparroquiaandroid.utils.DayUtils
+import com.effeta.miparroquiaandroid.repositories.ChurchRepository
+import org.joda.time.DateTime
+import javax.inject.Inject
 
-/**
- * Created by aulate on 14/3/18.
+/** -*- coding: utf-8 -*-
+ * This file was created by
+ * @Author: aulate
+ * @Date:   20/3/18
  */
-class EucharistViewModel @javax.inject.Inject constructor(private val mEucharistRepository: EucharistRepository) : ViewModel() {
+class EucharistViewModel @Inject constructor(private val mChurchRepository: ChurchRepository) {
 
-    private var mEucharists: MutableLiveData<List<Eucharist>> = MutableLiveData()
-
-    init {
-
-    }
-
-    fun getWeekDays() = DayUtils.getDaysOfWeek()
-
-    fun getEucharists(): MutableLiveData<List<Eucharist>> {
-        mEucharistRepository.getEucharistsByParish().subscribe {
-            mEucharists.postValue(it)
+    var eucharist: Eucharist? = null
+        set(value) {
+            field = value
+            value?.mChurch?.let { getChurch(it) }
+            value?.mHour?.let { getEucharistHour(it) }
+            value?.mPriestName?.let { getPriest(it) }
         }
-        return mEucharists
+
+    val hour: MutableLiveData<String> = MutableLiveData()
+
+    val church: MutableLiveData<String> = MutableLiveData()
+
+    val priest: MutableLiveData<String> = MutableLiveData()
+
+    private fun getEucharistHour(eucharistHour: DateTime) {
+        hour.postValue(eucharistHour.toString(HOUR))
     }
 
-    fun getEucharistsByDay(day: String) {
+    private fun getPriest(priestKey: String) {
+        priest.postValue(priestKey)
+    }
 
+    private fun getChurch(chuchKey: String) {
+        mChurchRepository.getChurch(chuchKey).subscribe({
+            church.postValue(it.mName)
+        })
     }
 }

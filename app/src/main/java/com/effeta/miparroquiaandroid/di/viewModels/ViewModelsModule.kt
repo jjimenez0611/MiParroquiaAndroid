@@ -12,13 +12,13 @@ abstract class ViewModelsModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AnnouncementViewModel::class)
-    abstract fun bindAnnouncementViewModel(announcementViewModel: AnnouncementViewModel): ViewModel
+    @ViewModelKey(AnnouncementListViewModel::class)
+    abstract fun bindAnnouncementViewModel(announcementListViewModel: AnnouncementListViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(ChurchMapViewModel::class)
-    abstract fun bindChurchMapViewModel(churchMapViewModel: ChurchMapViewModel): ViewModel
+    @ViewModelKey(ChurchListViewModel::class)
+    abstract fun bindChurchMapViewModel(churchListViewModel: ChurchListViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -37,8 +37,8 @@ abstract class ViewModelsModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(EucharistViewModel::class)
-    abstract fun bindEucharistViewModel(eucharistViewModel: EucharistViewModel): ViewModel
+    @ViewModelKey(EucharistListViewModel::class)
+    abstract fun bindEucharistViewModel(eucharistListViewModel: EucharistListViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
