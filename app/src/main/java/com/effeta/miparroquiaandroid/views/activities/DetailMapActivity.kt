@@ -62,7 +62,7 @@ class DetailMapActivity : BaseActivity(), OnMapReadyCallback {
         church_name.text = String.format(getString(R.string.map_label_church), church.mName)
         fab_go_to_map.setOnClickListener { openMap(church) }
         addPointToMap(church.mLatitude!!, church.mLongitude!!, church.mName)
-        loadImageChurch(church.mKey)
+        loadImageChurch(church.mImage!!)
     }
 
     private fun loadImageChurch(churchKey: String) {

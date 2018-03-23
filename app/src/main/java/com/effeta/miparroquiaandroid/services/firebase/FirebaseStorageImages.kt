@@ -11,6 +11,6 @@ class FirebaseStorageImages @Inject constructor() {
     fun getReferenceStorageImage(churchKey: String): StorageReference {
         val storageRef = FirebaseStorage.getInstance().reference
         val imagesRef = storageRef.child("images/churches/")
-        return imagesRef.child(churchKey + ".jpg")
+        return imagesRef.child(churchKey)
     }
 }
