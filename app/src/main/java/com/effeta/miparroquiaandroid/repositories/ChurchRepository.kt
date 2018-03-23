@@ -2,8 +2,10 @@ package com.effeta.miparroquiaandroid.repositories
 
 import com.effeta.miparroquiaandroid.models.Church
 import com.effeta.miparroquiaandroid.services.firebase.FirebaseChurchMap
+import com.effeta.miparroquiaandroid.services.firebase.FirebaseStorageImages
 import com.effeta.miparroquiaandroid.services.room.dao.ChurchDao
 import com.effeta.miparroquiaandroid.services.sharedPref.SharedPreferencesHelper
+import com.google.firebase.storage.StorageReference
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -12,7 +14,8 @@ import javax.inject.Inject
  */
 class ChurchRepository @Inject constructor(private val mChurchMapFirebaseChurchMap: FirebaseChurchMap,
                                            private val mRoomChurch: ChurchDao,
-                                           private val mSharedPreferences: SharedPreferencesHelper) {
+                                           private val mSharedPreferences: SharedPreferencesHelper,
+                                           private val mFirebaseStorageImages: FirebaseStorageImages) {
 
 
     fun getChurches(): Observable<List<Church>> {
@@ -35,5 +38,9 @@ class ChurchRepository @Inject constructor(private val mChurchMapFirebaseChurchM
 
     fun getChurch(churchKey: String): Observable<Church> {
         return mRoomChurch.getChurchByKey(churchKey).toObservable()
+    }
+
+    fun getChurchImage(churchKey: String): StorageReference {
+        return mFirebaseStorageImages.getReferenceStorageImage(churchKey)
     }
 }
