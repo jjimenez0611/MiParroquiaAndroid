@@ -139,7 +139,6 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-
     /**
      * trigger when a marker was clicked
      */
@@ -149,7 +148,7 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
         val intent = Intent(context, DetailMapActivity::class.java)
         intent.putExtra(EXTRA_CHURCH, church as Serializable)
         startActivity(intent)
-        return false
+        return true
     }
 
     /**
