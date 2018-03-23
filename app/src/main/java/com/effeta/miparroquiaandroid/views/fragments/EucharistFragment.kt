@@ -13,7 +13,7 @@ import com.effeta.miparroquiaandroid.viewmodel.EucharistListViewModel
 import com.effeta.miparroquiaandroid.views.adapters.DayAdapter
 import com.effeta.miparroquiaandroid.views.adapters.EucharistAdapter
 import kotlinx.android.synthetic.main.fragment_eucharist.*
-import java.util.*
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 
@@ -45,7 +45,7 @@ class EucharistFragment : BaseFragment(), ItemClickListener.ClickListener {
     override fun observeLiveData(isNewActivity: Boolean) {
         getViewLifecycleOwner()?.let { lifecycleOwner ->
             showDays(mEucharistListViewModel.getWeekDays())
-            mEucharistListViewModel.getEucharists().observe(lifecycleOwner, Observer { eucharists ->
+            mEucharistListViewModel.getEucharistsByDay(DateTime()).observe(lifecycleOwner, Observer { eucharists ->
                 showEucharists(eucharists!!)
                 showContent()
             })
@@ -56,10 +56,11 @@ class EucharistFragment : BaseFragment(), ItemClickListener.ClickListener {
         when (view.id) {
             R.id.item_day -> {
                 if (mDayAdapter.mSelectedPosition != position) {
+                    showProgress()
                     mDayAdapter.mSelectedPosition = position
                     mDayAdapter.notifyDataSetChanged()
                     recyclerview_day_list.smoothScrollToPosition(position)
-//                mEucharistListViewModel.getEucharists(mDayAdapter.mList[position].toString(DATE_FORMAT))
+                    mEucharistListViewModel.getEucharistsByDay(mDayAdapter.mList[position])
                 }
             }
             R.id.item_eucharist -> {
@@ -69,7 +70,7 @@ class EucharistFragment : BaseFragment(), ItemClickListener.ClickListener {
 
     override fun onLongItemClick(view: View?, position: Int) {}
 
-    private fun showDays(list: List<Calendar>?) {
+    private fun showDays(list: List<DateTime>?) {
         mDayAdapter.mList = list!!
 
         recyclerview_day_list.adapter = mDayAdapter
@@ -97,8 +98,12 @@ class EucharistFragment : BaseFragment(), ItemClickListener.ClickListener {
     }
 
     private fun showContent() {
-        content.visibility = View.VISIBLE
-        progress.visibility = View.GONE
+        recyclerview_eucharist_list.visibility = View.VISIBLE
+        progress_eucharists.visibility = View.GONE
     }
 
+    private fun showProgress() {
+        recyclerview_eucharist_list.visibility = View.GONE
+        progress_eucharists.visibility = View.VISIBLE
+    }
 }

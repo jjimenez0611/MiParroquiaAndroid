@@ -11,8 +11,10 @@ import com.effeta.miparroquiaandroid.models.Parish
 import com.effeta.miparroquiaandroid.services.room.dao.ChurchDao
 import com.effeta.miparroquiaandroid.services.room.dao.ParishDao
 
-/**
- * Created by aulate on 19/3/18.
+/** -*- coding: utf-8 -*-
+ * This file was created by
+ * @Author: aulate
+ * @Date:   19/3/18
  */
 @Database(entities = [(Church::class), (Parish::class), (Announcement::class), (Eucharist::class)],
         version = 1,
@@ -24,7 +26,7 @@ abstract class MiParroquiaDB : RoomDatabase() {
 
     companion object {
         const val PARISHES_TABLENAME = "parishes"
-        const val CHURCHES_TABLENAME = "churchs"
+        const val CHURCHES_TABLENAME = "churches"
         const val ANNOUNCEMENTS_TABLENAME = "announcements"
         const val EUCHARISTS_TABLENAME = "eucharists"
         const val PRIESTS_TABLENAME = "priests"

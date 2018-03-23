@@ -1,29 +1,36 @@
 package com.effeta.miparroquiaandroid.common
 
+import android.annotation.SuppressLint
 import android.view.View
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-/**
- * Created by aulate on 6/2/18.
- */
+@SuppressLint("SimpleDateFormat")
+        /** -*- coding: utf-8 -*-
+         * This file was created by
+         * @Author: aulate
+         * @Date:   6/2/18
+         */
 
 fun Date.toString(pattern: String): String {
     val simpleDateFormat = SimpleDateFormat(pattern)
     return simpleDateFormat.format(this)
 }
 
+@SuppressLint("SimpleDateFormat")
 fun Calendar.toString(pattern: String): String {
     val simpleDateFormat = SimpleDateFormat(pattern)
     return simpleDateFormat.format(time)
 }
 
-fun DateTime.toString(pattern: String): String {
-    val dtf = DateTimeFormat.forPattern(pattern)
-    return dtf.print(this)
+fun DateTime.getStartDay(): Date {
+    return withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).toDate()
+}
+
+fun DateTime.getEndDay(): Date {
+    return withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).toDate()
 }
 
 fun View.changeBackground(resId: Int) {
@@ -42,5 +49,5 @@ fun Any.logName(): String {
         return "sl_" + str.substring(0, 35 - "sl_".length - 1)
     }
 
-    return "sl_" + str
+    return "sl_$str"
 }

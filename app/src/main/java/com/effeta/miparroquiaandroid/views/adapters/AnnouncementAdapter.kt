@@ -1,5 +1,6 @@
 package com.effeta.miparroquiaandroid.views.adapters
 
+import android.content.res.Resources
 import android.view.View
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.changeBackground
@@ -8,8 +9,10 @@ import com.effeta.miparroquiaandroid.viewmodel.AnnouncementViewModel
 import kotlinx.android.synthetic.main.item_announcement.view.*
 import javax.inject.Inject
 
-/**
- * Created by aulate on 20/2/18.
+/** -*- coding: utf-8 -*-
+ * This file was created by
+ * @Author: aulate
+ * @Date:   20/2/18
  */
 class AnnouncementAdapter @Inject constructor() : BaseAdapter<Announcement, AnnouncementAdapter.AnnouncementViewHolder>() {
 
@@ -17,6 +20,13 @@ class AnnouncementAdapter @Inject constructor() : BaseAdapter<Announcement, Anno
 
     override fun instantiateViewHolder(view: View): AnnouncementViewHolder {
         return AnnouncementViewHolder(view)
+    }
+
+    override fun getEmptyString(resources: Resources): String {
+        return resources.getString(
+                R.string.not_found_filtered,
+                resources.getString(R.string.title_announcements).decapitalize(),
+                resources.getString(R.string.filter_days).decapitalize())
     }
 
     inner class AnnouncementViewHolder(itemView: View?) : BaseViewHolder<Announcement>(itemView) {
