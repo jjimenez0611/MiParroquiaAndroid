@@ -75,6 +75,9 @@ dependencies {
     // Anko Commons
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
 
+
+    kapt 'com.github.bumptech.glide:compiler:4.6.1'
+
     //Google maps
     implementation "com.google.android.gms:play-services-maps:$google_service_version"
     implementation "com.google.android.gms:play-services-location:$google_service_version"

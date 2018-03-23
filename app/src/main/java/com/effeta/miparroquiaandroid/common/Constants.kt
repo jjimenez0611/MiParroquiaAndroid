@@ -19,3 +19,5 @@ const val FASTEST_INTERVAL: Long = 2000 /* 2 sec */
 const val OVERWRITE_PARISH = "overwrite_parish"
 
 const val EXTRA_CHURCH = "church_extra"
+
+const val IMAGES_STORAGE_REFERENCE = "images/churches/"
