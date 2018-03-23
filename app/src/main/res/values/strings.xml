@@ -26,6 +26,7 @@
     <string name="title_eucharist">Eucaristías</string>
     <string name="title_church_map">Mapa</string>
     <string name="map_label_church">Iglesia de %s</string>
+    <string name="marker_info_message">Para mayor información\npresione aquí</string>
 
     <!-- Content Descriptions -->
     <string name="parish_logo_help">Logo de la parroquia</string>
