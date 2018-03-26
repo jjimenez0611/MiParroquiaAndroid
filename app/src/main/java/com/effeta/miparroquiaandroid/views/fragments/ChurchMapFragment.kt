@@ -32,10 +32,11 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_announcements.*
+import kotlinx.android.synthetic.main.marker_info_layout.view.*
 import java.io.Serializable
 import javax.inject.Inject
 
-class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
     override val mLayout: Int = R.layout.fragment_church_map
 
@@ -108,14 +109,16 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
         mChurchViewModel.isError.observe(this, Observer {
             Toast.makeText(this@ChurchMapFragment.context, R.string.error_to_load_map_church, Toast.LENGTH_SHORT).show()
         })
-
         mChurchViewModel.getChurches().observe(this, Observer {
             progress.visibility = View.GONE
             content.visibility = View.VISIBLE
             showMapPoints(it!!)
-        })
 
+        })
+        mMap.setInfoWindowAdapter(CustomMarkerInformation())
         mMap.setOnMarkerClickListener(this)
+        mMap.setOnInfoWindowClickListener(this)
+
     }
 
     /**
@@ -131,8 +134,7 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
                     pointToAdd = LatLng(item.mLatitude!!, item.mLongitude!!)
                     mMap.addMarker(MarkerOptions()
                             .icon(MapUtils.getMarkerIconFromDrawable(ContextCompat.getDrawable(context, R.drawable.marker_map_church)))
-                            .position(pointToAdd)
-                            .title(String.format(getString(R.string.map_label_church), item.mName))).tag = item
+                            .position(pointToAdd)).tag = item
                 }
                 pointToAdd?.let { mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pointToAdd, 12F)) }
             }
@@ -140,16 +142,23 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     /**
-     * trigger when a marker was clicked
+     * fun used to go the detail activity
      */
-    override fun onMarkerClick(p0: Marker?): Boolean {
-
+    override fun onInfoWindowClick(p0: Marker?) {
         val church = p0?.tag as Church
         val intent = Intent(context, DetailMapActivity::class.java)
         intent.putExtra(EXTRA_CHURCH, church as Serializable)
         startActivity(intent)
-        return true
     }
+
+    /**
+     * Fun used to show the custom info dialog
+     */
+    override fun onMarkerClick(p0: Marker?): Boolean {
+        p0!!.showInfoWindow()
+        return false
+    }
+
 
     /**
      * fun to retrieve the permissions
@@ -184,7 +193,6 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
         // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsClient
         val settingsClient = LocationServices.getSettingsClient(activity)
         settingsClient.checkLocationSettings(mMapViewModel.initLocationUpdates())
-
         // new Google API SDK v11 uses getFusedLocationProviderClient(this)
         getFusedLocationProviderClient(activity).requestLocationUpdates(mMapViewModel.getLocationRequest(), mLocationCallback, null)
     }
@@ -216,5 +224,20 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
         getFusedLocationProviderClient(activity).removeLocationUpdates(mLocationCallback)
     }
 
+    internal inner class CustomMarkerInformation: GoogleMap.InfoWindowAdapter {
+
+        private val window: View = layoutInflater.inflate(R.layout.marker_info_layout, null)
+        override fun getInfoContents(p0: Marker?): View {
+            val church = p0?.tag as Church
+            window.church_name.text = String.format(getString(R.string.map_label_church), church.mName)
+            window.message.text = getString(R.string.marker_info_message)
+            return  window
+        }
+
+        override fun getInfoWindow(p0: Marker?): View? {
+            return null
+        }
+
+    }
 
 }
