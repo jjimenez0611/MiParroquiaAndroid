@@ -6,8 +6,10 @@ import com.google.firebase.firestore.*
 import io.reactivex.Observable
 import javax.inject.Inject
 
-/**
- * Created by jjimenez on 2/26/18.
+/** -*- coding: utf-8 -*-
+ * This file was created by
+ * @Author: jjimenez
+ * @Date:   2/26/18
  */
 
 

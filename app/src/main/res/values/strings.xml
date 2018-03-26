@@ -9,6 +9,12 @@
     <string name="error_to_load_announcements">Error al cargar los anuncios</string>
     <string name="error_nothing_selected">No se ha seleccionado ninguna opción.</string>
     <string name="feature_not_ready">Funcionalidad no disponible todavía.</string>
+    <string name="not_found_filtered">No se encontraron %s para %s.</string>
+    <string name="not_found">No se encontraron %s.</string>
+
+    <!-- Filters -->
+    <string name="filter_day">este día</string>
+    <string name="filter_days">estos días</string>
 
     <!-- Nav Drawer texts -->
     <string name="navigation_drawer_open">Abrir menú de navegación</string>
@@ -24,6 +30,7 @@
     <!-- MainActivity -->
     <string name="title_announcements">Anuncios</string>
     <string name="title_eucharist">Eucaristías</string>
+    <string name="title_days">Días</string>
     <string name="title_church_map">Mapa</string>
     <string name="map_label_church">Iglesia de %s</string>
 

@@ -11,8 +11,10 @@ import com.effeta.miparroquiaandroid.models.Parish
 import com.effeta.miparroquiaandroid.services.room.dao.ChurchDao
 import com.effeta.miparroquiaandroid.services.room.dao.ParishDao
 
-/**
- * Created by aulate on 19/3/18.
+/** -*- coding: utf-8 -*-
+ * This file was created by
+ * @Author: aulate
+ * @Date:   19/3/18
  */
 @Database(entities = [(Church::class), (Parish::class), (Announcement::class), (Eucharist::class)],
         version = 1,
