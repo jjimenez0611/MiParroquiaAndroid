@@ -60,6 +60,10 @@ abstract class BaseAdapter<T, VH : BaseAdapter.BaseViewHolder<T>?> : RecyclerVie
 
     protected abstract fun getEmptyString(resources: Resources): String
 
+    operator fun get(position: Int): T {
+        return mList[position]
+    }
+
     inner class EmptyViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
         fun showEmpty() {
             itemView.empty_label.text = getEmptyString(itemView.resources)

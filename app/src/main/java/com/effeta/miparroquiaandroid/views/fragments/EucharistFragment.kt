@@ -7,12 +7,15 @@ import android.support.v7.widget.LinearSnapHelper
 import android.view.View
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.BaseFragment
+import com.effeta.miparroquiaandroid.common.EXTRA_CHURCH
 import com.effeta.miparroquiaandroid.common.ItemClickListener
 import com.effeta.miparroquiaandroid.models.Eucharist
 import com.effeta.miparroquiaandroid.viewmodel.EucharistListViewModel
+import com.effeta.miparroquiaandroid.views.activities.ChurchDetailActivity
 import com.effeta.miparroquiaandroid.views.adapters.DayAdapter
 import com.effeta.miparroquiaandroid.views.adapters.EucharistAdapter
 import kotlinx.android.synthetic.main.fragment_eucharist.*
+import org.jetbrains.anko.intentFor
 import org.joda.time.DateTime
 import javax.inject.Inject
 
@@ -60,10 +63,11 @@ class EucharistFragment : BaseFragment(), ItemClickListener.ClickListener {
                     mDayAdapter.mSelectedPosition = position
                     mDayAdapter.notifyDataSetChanged()
                     recyclerview_day_list.smoothScrollToPosition(position)
-                    mEucharistListViewModel.getEucharistsByDay(mDayAdapter.mList[position])
+                    mEucharistListViewModel.getEucharistsByDay(mDayAdapter[position])
                 }
             }
             R.id.item_eucharist -> {
+                startActivity(context.intentFor<ChurchDetailActivity>(Pair(EXTRA_CHURCH, mEucharistAdapter[position].mChurch)))
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.effeta.miparroquiaandroid.views.activities
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.view.View
 import android.widget.AdapterView
@@ -16,15 +15,11 @@ import kotlinx.android.synthetic.main.activity_select_church.*
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
-import javax.inject.Inject
 
 /**
  * Created by aulate on 26/2/18.
  */
 class SelectParishActivity : BaseActivity() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var mParishViewModel: ParishViewModel
 

@@ -6,5 +6,5 @@ package com.effeta.miparroquiaandroid.common
 enum class Status {
     LOADING,
     ERROR,
-    COMPLETE
+    SUCCESS
 }
