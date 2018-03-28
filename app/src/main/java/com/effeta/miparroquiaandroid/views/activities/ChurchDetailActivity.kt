@@ -1,7 +1,6 @@
 package com.effeta.miparroquiaandroid.views.activities
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.content.ContextCompat
 import com.effeta.miparroquiaandroid.R
@@ -11,35 +10,30 @@ import com.effeta.miparroquiaandroid.di.GlideApp
 import com.effeta.miparroquiaandroid.models.Church
 import com.effeta.miparroquiaandroid.utils.MapUtils
 import com.effeta.miparroquiaandroid.utils.MapUtils.getIntentToOpenGoogleMaps
-import com.effeta.miparroquiaandroid.viewmodel.DetailMapViewModel
+import com.effeta.miparroquiaandroid.viewmodel.ChurchViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_detail_map.*
-import javax.inject.Inject
+import kotlinx.android.synthetic.main.activity_church_detail.*
 
 
 /**
  * Created by jjimenez on 3/12/18.
  */
 
-class DetailMapActivity : BaseActivity(), OnMapReadyCallback {
+class ChurchDetailActivity : BaseActivity(), OnMapReadyCallback {
 
-    override val mLayout: Int = R.layout.activity_detail_map
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    override val mLayout: Int = R.layout.activity_church_detail
 
     private lateinit var mMap: GoogleMap
 
-
-    private lateinit var mDetailMapViewModel: DetailMapViewModel
+    private lateinit var mChurchViewModel: ChurchViewModel
 
     override fun initializeViewModels() {
-        mDetailMapViewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailMapViewModel::class.java)
+        mChurchViewModel = ViewModelProviders.of(this, viewModelFactory).get(ChurchViewModel::class.java)
     }
 
     override fun initializeUI() {
@@ -66,7 +60,7 @@ class DetailMapActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun loadImageChurch(churchKey: String) {
-        mDetailMapViewModel.getImageChurch(churchKey).observe(this, Observer {
+        mChurchViewModel.getImageChurch(churchKey).observe(this, Observer {
             GlideApp.with(this)
                     .load(it)
                     .placeholder(R.drawable.ph_church_detail)
@@ -88,9 +82,9 @@ class DetailMapActivity : BaseActivity(), OnMapReadyCallback {
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isCompassEnabled = true
         if (intent.hasExtra(EXTRA_CHURCH)) {
-            mDetailMapViewModel.mChurch.value = intent.extras.get(EXTRA_CHURCH) as Church
+            mChurchViewModel.mChurchKey = intent.extras.get(EXTRA_CHURCH) as String
         }
-        mDetailMapViewModel.mChurch.observe(this, Observer {
+        mChurchViewModel.getChurch().observe(this, Observer {
             showChurchInformation(it!!)
         })
     }

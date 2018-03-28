@@ -16,6 +16,6 @@ interface ViewModelComponent {
 
     fun inject(mapViewModel: MapViewModel)
 
-    fun inject(detailMapViewModel: DetailMapViewModel)
+    fun inject(churchViewModel: ChurchViewModel)
 
 }

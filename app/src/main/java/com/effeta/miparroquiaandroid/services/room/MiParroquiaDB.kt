@@ -9,6 +9,7 @@ import com.effeta.miparroquiaandroid.models.Church
 import com.effeta.miparroquiaandroid.models.Eucharist
 import com.effeta.miparroquiaandroid.models.Parish
 import com.effeta.miparroquiaandroid.services.room.dao.ChurchDao
+import com.effeta.miparroquiaandroid.services.room.dao.EucharistDao
 import com.effeta.miparroquiaandroid.services.room.dao.ParishDao
 
 /** -*- coding: utf-8 -*-
@@ -23,6 +24,7 @@ import com.effeta.miparroquiaandroid.services.room.dao.ParishDao
 abstract class MiParroquiaDB : RoomDatabase() {
     abstract fun parishDao(): ParishDao
     abstract fun churchDao(): ChurchDao
+    abstract fun eucharistDao(): EucharistDao
 
     companion object {
         const val PARISHES_TABLENAME = "parishes"

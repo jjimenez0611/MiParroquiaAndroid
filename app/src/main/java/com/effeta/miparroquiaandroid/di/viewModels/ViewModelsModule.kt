@@ -32,8 +32,8 @@ abstract class ViewModelsModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(DetailMapViewModel::class)
-    abstract fun bindDetailMapViewModel(mapViewModel: DetailMapViewModel) : ViewModel
+    @ViewModelKey(ChurchViewModel::class)
+    abstract fun bindDetailMapViewModel(mapViewModel: ChurchViewModel): ViewModel
 
     @Binds
     @IntoMap

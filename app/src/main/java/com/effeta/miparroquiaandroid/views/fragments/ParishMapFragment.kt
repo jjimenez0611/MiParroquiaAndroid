@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -19,7 +18,7 @@ import com.effeta.miparroquiaandroid.models.Church
 import com.effeta.miparroquiaandroid.utils.MapUtils
 import com.effeta.miparroquiaandroid.viewmodel.ChurchListViewModel
 import com.effeta.miparroquiaandroid.viewmodel.MapViewModel
-import com.effeta.miparroquiaandroid.views.activities.DetailMapActivity
+import com.effeta.miparroquiaandroid.views.activities.ChurchDetailActivity
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
@@ -33,12 +32,12 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_announcements.*
 import kotlinx.android.synthetic.main.marker_info_layout.view.*
-import java.io.Serializable
+import org.jetbrains.anko.intentFor
 import javax.inject.Inject
 
-class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
+class ParishMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
-    override val mLayout: Int = R.layout.fragment_church_map
+    override val mLayout: Int = R.layout.fragment_parish_map
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -79,11 +78,13 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     override fun observeLiveData(isNewActivity: Boolean) {
-        mMapViewModel.hasPermission.observe(this, Observer {
-            if (!it!!) {
-                requestLocationPermissions()
-            }
-        })
+        getViewLifecycleOwner()?.let {
+            mMapViewModel.hasPermission.observe(it, Observer { hasPermission ->
+                if (!hasPermission!!) {
+                    requestLocationPermissions()
+                }
+            })
+        }
     }
 
     private fun initMapFragment() {
@@ -107,7 +108,7 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
         //Set Churches Observes when the map are ready
         mChurchViewModel.isError.observe(this, Observer {
-            Toast.makeText(this@ChurchMapFragment.context, R.string.error_to_load_map_church, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@ParishMapFragment.context, R.string.error_to_load_map_church, Toast.LENGTH_SHORT).show()
         })
         mChurchViewModel.getChurches().observe(this, Observer {
             progress.visibility = View.GONE
@@ -146,9 +147,7 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
      */
     override fun onInfoWindowClick(p0: Marker?) {
         val church = p0?.tag as Church
-        val intent = Intent(context, DetailMapActivity::class.java)
-        intent.putExtra(EXTRA_CHURCH, church as Serializable)
-        startActivity(intent)
+        startActivity(context.intentFor<ChurchDetailActivity>(Pair(EXTRA_CHURCH, church.mKey)))
     }
 
     /**
@@ -174,7 +173,7 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
         when (requestCode) {
             REQUEST_FINE_LOCATION -> {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted.
                     startLocationUpdates()
                     mMap.isMyLocationEnabled = true
@@ -224,14 +223,15 @@ class ChurchMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
         getFusedLocationProviderClient(activity).removeLocationUpdates(mLocationCallback)
     }
 
-    internal inner class CustomMarkerInformation: GoogleMap.InfoWindowAdapter {
+    internal inner class CustomMarkerInformation : GoogleMap.InfoWindowAdapter {
 
         private val window: View = layoutInflater.inflate(R.layout.marker_info_layout, null)
+
         override fun getInfoContents(p0: Marker?): View {
             val church = p0?.tag as Church
             window.church_name.text = String.format(getString(R.string.map_label_church), church.mName)
             window.message.text = getString(R.string.marker_info_message)
-            return  window
+            return window
         }
 
         override fun getInfoWindow(p0: Marker?): View? {

@@ -13,7 +13,7 @@ import javax.inject.Inject
  */
 
 
-class FirebaseChurchMap @Inject constructor() {
+class FirebaseChurch @Inject constructor() {
 
     private val churchesKey = "churches"
     private val churches: CollectionReference = FirebaseFirestore.getInstance().collection(churchesKey)
@@ -47,6 +47,14 @@ class FirebaseChurchMap @Inject constructor() {
         }
     }
 
+    private fun parseChurchesList(task: Task<QuerySnapshot>): List<Church> {
+        val list = ArrayList<Church>()
+        task.result.documents.forEach({ documentSnapshot ->
+            list.add(parseChurch(documentSnapshot))
+        })
+        return list
+    }
+
     private fun parseChurch(documentSnapshot: DocumentSnapshot): Church {
         val data = documentSnapshot.data
 
@@ -60,13 +68,5 @@ class FirebaseChurchMap @Inject constructor() {
             church.mLongitude = geoPoint.longitude
         }
         return church
-    }
-
-    private fun parseChurchesList(task: Task<QuerySnapshot>): List<Church> {
-        val list = ArrayList<Church>()
-        task.result.documents.forEach({ documentSnapshot ->
-            list.add(parseChurch(documentSnapshot))
-        })
-        return list
     }
 }

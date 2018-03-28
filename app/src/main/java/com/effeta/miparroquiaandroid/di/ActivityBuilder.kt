@@ -1,6 +1,6 @@
 package com.effeta.miparroquiaandroid.di
 
-import com.effeta.miparroquiaandroid.views.activities.DetailMapActivity
+import com.effeta.miparroquiaandroid.views.activities.ChurchDetailActivity
 import com.effeta.miparroquiaandroid.views.activities.MainActivity
 import com.effeta.miparroquiaandroid.views.activities.SelectParishActivity
 import dagger.Module
@@ -19,6 +19,6 @@ abstract class ActivityBuilder {
     abstract fun bindSelectChurchActivity(): SelectParishActivity
 
     @ContributesAndroidInjector()
-    abstract fun bindDetailMapActivity(): DetailMapActivity
+    abstract fun bindDetailMapActivity(): ChurchDetailActivity
 
 }

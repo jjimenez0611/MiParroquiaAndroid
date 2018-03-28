@@ -1,8 +1,8 @@
 package com.effeta.miparroquiaandroid.di
 
 import com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment
-import com.effeta.miparroquiaandroid.views.fragments.ChurchMapFragment
 import com.effeta.miparroquiaandroid.views.fragments.EucharistFragment
+import com.effeta.miparroquiaandroid.views.fragments.ParishMapFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -16,7 +16,7 @@ abstract class FragmentBuilder {
     abstract fun bindAnnouncementFragment() : AnnouncementsFragment
 
     @ContributesAndroidInjector()
-    abstract fun bindChurchMapFragment() : ChurchMapFragment
+    abstract fun bindChurchMapFragment(): ParishMapFragment
 
     @ContributesAndroidInjector()
     abstract fun bindEucharistFragment() : EucharistFragment

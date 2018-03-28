@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import com.effeta.miparroquiaandroid.services.room.MiParroquiaDB
 import com.effeta.miparroquiaandroid.services.room.dao.ChurchDao
+import com.effeta.miparroquiaandroid.services.room.dao.EucharistDao
 import com.effeta.miparroquiaandroid.services.room.dao.ParishDao
 import dagger.Module
 import dagger.Provides
@@ -28,5 +29,10 @@ class RoomModule {
     @Provides
     fun provideChurchDao(db: MiParroquiaDB): ChurchDao {
         return db.churchDao()
+    }
+
+    @Provides
+    fun provideEucharistDao(db: MiParroquiaDB): EucharistDao {
+        return db.eucharistDao()
     }
 }

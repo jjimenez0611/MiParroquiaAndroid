@@ -11,8 +11,8 @@ import com.effeta.miparroquiaandroid.common.NavDrawerActivity
 import com.effeta.miparroquiaandroid.viewmodel.ChurchListViewModel
 import com.effeta.miparroquiaandroid.views.adapters.ViewPagerAdapter
 import com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment
-import com.effeta.miparroquiaandroid.views.fragments.ChurchMapFragment
 import com.effeta.miparroquiaandroid.views.fragments.EucharistFragment
+import com.effeta.miparroquiaandroid.views.fragments.ParishMapFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -85,7 +85,7 @@ class MainActivity : NavDrawerActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(AnnouncementsFragment())
         adapter.addFragment(EucharistFragment())
-        adapter.addFragment(ChurchMapFragment())
+        adapter.addFragment(ParishMapFragment())
         viewPager.adapter = adapter
     }
 }

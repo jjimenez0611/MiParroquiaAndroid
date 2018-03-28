@@ -37,5 +37,6 @@
 
     <!-- Content Descriptions -->
     <string name="parish_logo_help">Logo de la parroquia</string>
+    <string name="description_church_image">Imagen de la iglesia seleccionada.</string>
 
 </resources>
