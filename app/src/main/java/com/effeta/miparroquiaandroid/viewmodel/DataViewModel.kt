@@ -15,16 +15,9 @@ class DataViewModel @Inject constructor(private val mChurchRepository: ChurchRep
         //first try to get from firebase
         mChurchRepository.getChurchesFromFirebase().subscribe {
             //them get the churches from database
-            getChurchesFromRoom()
-        }
-        return isDataSaved
-    }
-
-    private fun getChurchesFromRoom() {
-        mChurchRepository.getChurchesFromRoom().subscribe { list ->
-            // And finally get the Eucharists
             getEucharistsFromFirebaseAndSave()
         }
+        return isDataSaved
     }
 
     private fun getEucharistsFromFirebaseAndSave() {
