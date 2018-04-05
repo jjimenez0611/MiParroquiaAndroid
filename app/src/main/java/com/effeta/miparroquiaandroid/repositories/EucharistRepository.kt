@@ -37,15 +37,16 @@ class EucharistRepository @Inject constructor(private val mFirebaseEucharist: Fi
         val parishKey = mSharedPreferences.getParishKey()
         return mEucharistDao.getEucharistsByDay(parishKey!!, day.getStartDay().toString(ISO_8601_DATE_FORMAT),
                 day.getEndDay().toString(ISO_8601_DATE_FORMAT)).toObservable()
-
-
     }
 
     fun getEucharistsFromFirebaseAndSave(): Observable<List<Eucharist>> {
         val parishKey = mSharedPreferences.getParishKey()
         val days = DayUtils.getDaysOfWeek()
         return mFirebaseEucharist.getEucharistsByParishAndDays(parishKey!!, days.first(), days.last()).doOnNext {
-            mEucharistDao.insertAll(it)
+            if (!it.isEmpty()) {
+                mEucharistDao.deleteAllEucharists()
+                mEucharistDao.insertAll(it)
+            }
         }
     }
 }

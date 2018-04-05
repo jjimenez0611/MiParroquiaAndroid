@@ -9,6 +9,7 @@ import android.view.MenuItem
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.NavDrawerActivity
 import com.effeta.miparroquiaandroid.viewmodel.ChurchListViewModel
+import com.effeta.miparroquiaandroid.viewmodel.DataViewModel
 import com.effeta.miparroquiaandroid.views.adapters.ViewPagerAdapter
 import com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment
 import com.effeta.miparroquiaandroid.views.fragments.EucharistFragment
@@ -57,7 +58,7 @@ class MainActivity : NavDrawerActivity() {
 
     private var prevMenuItem: MenuItem? = null
 
-    private lateinit var mChurchViewModel: ChurchListViewModel
+    private lateinit var mDataViewModel: DataViewModel
 
     override val mLayout: Int = R.layout.activity_main
 
@@ -66,7 +67,7 @@ class MainActivity : NavDrawerActivity() {
     override val mTitle: Int? = R.string.app_name
 
     override fun initializeViewModels() {
-        mChurchViewModel = ViewModelProviders.of(this, viewModelFactory).get(ChurchListViewModel::class.java)
+        mDataViewModel = ViewModelProviders.of(this, viewModelFactory).get(DataViewModel::class.java)
     }
 
     override fun initializeUI() {
@@ -75,10 +76,11 @@ class MainActivity : NavDrawerActivity() {
     }
 
     override fun observeLiveData() {
-        mChurchViewModel.getChurches().observe(this, Observer {
-            mChurchViewModel.getEucharists().observe(this, Observer {
+
+        mDataViewModel.getData().observe(this, Observer {
+            if(it!!) {
                 setupViewPager(viewpager)
-            })
+            }
         })
     }
 

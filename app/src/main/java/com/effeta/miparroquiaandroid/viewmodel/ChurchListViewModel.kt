@@ -13,35 +13,17 @@ import javax.inject.Inject
  * @Author: jjimenez
  * @Date:   2/26/18
  */
-class ChurchListViewModel @Inject constructor(private val mChurchRepository: ChurchRepository,
-                                              private val mEucharistRepository: EucharistRepository) : ViewModel() {
+class ChurchListViewModel @Inject constructor(private val mChurchRepository: ChurchRepository) : ViewModel() {
 
     private var mChurchList: MutableLiveData<List<Church>> = MutableLiveData()
 
-    private var mEucharistList: MutableLiveData<List<Eucharist>> = MutableLiveData()
-
     var isError: MutableLiveData<Boolean> = MutableLiveData()
 
-    init {
-    }
-
     fun getChurches(): MutableLiveData<List<Church>> {
-        //first try to get from firebase
-        mChurchRepository.getChurchesFromFirebase().subscribe {
-            //them get the churches from database
             mChurchRepository.getChurchesFromRoom().subscribe { list ->
                 mChurchList.postValue(list)
             }
-        }
         return mChurchList
-    }
-
-
-    fun getEucharists(): MutableLiveData<List<Eucharist>> {
-        mEucharistRepository.getEucharistsFromFirebaseAndSave().subscribe { list ->
-            mEucharistList.postValue(list)
-        }
-        return mEucharistList
     }
 
 }
