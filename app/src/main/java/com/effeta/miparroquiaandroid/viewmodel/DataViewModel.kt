@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 class DataViewModel @Inject constructor(private val mChurchRepository: ChurchRepository,
                                         private val mEucharistRepository: EucharistRepository) : ViewModel() {
-    
-    var isDataSaved: MutableLiveData<Boolean> = MutableLiveData()
+
+    private var isDataSaved: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getData(): MutableLiveData<Boolean> {
         //first try to get from firebase
