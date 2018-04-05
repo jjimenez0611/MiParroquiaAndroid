@@ -1,12 +1,11 @@
 package com.effeta.miparroquiaandroid.services.room.dao
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.effeta.miparroquiaandroid.models.Eucharist
 import com.effeta.miparroquiaandroid.services.room.MiParroquiaDB
 import io.reactivex.Single
+import org.joda.time.DateTime
+import java.util.*
 
 /**
  * Created by aulate on 19/3/18.
@@ -21,9 +20,9 @@ interface EucharistDao {
     fun getAllEucharistsByParish(parishKey: String): Single<List<Eucharist>>
 
     @Query("SELECT * FROM ${MiParroquiaDB.EUCHARISTS_TABLENAME} WHERE ${Eucharist.Properties.parish} = :parishKey " +
-            "AND date(${Eucharist.Properties.hour}) = date(:day) " +
+            "AND date(${Eucharist.Properties.hour}) BETWEEN date(:startDay) AND date(:endDay)" +
             "ORDER BY ${Eucharist.Properties.hour}")
-    fun getEucharistsByDay(parishKey: String, day: String): Single<List<Eucharist>>
+    fun getEucharistsByDay(parishKey: String, startDay: String,endDay: String): Single<List<Eucharist>>
 
     @Query("SELECT COUNT(*) FROM ${MiParroquiaDB.EUCHARISTS_TABLENAME} WHERE ${Eucharist.Properties.parish} = :parishKey " +
             "AND date(${Eucharist.Properties.hour}) = date(:day) " +
@@ -38,4 +37,8 @@ interface EucharistDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(eucharists: List<Eucharist>)
+
+    @Query("DELETE FROM ${MiParroquiaDB.EUCHARISTS_TABLENAME}")
+    fun deleteAllEucharists()
+
 }

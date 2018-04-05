@@ -15,8 +15,8 @@ import com.google.android.gms.location.LocationSettingsRequest
 import javax.inject.Inject
 
 /**
-* Created by jjimenez on 3/7/18.
-*/
+ * Created by jjimenez on 3/7/18.
+ */
 class MapViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
     private var mLocationRequest: LocationRequest = LocationRequest()

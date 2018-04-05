@@ -3,7 +3,9 @@ package com.effeta.miparroquiaandroid.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.effeta.miparroquiaandroid.models.Church
+import com.effeta.miparroquiaandroid.models.Eucharist
 import com.effeta.miparroquiaandroid.repositories.ChurchRepository
+import com.effeta.miparroquiaandroid.repositories.EucharistRepository
 import javax.inject.Inject
 
 /** -*- coding: utf-8 -*-
@@ -11,18 +13,18 @@ import javax.inject.Inject
  * @Author: jjimenez
  * @Date:   2/26/18
  */
-class ChurchListViewModel @Inject constructor(mChurchRepository: ChurchRepository) : ViewModel() {
+class ChurchListViewModel @Inject constructor(private val mChurchRepository: ChurchRepository) : ViewModel() {
 
     private var mChurchList: MutableLiveData<List<Church>> = MutableLiveData()
 
     var isError: MutableLiveData<Boolean> = MutableLiveData()
 
-    init {
-        mChurchRepository.getChurches()
-                .subscribe { list ->
-                    mChurchList.postValue(list)
-                }
+    fun getChurches(): MutableLiveData<List<Church>> {
+            mChurchRepository.getChurchesFromRoom().subscribe { list ->
+                mChurchList.postValue(list)
+            }
+        return mChurchList
     }
 
-    fun getChurches() = mChurchList
 }
+

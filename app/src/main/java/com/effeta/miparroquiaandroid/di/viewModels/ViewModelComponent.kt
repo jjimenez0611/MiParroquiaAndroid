@@ -18,4 +18,6 @@ interface ViewModelComponent {
 
     fun inject(churchViewModel: ChurchViewModel)
 
+    fun inject(dataViewModel: DataViewModel)
+
 }

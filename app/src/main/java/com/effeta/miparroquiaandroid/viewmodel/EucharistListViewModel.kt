@@ -16,14 +16,10 @@ class EucharistListViewModel @javax.inject.Inject constructor(private val mEucha
 
     private var mEucharists: MutableLiveData<List<Eucharist>> = MutableLiveData()
 
-    init {
-
-    }
-
     fun getWeekDays() = DayUtils.getDaysOfWeek()
 
     fun getEucharistsByDay(day: DateTime): MutableLiveData<List<Eucharist>> {
-        mEucharistRepository.getEucharistsByParishAndDay(day).subscribe {
+        mEucharistRepository.getEucharistsByParishAndDayFromRoom(day).subscribe {
             mEucharists.postValue(it)
         }
         return mEucharists

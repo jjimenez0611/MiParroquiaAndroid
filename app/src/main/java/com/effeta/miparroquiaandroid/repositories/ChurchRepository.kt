@@ -18,22 +18,16 @@ class ChurchRepository @Inject constructor(private val mChurchMapFirebaseChurch:
                                            private val mFirebaseStorageImages: FirebaseStorageImages) {
 
 
-    fun getChurches(): Observable<List<Church>> {
+    fun getChurchesFromFirebase(): Observable<List<Church>> {
         val parishKey = mSharedPreferences.getParishKey()
-        return Observable.concatArray(
-                getChurchesFromRoom(parishKey!!),
-                getChurchesFromFirebase(parishKey)
-        )
-    }
-
-    private fun getChurchesFromFirebase(parishKey: String): Observable<List<Church>> {
         return mChurchMapFirebaseChurch.getChurchListByParish(parishKey).doOnNext {
             mRoomChurch.insertAll(it)
         }
     }
 
-    private fun getChurchesFromRoom(parishKey: String): Observable<List<Church>> {
-        return mRoomChurch.getAllChurchesByParish(parishKey).toObservable()
+    fun getChurchesFromRoom(): Observable<List<Church>> {
+        val parishKey = mSharedPreferences.getParishKey()
+        return mRoomChurch.getAllChurchesByParish(parishKey!!).toObservable()
     }
 
     fun getChurch(churchKey: String): Observable<Church> {

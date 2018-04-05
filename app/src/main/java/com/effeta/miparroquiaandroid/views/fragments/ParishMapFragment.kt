@@ -78,13 +78,7 @@ class ParishMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     override fun observeLiveData(isNewActivity: Boolean) {
-        getViewLifecycleOwner()?.let {
-            mMapViewModel.hasPermission.observe(it, Observer { hasPermission ->
-                if (!hasPermission!!) {
-                    requestLocationPermissions()
-                }
-            })
-        }
+
     }
 
     private fun initMapFragment() {
@@ -98,6 +92,15 @@ class ParishMapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarker
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+
+        getViewLifecycleOwner()?.let {
+            mMapViewModel.hasPermission.observe(it, Observer { hasPermission ->
+                if (!hasPermission!!) {
+                    requestLocationPermissions()
+                }
+            })
+        }
+
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isCompassEnabled = true
         // Add a marker in San Jose Costa Rica and move the camera
