@@ -53,7 +53,6 @@ class MainActivity : NavDrawerActivity() {
 
         override fun onPageSelected(position: Int) {
         }
-
     }
 
     private var prevMenuItem: MenuItem? = null
@@ -77,7 +76,9 @@ class MainActivity : NavDrawerActivity() {
 
     override fun observeLiveData() {
         mChurchViewModel.getChurches().observe(this, Observer {
-            setupViewPager(viewpager)
+            mChurchViewModel.getEucharists().observe(this, Observer {
+                setupViewPager(viewpager)
+            })
         })
     }
 

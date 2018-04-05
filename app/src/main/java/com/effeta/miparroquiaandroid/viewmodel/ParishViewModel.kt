@@ -16,24 +16,25 @@ class ParishViewModel @Inject constructor(
 
     private var mParish: MutableLiveData<Parish> = MutableLiveData()
 
-    init {
+    fun getParishes(): MutableLiveData<List<Parish>> {
         mParishRepository.getParishes().subscribe {
             mParishList.postValue(it)
         }
-        if (mParishRepository.hasParishStored()) {
-            mParishRepository.getParish().subscribe {
-                mParish.postValue(it)
-            }
-        }
+        return mParishList
     }
-
-    fun getParishes() = mParishList
 
     fun storeSelectedParish(parishKey: String) {
         mParishRepository.storeParish(parishKey)
     }
 
-    fun getParish() = mParish
+    fun getParish(): MutableLiveData<Parish> {
+        if (mParishRepository.hasParishStored()) {
+            mParishRepository.getParish().subscribe {
+                mParish.postValue(it)
+            }
+        }
+        return mParish
+    }
 
     fun hasParishStored(): Boolean {
         return mParishRepository.hasParishStored()

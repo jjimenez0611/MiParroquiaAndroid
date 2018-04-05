@@ -25,12 +25,12 @@ fun Calendar.toString(pattern: String): String {
     return simpleDateFormat.format(time)
 }
 
-fun DateTime.getStartDay(): Date {
-    return withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).toDate()
+fun DateTime.getStartDay(): DateTime {
+    return withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0)
 }
 
-fun DateTime.getEndDay(): Date {
-    return withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).toDate()
+fun DateTime.getEndDay(): DateTime {
+    return withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59)
 }
 
 fun View.changeBackground(resId: Int) {

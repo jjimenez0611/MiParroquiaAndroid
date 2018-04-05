@@ -71,6 +71,26 @@ class FirebaseEucharist @Inject constructor() {
         }
     }
 
+
+    fun getEucharistsByParishAndDays(parishKey: String, startDay: DateTime,endDay: DateTime): Observable<List<Eucharist>> {
+        val fromDay = startDay.getStartDay().toDate()
+        val toDay = endDay.getEndDay().toDate()
+        return Observable.create<List<Eucharist>> {
+            eucharists
+                    .whereEqualTo(Eucharist.Properties.parish, parishKey)
+                    .whereGreaterThanOrEqualTo(Eucharist.Properties.hour, fromDay)
+                    .whereLessThanOrEqualTo(Eucharist.Properties.hour, toDay)
+                    .get().addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            it.onNext(parseEucharistList(task))
+                            it.onComplete()
+                        } else {
+                            it.onError(task.exception!!)
+                        }
+                    }
+        }
+    }
+
     private fun parseEucharistList(task: Task<QuerySnapshot>): List<Eucharist> {
         val list = ArrayList<Eucharist>()
         task.result.documents.forEach({ documentSnapshot ->
