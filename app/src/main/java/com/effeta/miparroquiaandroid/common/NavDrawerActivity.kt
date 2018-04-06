@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.models.Parish
+import com.effeta.miparroquiaandroid.utils.RemoteConfig
 import com.effeta.miparroquiaandroid.viewmodel.ParishViewModel
 import com.effeta.miparroquiaandroid.views.activities.SelectParishActivity
 import dagger.android.support.DaggerAppCompatActivity
@@ -38,6 +39,7 @@ abstract class NavDrawerActivity : DaggerAppCompatActivity(), NavigationView.OnN
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(RemoteConfig.getTheme())
         setContentView(mLayout)
 
         //Set the Nav Drawer

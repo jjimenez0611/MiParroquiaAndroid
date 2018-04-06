@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Lent application theme. -->
+    <style name="AppThemeLent" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryLent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkLent</item>
+        <item name="colorAccent">@color/colorAccentLent</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryTextLent</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryTextLent</item>
+    </style>
+
+</resources>

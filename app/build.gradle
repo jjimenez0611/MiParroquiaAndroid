@@ -63,6 +63,7 @@ dependencies {
     implementation "com.google.firebase:firebase-firestore:$firebase_version"
     implementation "com.google.firebase:firebase-storage:$firebase_version"
     implementation ("com.firebaseui:firebase-ui-storage:3.2.2") { exclude group: 'com.android.support' }
+    implementation "com.google.firebase:firebase-config:$firebase_version"
 
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
     implementation "com.google.dagger:dagger:$dagger_version"

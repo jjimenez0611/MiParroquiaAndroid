@@ -2,6 +2,7 @@ package com.effeta.miparroquiaandroid.views.activities
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.BaseActivity
@@ -10,6 +11,7 @@ import com.effeta.miparroquiaandroid.di.GlideApp
 import com.effeta.miparroquiaandroid.models.Church
 import com.effeta.miparroquiaandroid.utils.MapUtils
 import com.effeta.miparroquiaandroid.utils.MapUtils.getIntentToOpenGoogleMaps
+import com.effeta.miparroquiaandroid.utils.RemoteConfig
 import com.effeta.miparroquiaandroid.viewmodel.ChurchViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -40,6 +42,7 @@ class ChurchDetailActivity : BaseActivity(), OnMapReadyCallback {
         setSupportActionBar(toolbar_detail)
         toolbar_detail.title = getString(R.string.detail_map_activity_title)
         toolbar_detail.setNavigationOnClickListener { finish() }
+        collapsing_toolbar_layout.setContentScrimColor(ContextCompat.getColor(applicationContext,RemoteConfig.getThemeCollapsingToolbar()))
         initMapFragment()
     }
 

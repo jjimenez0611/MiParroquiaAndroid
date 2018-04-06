@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Easter application theme. -->
+    <style name="AppThemeEaster" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryEaster</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkEaster</item>
+        <item name="colorAccent">@color/colorAccentEaster</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryTextEaster</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryTextEaster</item>
+    </style>
+
+
+</resources>

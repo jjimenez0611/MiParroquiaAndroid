@@ -21,7 +21,7 @@ class DataViewModel @Inject constructor(private val mChurchRepository: ChurchRep
     }
 
     private fun getEucharistsFromFirebaseAndSave() {
-        mEucharistRepository.getEucharistsFromFirebaseAndSave().subscribe { eucharists ->
+        mEucharistRepository.getEucharistsFromFirebaseAndSave().subscribe {
             isDataSaved.postValue(true)
         }
     }

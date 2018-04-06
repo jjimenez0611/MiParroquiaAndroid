@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Colors to Lent-->
+    <color name="colorPrimaryLent">#673AB7</color>
+    <color name="colorPrimaryDarkLent">#512DA8</color>
+    <color name="colorPrimaryLightLent">#D1C4E9</color>
+    <color name="colorAccentLent">#FF5722</color>
+    <color name="colorPrimaryTextLent">#212121</color>
+    <color name="colorSecondaryTextLent">#757575</color>
+
+
+</resources>

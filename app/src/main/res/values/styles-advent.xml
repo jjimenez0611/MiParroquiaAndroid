@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Advent application theme. -->
+    <style name="AppThemeAdvent" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryAdvent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkAdvent</item>
+        <item name="colorAccent">@color/colorAccentAdvent</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryTextAdvent</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryTextAdvent</item>
+    </style>
+
+</resources>

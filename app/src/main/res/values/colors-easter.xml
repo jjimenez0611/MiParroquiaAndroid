@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Colors to Easter-->
+    <color name="colorPrimaryEaster">#FFC107</color>
+    <color name="colorPrimaryDarkEaster">#FFA000</color>
+    <color name="colorPrimaryLightEaster">#FFECB3</color>
+    <color name="colorAccentEaster">#00BCD4</color>
+    <color name="colorPrimaryTextEaster">#212121</color>
+    <color name="colorSecondaryTextEaster">#757575</color>
+</resources>
