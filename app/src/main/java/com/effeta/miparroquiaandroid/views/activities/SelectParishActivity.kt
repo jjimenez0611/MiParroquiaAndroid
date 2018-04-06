@@ -2,7 +2,6 @@ package com.effeta.miparroquiaandroid.views.activities
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -11,7 +10,6 @@ import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.BaseActivity
 import com.effeta.miparroquiaandroid.common.OVERWRITE_PARISH
 import com.effeta.miparroquiaandroid.models.Parish
-import com.effeta.miparroquiaandroid.utils.RemoteConfig
 import com.effeta.miparroquiaandroid.viewmodel.ParishViewModel
 import kotlinx.android.synthetic.main.activity_select_church.*
 import org.jetbrains.anko.clearTop

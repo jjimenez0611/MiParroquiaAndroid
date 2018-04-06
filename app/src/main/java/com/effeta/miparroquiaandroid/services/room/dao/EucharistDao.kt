@@ -1,11 +1,12 @@
 package com.effeta.miparroquiaandroid.services.room.dao
 
-import android.arch.persistence.room.*
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
+import android.arch.persistence.room.Query
 import com.effeta.miparroquiaandroid.models.Eucharist
 import com.effeta.miparroquiaandroid.services.room.MiParroquiaDB
 import io.reactivex.Single
-import org.joda.time.DateTime
-import java.util.*
 
 /**
  * Created by aulate on 19/3/18.

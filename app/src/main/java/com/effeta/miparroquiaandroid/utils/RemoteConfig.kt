@@ -1,10 +1,7 @@
 package com.effeta.miparroquiaandroid.utils
 
-import android.app.Activity
-import android.util.Log
 import com.effeta.miparroquiaandroid.BuildConfig
 import com.effeta.miparroquiaandroid.R
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 
@@ -61,7 +58,7 @@ object RemoteConfig {
         // [END fetch_config_with_callback]
 
     }
-    
+
     fun getTheme():Int{
         val mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
         val value = mFirebaseRemoteConfig.getString(PARAMETER_THEME_VALUE)

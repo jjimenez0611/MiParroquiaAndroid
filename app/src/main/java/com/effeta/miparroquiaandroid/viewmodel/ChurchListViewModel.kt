@@ -3,9 +3,7 @@ package com.effeta.miparroquiaandroid.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.effeta.miparroquiaandroid.models.Church
-import com.effeta.miparroquiaandroid.models.Eucharist
 import com.effeta.miparroquiaandroid.repositories.ChurchRepository
-import com.effeta.miparroquiaandroid.repositories.EucharistRepository
 import javax.inject.Inject
 
 /** -*- coding: utf-8 -*-

@@ -2,7 +2,6 @@ package com.effeta.miparroquiaandroid.views.activities
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.BaseActivity

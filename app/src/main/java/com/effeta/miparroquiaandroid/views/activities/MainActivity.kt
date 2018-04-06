@@ -2,15 +2,12 @@ package com.effeta.miparroquiaandroid.views.activities
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.MenuItem
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.NavDrawerActivity
-import com.effeta.miparroquiaandroid.utils.RemoteConfig
-import com.effeta.miparroquiaandroid.viewmodel.ChurchListViewModel
 import com.effeta.miparroquiaandroid.viewmodel.DataViewModel
 import com.effeta.miparroquiaandroid.views.adapters.ViewPagerAdapter
 import com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment
@@ -80,7 +77,7 @@ class MainActivity : NavDrawerActivity() {
     override fun observeLiveData() {
 
         mDataViewModel.getData().observe(this, Observer {
-            if(it!!) {
+            if (it!!) {
                 setupViewPager(viewpager)
             }
         })
