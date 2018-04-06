@@ -11,6 +11,10 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 
 object RemoteConfig {
 
+    val LENT_VALUE = "lent"
+    val ADVENT_VALUE = "advent"
+    val EASTER_VALUE = "easter"
+    val FESTIVE_VALUE = "festive"
 
     fun getRemoteConfig() {
         // Get Remote Config instance.
@@ -63,10 +67,10 @@ object RemoteConfig {
         val value = mFirebaseRemoteConfig.getString("theme_app")
 
         when(value){
-            "advent" -> return R.style.AppThemeAdvent
-            "lent" -> return R.style.AppThemeLent
-            "easter" -> return R.style.AppThemeEaster
-            "festive" -> return R.style.AppThemeFestive
+            ADVENT_VALUE-> return R.style.AppThemeAdvent
+            LENT_VALUE -> return R.style.AppThemeLent
+            EASTER_VALUE -> return R.style.AppThemeEaster
+            FESTIVE_VALUE -> return R.style.AppThemeFestive
         }
         return R.style.AppTheme
     }
@@ -76,10 +80,10 @@ object RemoteConfig {
         val value = mFirebaseRemoteConfig.getString("theme_app")
 
         when(value){
-            "advent" -> return R.color.colorPrimaryAdvent
-            "lent" -> return R.color.colorPrimaryLent
-            "easter" -> return R.color.colorPrimaryEaster
-            "festive" -> return R.color.colorPrimaryFestive
+            ADVENT_VALUE -> return R.color.colorPrimaryAdvent
+            LENT_VALUE -> return R.color.colorPrimaryLent
+            EASTER_VALUE -> return R.color.colorPrimaryEaster
+            FESTIVE_VALUE -> return R.color.colorPrimaryFestive
         }
         return R.style.CollapsingToolbarLayoutOrdinary
     }
