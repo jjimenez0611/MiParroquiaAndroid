@@ -11,10 +11,11 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 
 object RemoteConfig {
 
-    val LENT_VALUE = "lent"
-    val ADVENT_VALUE = "advent"
-    val EASTER_VALUE = "easter"
-    val FESTIVE_VALUE = "festive"
+    private const val LENT_VALUE = "lent"
+    private const val ADVENT_VALUE = "advent"
+    private const val EASTER_VALUE = "easter"
+    private const val FESTIVE_VALUE = "festive"
+    private const val PARAMETER_THEME_VALUE = "theme_app"
 
     fun getRemoteConfig() {
         // Get Remote Config instance.
@@ -60,11 +61,10 @@ object RemoteConfig {
         // [END fetch_config_with_callback]
 
     }
-
-
+    
     fun getTheme():Int{
         val mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-        val value = mFirebaseRemoteConfig.getString("theme_app")
+        val value = mFirebaseRemoteConfig.getString(PARAMETER_THEME_VALUE)
 
         when(value){
             ADVENT_VALUE-> return R.style.AppThemeAdvent
@@ -77,7 +77,7 @@ object RemoteConfig {
 
     fun getThemeCollapsingToolbar():Int{
         val mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-        val value = mFirebaseRemoteConfig.getString("theme_app")
+        val value = mFirebaseRemoteConfig.getString(PARAMETER_THEME_VALUE)
 
         when(value){
             ADVENT_VALUE -> return R.color.colorPrimaryAdvent
