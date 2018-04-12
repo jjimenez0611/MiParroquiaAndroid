@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.MenuItem
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.NavDrawerActivity
-import com.effeta.miparroquiaandroid.viewmodel.ChurchListViewModel
 import com.effeta.miparroquiaandroid.viewmodel.DataViewModel
 import com.effeta.miparroquiaandroid.views.adapters.ViewPagerAdapter
 import com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment
@@ -78,7 +77,7 @@ class MainActivity : NavDrawerActivity() {
     override fun observeLiveData() {
 
         mDataViewModel.getData().observe(this, Observer {
-            if(it!!) {
+            if (it!!) {
                 setupViewPager(viewpager)
             }
         })

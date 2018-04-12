@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Colors to Advent-->
+    <color name="colorPrimaryAdvent">#F44336</color>
+    <color name="colorPrimaryDarkAdvent">#D32F2F</color>
+    <color name="colorPrimaryLightAdvent">#FFCDD2</color>
+    <color name="colorAccentAdvent">#8BC34A</color>
+    <color name="colorPrimaryTextAdvent">#212121</color>
+    <color name="colorSecondaryTextAdvent">#757575</color>
+
+</resources>

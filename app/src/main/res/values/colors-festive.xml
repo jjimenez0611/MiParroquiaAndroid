@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Colors to Festive -->
+    <color name="colorPrimaryFestive">#2196F3</color>
+    <color name="colorPrimaryDarkFestive">#1976D2</color>
+    <color name="colorPrimaryLightFestive">#BBDEFB</color>
+    <color name="colorAccentFestive">#607D8B</color>
+    <color name="colorPrimaryTextFestive">#212121</color>
+    <color name="colorSecondaryTextFestive">#757575</color>
+</resources>

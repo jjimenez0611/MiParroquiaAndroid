@@ -2,6 +2,7 @@ package com.effeta.miparroquiaandroid.common
 
 import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
+import com.effeta.miparroquiaandroid.utils.RemoteConfig
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -15,6 +16,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(RemoteConfig.getTheme())
         setContentView(mLayout)
         initialize()
     }
