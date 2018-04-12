@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat
 import android.view.View
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.*
+import com.effeta.miparroquiaandroid.utils.RemoteConfig
 import kotlinx.android.synthetic.main.item_day.view.*
 import org.joda.time.DateTime
 import java.util.*
@@ -51,11 +52,11 @@ class DayAdapter @Inject constructor() : BaseAdapter<DateTime, DayAdapter.DayVie
 
         private fun changeLayoutState() {
             if (mSelectedPosition == adapterPosition) {
-                itemView.item_day_background.changeBackground(R.color.colorPrimaryDark)
+                itemView.item_day_background.changeBackground(RemoteConfig.getPrimaryColor())
                 itemView.item_day_name.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
                 itemView.item_day_date.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
             } else {
-                itemView.item_day_background.changeBackground(R.color.colorPrimaryLight)
+                itemView.item_day_background.changeBackground(RemoteConfig.getPrimaryLightColor())
                 itemView.item_day_name.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimaryText))
                 itemView.item_day_date.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimaryText))
             }

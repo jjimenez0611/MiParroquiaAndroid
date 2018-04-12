@@ -32,12 +32,12 @@ object RemoteConfig {
 
         mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults)
 
-        var cacheExpiration: Long = 3
+        var cacheExpiration: Long = 3600
 
         // If your app is using developer mode, cacheExpiration is set to 0, so each fetch will
         // retrieve values from the service.
         if (mFirebaseRemoteConfig.info.configSettings.isDeveloperModeEnabled) {
-            cacheExpiration = 3
+            cacheExpiration = 0
         }
 
         // [START fetch_config_with_callback]
@@ -72,7 +72,7 @@ object RemoteConfig {
         return R.style.AppTheme
     }
 
-    fun getThemeCollapsingToolbar():Int{
+    fun getPrimaryColor():Int{
         val mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
         val value = mFirebaseRemoteConfig.getString(PARAMETER_THEME_VALUE)
 
@@ -82,7 +82,20 @@ object RemoteConfig {
             EASTER_VALUE -> return R.color.colorPrimaryEaster
             FESTIVE_VALUE -> return R.color.colorPrimaryFestive
         }
-        return R.style.CollapsingToolbarLayoutOrdinary
+        return R.color.colorPrimary
+    }
+
+    fun getPrimaryLightColor():Int{
+        val mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        val value = mFirebaseRemoteConfig.getString(PARAMETER_THEME_VALUE)
+
+        when(value){
+            ADVENT_VALUE -> return R.color.colorPrimaryLightAdvent
+            LENT_VALUE -> return R.color.colorPrimaryLightLent
+            EASTER_VALUE -> return R.color.colorPrimaryLightEaster
+            FESTIVE_VALUE -> return R.color.colorPrimaryLightFestive
+        }
+        return R.color.colorPrimaryLight
     }
 
 

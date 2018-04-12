@@ -46,12 +46,13 @@ class MainActivity : NavDrawerActivity() {
             } else {
                 navigation.menu.getItem(0).isChecked = false
             }
-            Log.d("page", "onPageSelected: " + position)
+
             navigation.menu.getItem(position).isChecked = true
             prevMenuItem = navigation.menu.getItem(position)
         }
 
         override fun onPageSelected(position: Int) {
+            Log.d("page", "onPageSelected: $position")
         }
     }
 

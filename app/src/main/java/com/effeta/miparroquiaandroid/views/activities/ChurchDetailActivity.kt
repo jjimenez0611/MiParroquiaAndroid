@@ -41,7 +41,7 @@ class ChurchDetailActivity : BaseActivity(), OnMapReadyCallback {
         setSupportActionBar(toolbar_detail)
         toolbar_detail.title = getString(R.string.detail_map_activity_title)
         toolbar_detail.setNavigationOnClickListener { finish() }
-        collapsing_toolbar_layout.setContentScrimColor(ContextCompat.getColor(applicationContext,RemoteConfig.getThemeCollapsingToolbar()))
+        collapsing_toolbar_layout.setContentScrimColor(ContextCompat.getColor(applicationContext,RemoteConfig.getPrimaryColor()))
         initMapFragment()
     }
 
