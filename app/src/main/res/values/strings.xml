@@ -3,6 +3,7 @@
     <string name="app_name">MiParroquia</string>
     <string name="btn_continue">Continuar</string>
     <string name="detail_map_activity_title">Información de la Iglesia</string>
+    <string name="yes">Si</string>
 
     <!--Error texts-->
     <string name="error_to_load_map_church">No fue posible cargar las iglesias</string>
@@ -34,6 +35,11 @@
     <string name="title_church_map">Mapa</string>
     <string name="map_label_church">Iglesia de %s</string>
     <string name="marker_info_message">Para mayor información\npresione aquí</string>
+    <string name="message_advent_change">¡Felices fiestas de Adviento! Ahora nos preparamos para la venida de nuestro Jesús en un pesebre en Belén.</string>
+    <string name="message_easter_change">¡RESUCITÓ! Jesús ha vencido a la muerte, y nos ha liberado, la Pascua es tiempo de Gloria y Santa Alegría.</string>
+    <string name="message_festive_change">¡Que viva la Iglesia! Tu parroquia se encuentra en fiestas patronales, únete a las celebraciones.</string>
+    <string name="message_lent_change">Ahora mismo nosotros también debemos prepararnos para la Semana Santa, por eso nos unimos a la Cuaresma, el camino hacia la Cruz.</string>
+    <string name="message_default_change">Durante este tiempo debemos vivir una vida como Jesús la desea. En tiempo ordinario, la esperanza se pinta de verde.</string>
 
     <!-- Content Descriptions -->
     <string name="parish_logo_help">Logo de la parroquia</string>

@@ -8,12 +8,16 @@ import android.util.Log
 import android.view.MenuItem
 import com.effeta.miparroquiaandroid.R
 import com.effeta.miparroquiaandroid.common.NavDrawerActivity
+import com.effeta.miparroquiaandroid.rxBusEvents.ChangeThemeEvent
+import com.effeta.miparroquiaandroid.utils.RXBus
 import com.effeta.miparroquiaandroid.viewmodel.DataViewModel
 import com.effeta.miparroquiaandroid.views.adapters.ViewPagerAdapter
 import com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment
 import com.effeta.miparroquiaandroid.views.fragments.EucharistFragment
 import com.effeta.miparroquiaandroid.views.fragments.ParishMapFragment
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.alert
 
 
 class MainActivity : NavDrawerActivity() {
@@ -77,6 +81,19 @@ class MainActivity : NavDrawerActivity() {
 
     override fun observeLiveData() {
 
+        // Listen for changeThemeEvent
+        val disposal = RXBus.listen(ChangeThemeEvent::class.java).subscribe({
+            alert(it.message) {
+                isCancelable = false
+                positiveButton(R.string.yes) {
+                    finish()
+                    startActivity(intent)
+                }
+            }.show()
+        })
+
+        disposal.dispose()
+
         mDataViewModel.getData().observe(this, Observer {
             if (it!!) {
                 setupViewPager(viewpager)
@@ -91,4 +108,5 @@ class MainActivity : NavDrawerActivity() {
         adapter.addFragment(ParishMapFragment())
         viewPager.adapter = adapter
     }
+
 }
