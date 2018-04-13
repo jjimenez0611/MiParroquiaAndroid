@@ -15,7 +15,6 @@ import com.effeta.miparroquiaandroid.views.adapters.ViewPagerAdapter
 import com.effeta.miparroquiaandroid.views.fragments.AnnouncementsFragment
 import com.effeta.miparroquiaandroid.views.fragments.EucharistFragment
 import com.effeta.miparroquiaandroid.views.fragments.ParishMapFragment
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.alert
 
