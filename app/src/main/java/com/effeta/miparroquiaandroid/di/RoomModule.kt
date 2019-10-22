@@ -18,7 +18,8 @@ class RoomModule {
     @Provides
     fun provideRoomDatabase(context: Context): MiParroquiaDB {
         return Room.databaseBuilder(context,
-                MiParroquiaDB::class.java, "miparroquia-db").allowMainThreadQueries().build()
+                MiParroquiaDB::class.java, "miparroquia-db").
+                allowMainThreadQueries().build()
     }
 
     @Provides

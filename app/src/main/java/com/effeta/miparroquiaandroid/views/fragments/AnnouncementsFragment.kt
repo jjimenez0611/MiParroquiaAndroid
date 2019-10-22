@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_announcements.*
 import javax.inject.Inject
 
 class AnnouncementsFragment : BaseFragment() {
+
     override val mLayout: Int = R.layout.fragment_announcements
 
     @Inject
